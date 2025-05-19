@@ -57,7 +57,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-[100vh] relative flex items-center justify-center bg-primary-blue-light">
-      <div className="w-full h-[575px] max-w-[600px] mx-auto py-[80px] px-[100px] bg-white border border-br-gray rounded-[8px]">
+      <div className="w-full min-h-[575px] max-w-[600px] mx-auto py-[80px] px-[100px] bg-white border border-br-gray rounded-[8px]">
         <div className="flex flex-col items-center justify-center gap-[12px]">
           <Logo />
           <h2 className="font-bold text-center text-[40px]">통합 관리자 로그인</h2>

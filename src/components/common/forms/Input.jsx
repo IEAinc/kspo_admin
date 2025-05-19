@@ -99,7 +99,7 @@ const Input = ({
           focus:ring-blue-500
         `}
       />
-      {error && <span className="text-red-500 text-[12px] text-left mt-1">{error}</span>}
+      {error && <span className="block w-full text-red-500 text-[12px] text-left mt-1">{error}</span>}
     </div>
   );
 };
