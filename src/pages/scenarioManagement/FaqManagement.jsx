@@ -57,7 +57,6 @@ const FaqManagement = () => {
 
     /* 그리드 헤더 설정 */
     let grid_columns = [
-      { headerName: '',headerCheckboxSelection: true, checkboxSelection: true, width: 50,cellClass: 'custom-checkbox',suppressSizeToFit: true}, // 체크박스용 컬럼
       { headerName: "센터명", flex:1,field: "centerName", cellClass: 'text-center'},
       { headerName: "대화명",flex:1, field: "dialogName", cellClass: 'text-left'},
       { headerName: "대표 질문",flex:1, field: "question", cellClass: 'text-left'},
@@ -89,7 +88,6 @@ const FaqManagement = () => {
       </div>
       <Box>
         <AgGrid
-          rowSelection="multiple"
           rowDeselection={true}
           rowData={gridData}
           columnDefs={gridColumns}
@@ -100,6 +98,7 @@ const FaqManagement = () => {
             register: true,
             delete: true,
           }}
+          isCheckboxMode={true}
           onDataUpdate={handleDataUpdate} // 삭제 후 데이터 갱신
           onRegisterClick={handleRegisterClick}
           sortable={true}

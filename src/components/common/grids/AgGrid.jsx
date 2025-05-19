@@ -16,6 +16,7 @@ import { saveAs } from 'file-saver';
 
 const AgGrid = (props) => {
   const gridRef = useRef(null);
+  const [gridApi, setGridApi] = useState(null);
 
   const defaultColDef = {
     flex: props.cellFlex ? 1 : false,
@@ -28,24 +29,25 @@ const AgGrid = (props) => {
   const [pageSize, setPageSize] = useState(10); // 페이지당 데이터 수
   const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 (index 1 기반)
   const [displayData, setDisplayData] = useState([]); // 현재 페이지에 표시할 데이터
-
-  // 상위 데이터의 총 개수 자동 계산
-
-// 상위 데이터의 총 개수
+  
+  // 상위 데이터의 총 개수
   const totalItems = props.rowData.length;
   const totalPages = Math.ceil(totalItems / pageSize);
 
   // 데이터를 슬라이싱하고 페이지 상태 조정
   useEffect(() => {
-    // 현재 페이지가 유효 범위를 벗어나면 마지막 유효 페이지로 이동
-    if (currentPage > totalPages && totalItems > 0) {
-      setCurrentPage(totalPages);
+    const calculatedTotalPages = Math.ceil(props.rowData.length / pageSize);
+
+    if (currentPage > calculatedTotalPages && totalItems > 0) {
+      if (currentPage !== calculatedTotalPages) { // 현재 페이지를 한 번만 업데이트
+        setCurrentPage(calculatedTotalPages);
+      }
     } else {
       const startIndex = (currentPage - 1) * pageSize;
       const endIndex = startIndex + pageSize;
       setDisplayData(props.rowData.slice(startIndex, endIndex));
     }
-  }, [props.rowData, pageSize, currentPage, totalPages]);
+  }, [props.rowData, pageSize, currentPage, totalItems]);
   const handlePageChange = (page) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page); // 현재 페이지를 유효 범위 내로 업데이트
@@ -56,13 +58,14 @@ const AgGrid = (props) => {
     setCurrentPage(1); // 페이지 크기 변경 시 첫 페이지로 이동
   };
 
+  /* 선택된 row 삭제하기 */
   const handleDeleteSelectedRows = () => {
-    if (!gridRef.current || !gridRef.current.api) {
-      console.warn("Grid 초기화가 안 되었습니다.");
+    if (!gridApi) {
+      console.warn("Grid가 초기화되지 않았습니다.");
       return;
     }
 
-    const selectedRows = gridRef.current.api.getSelectedRows();
+    const selectedRows = gridApi.getSelectedRows();
     console.log("선택한 행들:", selectedRows);
 
     if (!selectedRows || selectedRows.length === 0) {
@@ -70,18 +73,20 @@ const AgGrid = (props) => {
       return;
     }
 
+    // 고유 ID를 기준으로 데이터 필터링
     const updatedData = props.rowData.filter(
-      (row) => !selectedRows.includes(row)
+      (row) => !selectedRows.some((selected) => selected.id === row.id) // ID 기준으로 매칭
     );
+
     console.log("업데이트된 데이터:", updatedData);
 
     if (props.onDataUpdate) {
-      console.log("onDataUpdate 호출 중...");
       props.onDataUpdate(updatedData); // 부모로 데이터 전달
     } else {
-      console.error("onDataUpdate prop이 전달되지 않음");
+      console.error("onDataUpdate prop이 전달되지 않았습니다.");
     }
   };
+
   /* 엑셀 내보내기 */
   const exportToExcel = (rowData, columnData) => {
     if (!rowData || rowData.length === 0) {
@@ -127,7 +132,6 @@ const AgGrid = (props) => {
 
     saveAs(blob, 'export.xlsx');
   };
-
   return (
     <div className="grid-box w-full">
       {
@@ -202,15 +206,41 @@ const AgGrid = (props) => {
             currentPage: currentPage, // 현재 페이지
             pageSize: pageSize,       // 한 페이지당 데이터 크기
           }}
-          rowSelection="multiple" // 다중 행 선택 가능
+          // 아래 두 옵션으로 체크박스 활성화
+          rowSelection={{
+            mode: props.isCheckboxMode ? 'multiRow' : 'single',
+            enableSelectionWithoutKeys: true,
+          }}
           onGridReady={(params) => {
             gridRef.current = params.api;
-            params.api.sizeColumnsToFit(); // 컨테이너 폭에 맞춰 열 크기 조정
+            setGridApi(params.api); // API를 상태로 저장
+            console.log(gridRef.current,'gridRef.current')
+            // 체크박스 컬럼 아이디 찾기
+            const checkboxColumn = params.columnApi.getAllColumns().find(col => col.getColDef().checkboxSelection);
+            if (checkboxColumn) {
+              // 너비 50으로 고정
+              params.columnApi.setColumnWidth(checkboxColumn.getId(), 50);
+              params.columnApi.setColumnPinned(checkboxColumn.getId(), 'left'); // 고정도 가능
+            }
+
+            // 나머지 컬럼 자동 조정
+            const allColumns = params.columnApi.getAllColumns();
+            const autoSizeColumnIds = allColumns
+              .filter(col => !col.getColDef().checkboxSelection)
+              .map(col => col.getId());
+
+            params.columnApi.autoSizeColumns(autoSizeColumnIds);
+
           }}
           onFirstDataRendered={(params) => {
-            params.api.sizeColumnsToFit(); // 컬럼 기본 폭 맞추기
-            const allColumnIds = params.columnApi.getAllColumns().map(col => col.getId());
-            params.columnApi.autoSizeColumns(allColumnIds); // 데이터 기반 컬럼 자동 너비
+            // 체크박스 컬럼을 제외한 나머지 컬럼 아이디 구하기
+            const allColumns = params.columnApi.getAllColumns();
+            console.log(allColumns,'allColumns')
+            const autoSizeColumnIds = allColumns
+              .filter(col => !col.getColDef().checkboxSelection)
+              .map(col => col.getId());
+            // 체크박스 컬럼 제외한 컬럼만 자동 사이즈 조정
+            params.columnApi.autoSizeColumns(autoSizeColumnIds);
           }}
           onGridSizeChanged={(params) => {
             setTimeout(function() {

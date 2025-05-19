@@ -39,6 +39,10 @@ const MainScenarioManagement = () => {
     const basePath = location.pathname; // 현재 경로 가져오기
     navigate(`${basePath}/detail/${String(id)}`); // 동적 경로 생성
   }
+  // 데이터 삭제
+  const handleDataUpdate = (updatedRows) => {
+    setGridData(updatedRows);
+  };
 
   useEffect(() => {
     /* 그리드 데이터 */
@@ -68,7 +72,6 @@ const MainScenarioManagement = () => {
 
     /* 그리드 헤더 설정 */
     let grid_columns = [
-      { headerName: '',headerCheckboxSelection: true, checkboxSelection: true, width: 50,cellClass: 'custom-checkbox',suppressSizeToFit: true }, // 체크박스용 컬럼
       { headerName: "센터명", flex:1,field: "centerName", cellClass: 'text-center'},
       { headerName: "대화명",flex:1, field: "dialogName", cellClass: 'text-left'},
       { headerName: "답변 내용",flex:1, field: "dialogAnswer", cellClass: 'text-left' },
@@ -99,6 +102,7 @@ const MainScenarioManagement = () => {
       </div>
       <Box>
         <AgGrid
+          rowDeselection={true}
           rowData={gridData}
           columnDefs={gridColumns}
           height={463}
@@ -108,6 +112,8 @@ const MainScenarioManagement = () => {
             register: true,
             delete: true,
           }}
+          isCheckboxMode={true}
+          onDataUpdate={handleDataUpdate} // 삭제 후 데이터 갱신
           onRegisterClick={handleRegisterClick}
           sortable={true}
         />
