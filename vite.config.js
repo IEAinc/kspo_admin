@@ -7,7 +7,7 @@ import svgLoader from 'vite-svg-loader';
 const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd());
 const API_BASE_URL = env.VITE_API_BASE_URL +":80"
 
-console.log(API_BASE_URL)
+
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -30,7 +30,7 @@ export default defineConfig({
           });
         },
         rewrite: (path) => {
-          console.log("hfee",path)
+        
           return path;
         }
       },
@@ -43,7 +43,7 @@ export default defineConfig({
           });
         },
         secure: false,
-        rewrite: (path) => {console.log(path);return path;}
+        rewrite: (path) => {return path;}
       }
     }
      

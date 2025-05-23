@@ -15,7 +15,6 @@ const MainScenarioManagement = () => {
   const [modalText, setModalText] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(location.state)
   // 모달 임시추가
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const handleOpen = () => setIsModalOpen(true);
@@ -45,13 +44,11 @@ const MainScenarioManagement = () => {
   };
   // 확인 버튼 클릭 동작
   const handleConfirm = () => {
-    console.log("확인 버튼 동작 실행");
     setIsModalOpen(false); // 모달 닫기
   };
 
   // 취소 버튼 클릭 동작
   const handleCancel = () => {
-    console.log("취소 버튼 동작 실행");
     setIsModalOpen(false); // 모달 닫기
   };
 
@@ -174,11 +171,9 @@ const MainScenarioManagement = () => {
         cancelButton: true,
         onConfirm: async () =>{
           let idList=[]
-          console.log('dfdsfd')
           selectedRows.map(e=>{
             idList.push(e.id)
           })
-          console.log('dfdsfd1')
           const response = await api.post(API_ENDPOINTS.Delete, {
             id:idList
           });

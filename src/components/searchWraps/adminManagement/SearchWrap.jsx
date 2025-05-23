@@ -43,7 +43,6 @@ const SearchWrap = ({onSearchClick}) => {
     fetchCenterOptions();
   }, []);
   const handleCenterChange = (selectedOption) => {
-    console.log(selectedOption)
     setSelectedCenter(selectedOption);
   };
   
@@ -53,7 +52,6 @@ const SearchWrap = ({onSearchClick}) => {
   const handleSearchClick = () => {
     // 검색 로직
     onSearchClick(selectedCenter?.value,searchContent?searchContent:null)
-    console.log('검색:', selectedCenter, searchContent);
     // 여기서 부모 컴포넌트로 검색 조건을 전달할 수 있습니다
   };
 

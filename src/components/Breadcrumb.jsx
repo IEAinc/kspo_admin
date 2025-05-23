@@ -17,7 +17,7 @@ const Breadcrumb = () => {
     loginHistory: "로그인 이력 조회",
   };
 
-  console.log(pathnames);
+
   // 마지막 경로 가져오기
   let lastPathname = ''
   if(pathnames.length === 2) {

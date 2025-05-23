@@ -83,7 +83,6 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
     // Range 업데이트
     newStartDate.setHours(newStartDate.getHours+9);
     newEndDate.setHours(newEndDate.getHours+9);
-    console.log(newStartDate,newEndDate)
     setDateRange([newStartDate, newEndDate]);
     setSelectedRange(range); // 현재 선택된 옵션 표시
   };

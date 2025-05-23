@@ -10,7 +10,6 @@ const DetailCardMainScenarioManagementEdit = (props) => {
   const navigate = useNavigate();
   const location=useLocation();
  
-  console.log(location.state)
   
   /* 버튼 구성 (select) */
   // 버튼 공통 option

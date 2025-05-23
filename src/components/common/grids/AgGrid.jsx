@@ -70,8 +70,6 @@ const AgGrid = (props) => {
     }
 
     const selectedRows = gridApi.getSelectedRows();
-    console.log("선택한 행들:", selectedRows);
-
     // if (!selectedRows || selectedRows.length === 0) {
     //   alert("삭제할 행을 선택해주세요.");
     //   return;
@@ -82,7 +80,6 @@ const AgGrid = (props) => {
       (row) => !selectedRows.some((selected) => selected.id === row.id) // ID 기준으로 매칭
     );
 
-    console.log("업데이트된 데이터:", updatedData);
 
     if (props.onDataUpdate) {
       props.onDataUpdate(updatedData,gridApi); // 부모로 데이터 전달
@@ -219,7 +216,6 @@ const AgGrid = (props) => {
           onGridReady={(params) => {
             gridRef.current = params.api;
             setGridApi(params.api); // API를 상태로 저장
-            console.log(gridRef.current,'gridRef.current')
             // 체크박스 컬럼 아이디 찾기
             const checkboxColumn = params.columnApi.getAllColumns().find(col => col.getColDef().checkboxSelection);
             if (checkboxColumn) {
@@ -240,7 +236,6 @@ const AgGrid = (props) => {
           onFirstDataRendered={(params) => {
             // 체크박스 컬럼을 제외한 나머지 컬럼 아이디 구하기
             const allColumns = params.columnApi.getAllColumns();
-            console.log(allColumns,'allColumns')
             const autoSizeColumnIds = allColumns
               .filter(col => !col.getColDef().checkboxSelection)
               .map(col => col.getId());

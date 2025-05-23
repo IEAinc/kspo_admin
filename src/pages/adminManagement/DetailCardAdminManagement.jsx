@@ -39,7 +39,6 @@ const DetailCardAdminManagement = () => {
   // 권한있는 id확인
     const chkAuth=async ()=>{
       const response = await api.get(API_ENDPOINTS.GETID);
-      console.log(response)
       let allowIdList=['Admin','IEA_Admin']
       let myId=response.data
       if(allowIdList.indexOf(myId)==-1){
@@ -98,7 +97,6 @@ const DetailCardAdminManagement = () => {
       const response = await api.post(API_ENDPOINTS.AdminLIST, {
         chkId:location.state.id
      });
-     console.log(response.data)
       // 데잍터 넣기
      const data=response.data[0];
      let json={
@@ -118,7 +116,6 @@ const DetailCardAdminManagement = () => {
     
     setSelectedCenter( {value:data.company, label:data.company})
     setSelectedEmail( {value:data.email.split("@")[1], label:data.email.split("@")[1]})
-    console.log(json)
     }
   useEffect(() => {
       
@@ -175,7 +172,6 @@ const DetailCardAdminManagement = () => {
     
       //등록 모드
       // 센터명 검증
-      console.log(selectedCenter.value===null)
       if(selectedCenter.value === null){
         alert("센터명을 선택하세요");
         return;
@@ -334,7 +330,6 @@ const DetailCardAdminManagement = () => {
   
     // 조건 몇 개를 만족하는지 계산
     const count = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
-    console.log(count)
   
     return count >= 2;
   }
@@ -419,7 +414,7 @@ const DetailCardAdminManagement = () => {
               type='password'
               value={inputJson.password}
               onInput={(e)=>setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}
-              onChange={(e)=>{console.log(e.target.value);setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}}
+              onChange={(e)=>{setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}}
               options={{
                 isNormal:true
               }}

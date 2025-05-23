@@ -25,7 +25,6 @@ const FaqManagement = () => {
   }
   // 데이터 삭제
   const handleDataUpdate = (updatedRows) => {
-    console.log('dfsjkfsjksdjkjk')
     setGridData(updatedRows);
   };
 

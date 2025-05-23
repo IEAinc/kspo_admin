@@ -11,7 +11,6 @@ const DetailCardSatisfactionManagement = () => {
   const navigate = useNavigate();
   const location= useLocation();
   const [detailData, setDetailData] = useState({});
-  console.log(location.state)
   // 버튼 클릭 핸들러
   const goBack = () => {
     navigate('/satisfactionManagement/satisfactionManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
@@ -38,7 +37,6 @@ const DetailCardSatisfactionManagement = () => {
          id:location.state.id
         });
         response.data.created=timeFormat(response.data.created)
-        console.log(response.data)
         setDetailData(response.data)
       }catch(e){
         console.log(e)

@@ -12,7 +12,6 @@ const DetailCardMainScenarioManagement = () => {
   const navigate = useNavigate();
   //  파라미터 받아오기
   const location=useLocation();
-  console.log(location.state)
   // 초기데이터 불러오기
  
   // 초기 값 설정
@@ -41,7 +40,6 @@ const DetailCardMainScenarioManagement = () => {
         }
       }
     };
-    console.log("here")
     
     loadData();
     

@@ -48,7 +48,6 @@ const Login = () => {
       }
     },[])
   const handleIdChange = (e) => {
-    console.log('dddd'+e.target.value)
     setUserId(e.target.value)
    
     if (!e.target.value) {
@@ -74,8 +73,6 @@ const Login = () => {
 
   // 로그인 버튼 클릭 시
   const handleLogin = async () => {
-    console.log(userId)
-    console.log(userId,userPassword)
     if(!userId || !userPassword) {
       if (!userId) setErrorUserId('아이디를 입력해주세요.');
       if (!userPassword) setErrorUserPassword('비밀번호를 입력해주세요.');
@@ -103,7 +100,6 @@ const Login = () => {
           type:"big"
         }});
       }catch(e){
-        console.log(e)
         if(e.status===401){
           setAlertState({
             isOpen: true,

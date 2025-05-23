@@ -547,7 +547,6 @@ chatAddBtn.addEventListener("click", async () => {
 /* 대화 기록 변경 */
 $(function(){
   let href = location.href.split("://")[1];
-  console.log(href)
 
   if(href !== "chatbot.ksponco.ieabot.com" && href !== "chatbot.ksponco.ieabot.com/" && href !== "localhost/"){
     $("footer").hide();
@@ -626,7 +625,6 @@ $(function(){
 
   $(document).on("click", ".rating-box .rate-btn", function(){
     const i = $(this).index();
-    console.log('her22e')
     const text = ["1점 매우불만족", "2점 불만족", "3점 보통", "4점 만족", "5점 매우만족"];
 
     $(this).parent().find("> .rate-btn").removeClass("active");

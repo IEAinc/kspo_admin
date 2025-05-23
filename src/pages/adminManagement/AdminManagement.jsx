@@ -171,7 +171,7 @@ const AdminManagement = () => {
   // 권한있는 id확인
   const chkId=async ()=>{
     const response = await api.get(API_ENDPOINTS.GETID);
-    console.log(response)
+
     let allowIdList=['Admin','IEA_Admin']
     let myId=response.data
     if(allowIdList.indexOf(myId)==-1){

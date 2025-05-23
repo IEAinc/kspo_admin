@@ -13,7 +13,7 @@ export default function Layout() {
     try{
       const response = await api.get(API_ENDPOINTS.GETID)
     }catch(response){
-      console.log(response)
+
       if(response.status!==200){
         try{
           await api.get(API_ENDPOINTS.LOGOUT)
