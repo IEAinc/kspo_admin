@@ -23,8 +23,8 @@ const menuData = [
       active: Icon1Active,
     },
     subMenu: [
-      { title: '메인 시나리오 관리', path: '/scenarioManagement/mainScenarioManagement' },
-      { title: 'FAQ 관리', path: '/scenarioManagement/faqManagement' },
+      { title: '메인 시나리오 관리', path: '/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
+      { title: 'FAQ 관리', path: '/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
     ],
   },
   {
@@ -94,7 +94,7 @@ const Sidebar = () => {
   return (
     <div className="w-[220px] h-[100vh] fixed top-0 left-0 bg-primary-color">
       <h1 className="w-full h-[48px] flex items-center justify-center py-[10px] px-[22px] border-b border-gray1">
-        <Link to={"/scenarioManagement/mainScenarioManagement"}>
+        <Link to={"/scenarioManagement/mainScenarioManagement"} state={{type:'big'}}>
           <UserIcon />
         </Link>
       </h1>
@@ -114,7 +114,8 @@ const Sidebar = () => {
             <div key={index}>
               {/* Link 또는 Button을 사용하여 경로 이동 처리 */}
               <Link
-                to={menu.subMenu ? "#" : menu.path} // 하위 메뉴가 없으면 바로 경로로 이동
+                to={menu.subMenu ? "#" : menu.path} 
+                state={menu.state?menu.state:{}}// 하위 메뉴가 없으면 바로 경로로 이동
                 className={`w-full flex items-center justify-between px-[20px] py-[14px] text-[16px] font-medium ${
                   isOpened || isMenuActive || isSubMenuActive
                     ? "text-white"
@@ -161,6 +162,7 @@ const Sidebar = () => {
                     <li key={subIndex}>
                       <Link
                         to={subMenu.path}
+                        state={subMenu.state?subMenu.state:{}}
                         className={`block py-[11px] pl-[40px] pr-[10px] text-[15px] ${
                           location.pathname.startsWith(subMenu.path)
                             ? "text-white" // 하위 메뉴 활성화 스타일

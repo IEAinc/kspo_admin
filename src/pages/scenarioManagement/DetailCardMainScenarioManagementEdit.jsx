@@ -1,14 +1,17 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import Input from '../../components/common/forms/Input'
 import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
-const DetailCardMainScenarioManagementEdit = () => {
-  // const navigate = useNavigate();
-
+const DetailCardMainScenarioManagementEdit = (props) => {
+  const navigate = useNavigate();
+  const location=useLocation();
+ 
+  console.log(location.state)
+  
   /* 버튼 구성 (select) */
   // 버튼 공통 option
   const commonSelectOptions = [

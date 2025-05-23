@@ -6,7 +6,7 @@ import TabRadioWrap from '../forms/TabRadioWrap.jsx';
 // 사용한 이미지 모음
 import CalendarIcon from '../../../assets/images/icon/ico_calendar.svg?react';
 
-const CustomDatePicker = ({rangeOptions = [], options={}}) => {
+const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=[null,null]}) => {
   const {
     widthSize = 'full', // widthSize 추가 (기본값은 full)
     labelSize = 'full'
@@ -31,7 +31,7 @@ const CustomDatePicker = ({rangeOptions = [], options={}}) => {
   const labelClass = labelClassMap[labelSize] || 'sm'; // 기본값은 full
 
   // 시작 날짜와 종료 날짜 상태
-  const [dateRange, setDateRange] = useState([null,null]); // Default 시작 날짜
+  
   const [startDate, endDate] = dateRange; // Default 종료 날짜
   const [selectedRange, setSelectedRange] = useState(""); // 라디오 버튼 선택 값
   // const [rangeOptions, setRangeOptions] = useState(["오늘", "1주", "15일", "1개월", "3개월", "6개월", "1년"]); // 기본 옵션
@@ -81,6 +81,9 @@ const CustomDatePicker = ({rangeOptions = [], options={}}) => {
         break;
     }
     // Range 업데이트
+    newStartDate.setHours(newStartDate.getHours+9);
+    newEndDate.setHours(newEndDate.getHours+9);
+    console.log(newStartDate,newEndDate)
     setDateRange([newStartDate, newEndDate]);
     setSelectedRange(range); // 현재 선택된 옵션 표시
   };

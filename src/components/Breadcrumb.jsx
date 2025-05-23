@@ -26,7 +26,7 @@ const Breadcrumb = () => {
     if(pathnames.length === 3 && pathnames[2] === 'register') {
       lastPathname = `${routeNames[pathnames[pathnames.length - 3]]} > 등록`
     } else {
-      lastPathname = `${routeNames[pathnames[pathnames.length - 3]]} > 상세보기`
+      lastPathname = `${routeNames[pathnames[pathnames.length - 2]]} > 상세보기`
     }
   }
 

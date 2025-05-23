@@ -1,64 +1,131 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useState,useEffect } from 'react'
+import { useNavigate,useLocation } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import Input from '../../components/common/forms/Input'
 import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
+import { API_ENDPOINTS } from '../../constants/api'
+import { api } from '../../constants/api';
 const DetailCardMainScenarioManagement = () => {
   const navigate = useNavigate();
+  //  파라미터 받아오기
+  const location=useLocation();
+  console.log(location.state)
+  // 초기데이터 불러오기
+ 
+  // 초기 값 설정
+  useEffect( ()=>{
+    const loadData = async () => {
+      //수정시 초기 데이터 설정
+      const response = await api.post(API_ENDPOINTS.Detail, {
+        id:location.state.id
+      });
+      let data=response.data
+      setCenterName(data.company);
+      setDialogName(data.name);
+      setText(data.answer);
+      setQuestion(data.main_question)
+
+      if(data.btn_type){
+        btnList[0].btnType=data.btn_type;
+        btnList[0].btnName=data.btn_name.split("**")[0];
+        btnList[0].btnDetail=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
+      }
+      for(let i=0;i<=7;i++){
+        if(data["btn_type"+i]){
+          btnList[i].btnType=data["btn_type"+i];
+          btnList[i].btnName=data["btn_name"+i].split("**")[0];
+          btnList[i].btnDetail=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
+        }
+      }
+    };
+    console.log("here")
+    
+    loadData();
+    
+  
+  },[])
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate(-1); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/scenarioManagement/mainScenarioManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
   };
   const handleEditClick = () => {
-    navigate("scenarioManagement/mainScenarioManagement/detail/edit:id"); // 경로로 이동
-  };
+    if(location.state.type==='FAQ'){
+      navigate(`/scenarioManagement/faqManagement/detail/edit`,{
+        state:{
+         id:location.state.id,
+         type:location.state.type,
+         mode:'update'
+       }
+       }); // 경로로 이동
+    }else{
+      navigate(`/scenarioManagement/mainScenarioManagement/detail/edit`,{
+        state:{
+         id:location.state.id,
+         type:location.state.type,
+         mode:'update'
+       }
+       }); // 경로로 이동
+    };
+    }
+   
+//
 
+  // 센터명
+  const [centerName, setCenterName] = useState("");
+  // 대화명
+  const [dialogName, setDialogName] = useState("");
+// 대표 질문
+  const [dialogQuestion, setQuestion] = useState("");
+
+
+  /* 답변 내용 */
+  const [text, setText] = useState("");
   // 버튼 항목 리스트
   const [btnList, setBtnList] = useState([
     {
-      name: '버튼f1',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      name: '버튼1',
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼2',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼3',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼4',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼5',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼6',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
     {
       name: '버튼7',
-      btnType:'웹링크',
-      btnName:'약도 및 대중교통',
-      btnDetail:'올림픽공원스포츠센터'
+      btnType:null,
+      btnName:null,
+      btnDetail:null
     },
   ]);
 
@@ -72,7 +139,7 @@ const DetailCardMainScenarioManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            올림픽공원스포츠센터
+            {centerName}
           </div>
         </div>
         {/* 대화명 */}
@@ -81,34 +148,29 @@ const DetailCardMainScenarioManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            차량 안내
+           {dialogName}
           </div>
         </div>
+        {/* 대표 질문*/}
+        {
+          location.state.type==='FAQ'?<>
+          <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+          대표 질문
+        
+        </div>
+        <div className="p-4 col-span-7 border-b border-tb-br-color">
+          <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
+           {dialogQuestion}
+          </div>
+        </div>
+          </>:<></>
+         }
         {/* 답변 내용 */}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
           답변 내용
         </div>
         <div className="py-[6px] px-[8px] col-span-7 border-b border-tb-br-color text-[14px] text-black font-normal whitespace-pre-line">
-          {`◼ 월 회원 1인 1차량에 한하여 등록 가능합니다.
-둘
-셋
-넷
-다섯
-여섯
-일곱
-여덟
-아홉
-열
-하나
-둘
-셋
-넷
-다섯
-여섯
-일곱
-여덟
-아홉
-열`}
+          {text}
         </div>
 
         {/* 버튼 구성 */}

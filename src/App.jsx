@@ -24,11 +24,29 @@ import DetailCardMainScenarioHistory from './pages/historyManagement/DetailCardM
 import FaqModificationHistory from './pages/historyManagement/FaqModificationHistory'
 import DetailCardFaqModificationHistory from './pages/historyManagement/DetailCardFaqModificationHistory'
 import LoginHistory from './pages/historyManagement/LoginHistory'
+import ChatMain from './pages/userPage/templates/chatMain.jsx';
+import ChatWindow from './pages/userPage/templates/window.jsx';
 
 function App() {
+  let pagList=['olparksports','olparkswim','olparktennis','olparksoccer','ilsansports','bundangsports']
   return (
     <Routes>
-      <Route index element={<Login />} />
+      {/* 사용자 페이지 */}
+      {pagList.map(e=>{
+        return <Route path={`/sports/`+e} element={<ChatMain/>}/>
+      }
+      )}
+  
+      {/*  윈도우 페이지 */}
+      {pagList.map(e=>{
+        return <Route path={`/sports/`+e+`/window`} element={<ChatWindow/>}/>
+      }
+      )}
+      <Route path='/' element={<ChatMain/>}/>
+      {/* 관리자 페이지 */}
+
+      <Route path="/login" element={<Login />} />
+ 
       <Route
         path="/"
         element={<Layout />}
@@ -36,16 +54,16 @@ function App() {
         {/* 시나리오 관리 */}
         <Route path="scenarioManagement/mainScenarioManagement" element={<MainScenarioManagement />} />{/* 메인시나리오 관리 */}
         <Route path="scenarioManagement/mainScenarioManagement/detail/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
-        <Route path="scenarioManagement/mainScenarioManagement/detail/edit:id" element={<DetailCardMainScenarioManagementEdit />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
-        <Route path="scenarioManagement/mainScenarioManagement/detail/:id" element={<DetailCardMainScenarioManagement />} /> {/* 메인시나리오 관리 > 상세보기 */}
-        <Route path="scenarioManagement/faqManagement" element={<FaqManagement />} />
-        <Route path="scenarioManagement/faqManagement/detail/register" element={<DetailCardFaqManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
-        <Route path="scenarioManagement/faqManagement/detail/edit:id" element={<DetailCardMainScenarioManagementEdit />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
-        <Route path="scenarioManagement/faqManagement/detail/:id" element={<DetailCardFaqManagement />} />
+        <Route path="scenarioManagement/mainScenarioManagement/detail/edit" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
+        <Route path="scenarioManagement/mainScenarioManagement/detail" element={<DetailCardMainScenarioManagement />} /> {/* 메인시나리오 관리 > 상세보기 */}
+        <Route path="scenarioManagement/faqManagement" element={<MainScenarioManagement />} />
+        <Route path="scenarioManagement/faqManagement/detail/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
+        <Route path="scenarioManagement/faqManagement/detail/edit" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
+        <Route path="scenarioManagement/faqManagement/detail" element={<DetailCardMainScenarioManagement />} />
 
         {/* 만족도 관리 */}
         <Route path="satisfactionManagement/satisfactionManagement" element={<SatisfactionManagement />} />
-        <Route path="satisfactionManagement/satisfactionManagement/detail/:id" element={<DetailCardSatisfactionManagement />} />
+        <Route path="satisfactionManagement/satisfactionManagement/detail" element={<DetailCardSatisfactionManagement />} />
 
         {/* 관리자 관리 */}
         <Route path="adminManagement/adminManagement" element={<AdminManagement />} />
@@ -53,9 +71,9 @@ function App() {
 
         {/* 이력 관리 */}
         <Route path="historyManagement/mainScenarioHistory" element={<MainScenarioHistory />} />
-        <Route path="historyManagement/mainScenarioHistory/detail/:id" element={<DetailCardMainScenarioHistory />} />
+        <Route path="historyManagement/mainScenarioHistory/detail" element={<DetailCardMainScenarioHistory />} />
         <Route path="historyManagement/faqModificationHistory" element={<FaqModificationHistory />} />
-        <Route path="historyManagement/faqModificationHistory/detail/:id" element={<DetailCardFaqModificationHistory />} />
+        <Route path="historyManagement/faqModificationHistory/detail" element={<DetailCardFaqModificationHistory />} />
         <Route path="historyManagement/loginHistory" element={<LoginHistory />} />
       </Route>
     </Routes>

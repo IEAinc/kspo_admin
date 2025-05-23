@@ -1,17 +1,51 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import Input from '../../components/common/forms/Input'
 import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
+import { API_ENDPOINTS ,api} from '../../constants/api'
 const DetailCardSatisfactionManagement = () => {
   const navigate = useNavigate();
+  const location= useLocation();
+  const [detailData, setDetailData] = useState({});
+  console.log(location.state)
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate(-1); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/satisfactionManagement/satisfactionManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
   };
+  // 날짜 포맷
+  const timeFormat=(timestamp)=>{
+    const date = new Date(timestamp);
+
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+
+    const formatted = `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+    return formatted;
+  }
+  useEffect(()=>{
+    const loadData= async ()=>{
+      try {
+        
+        const response = await api.post(API_ENDPOINTS.SatisDetail, {
+         id:location.state.id
+        });
+        response.data.created=timeFormat(response.data.created)
+        console.log(response.data)
+        setDetailData(response.data)
+      }catch(e){
+        console.log(e)
+      }
+    }
+    loadData();
+  },[])
 
   return (
     <Box padding={{ px: 16, py: 16 }}>
@@ -23,7 +57,7 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            2025-04-21 18:11:00
+            {detailData.created}
           </div>
         </div>
         {/* 센터명 */}
@@ -32,16 +66,25 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            올림픽공원스포츠센터
+          {detailData.company}
           </div>
         </div>
-        {/* 질문 내용 */}
+        {/* 질문 내용*/}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          질문 내용
+        질문 내용
+        </div>
+        <div className="p-4 col-span-7 border-b border-tb-br-color">
+          <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
+          {detailData.name}
+          </div>
+        </div>
+        {/* 답변 내용*/}
+        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+          답변 내용
         </div>
         <div className="py-[6px] px-[8px] col-span-7 border-b border-tb-br-color">
           <div className="min-h-[132px] col-span-7 text-[14px] text-black font-normal whitespace-pre-line">
-            {`◼ 월 회원 1인 1차량에 \n한하여 등록 가능합니다.`}
+          {detailData.answer}
           </div>
         </div>
         {/* 점수 */}
@@ -50,7 +93,7 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            4
+          {detailData.point}
           </div>
         </div>
         {/* 피드백 */}
@@ -59,7 +102,7 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         <div className="py-[6px] px-[8px] col-span-7 border-b border-tb-br-color">
           <div className="min-h-[132px] col-span-7 text-[14px] text-black font-normal whitespace-pre-line">
-            {`피드백 내용`}
+          {detailData.comment}
           </div>
         </div>
         {/* IP */}
@@ -68,7 +111,7 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         <div className="p-4 col-span-7 border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            121.133.89.66
+          {detailData.ip}
           </div>
         </div>
       </div>

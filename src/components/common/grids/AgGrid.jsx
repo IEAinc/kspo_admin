@@ -57,6 +57,10 @@ const AgGrid = (props) => {
     setPageSize(newSize); // 페이지 크기 업데이트
     setCurrentPage(1); // 페이지 크기 변경 시 첫 페이지로 이동
   };
+  // 선택된 row 수정하기
+  const handleEditSelectedRows=()=>{
+    props.onEditClick(gridApi)
+  }
 
   /* 선택된 row 삭제하기 */
   const handleDeleteSelectedRows = () => {
@@ -68,10 +72,10 @@ const AgGrid = (props) => {
     const selectedRows = gridApi.getSelectedRows();
     console.log("선택한 행들:", selectedRows);
 
-    if (!selectedRows || selectedRows.length === 0) {
-      alert("삭제할 행을 선택해주세요.");
-      return;
-    }
+    // if (!selectedRows || selectedRows.length === 0) {
+    //   alert("삭제할 행을 선택해주세요.");
+    //   return;
+    // }
 
     // 고유 ID를 기준으로 데이터 필터링
     const updatedData = props.rowData.filter(
@@ -81,7 +85,7 @@ const AgGrid = (props) => {
     console.log("업데이트된 데이터:", updatedData);
 
     if (props.onDataUpdate) {
-      props.onDataUpdate(updatedData); // 부모로 데이터 전달
+      props.onDataUpdate(updatedData,gridApi); // 부모로 데이터 전달
     } else {
       console.error("onDataUpdate prop이 전달되지 않았습니다.");
     }
@@ -171,6 +175,7 @@ const AgGrid = (props) => {
                 props.indicator.edit ?
                   <Btn
                     size="xs"
+                    onClick={handleEditSelectedRows}
                   >
                     수정
                   </Btn>

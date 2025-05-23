@@ -12,6 +12,7 @@ const Input = ({
                  name,
                  error,
                  onChange,
+                 onInput,
                  options = {}
                }) => {
   // 고유 ID 생성
@@ -79,6 +80,7 @@ const Input = ({
         name={name}
         value={value}
         onChange={onChange}
+        onInput={onInput}
         placeholder={placeholder}
         disabled={disabled}
         readOnly={readonly}

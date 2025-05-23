@@ -39,7 +39,6 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
 
   // 현재 선택된 옵션 찾기
   const currentOption = options.find(option => option.value === value?.value) || {};
-  console.log(currentOption);
   useEffect(() => {
     const handleOutsideClick = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
@@ -104,7 +103,7 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
         {/* 드롭다운 목록 */}
         {isOpen && (
           <ul
-            className={`absolute w-full border border-gray-200 rounded bg-white dark:bg-zinc-700 shadow-md z-50 ${
+            className={`absolute w-full border border-gray-200 rounded bg-white shadow-md z-50 ${
               openDirection === "top" ? "bottom-full mb-1" : "top-full mt-1"
             }`}
           >

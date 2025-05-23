@@ -1,22 +1,84 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate,useLocation } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import Input from '../../components/common/forms/Input'
 import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
-const DetailCardMainScenarioManagementRegister = () => {
-  // const navigate = useNavigate();
 
+import { API_ENDPOINTS } from '../../constants/api'
+import { api } from '../../constants/api';
+// 얼럿
+import CustomAlert from "../../components/common/modals/CustomAlert";
+const DetailCardMainScenarioManagementRegister = () => {
+   const navigate = useNavigate();
+  //  파라미터 받아오기
+  const location=useLocation();
+  // 초기데이터 불러오기
+ 
+  // 초기 값 설정
+  useEffect( ()=>{
+    const loadData = async () => {
+      //수정시 초기 데이터 설정
+      const response = await api.post(API_ENDPOINTS.Detail, {
+        id:location.state.id
+      });
+      let data=response.data
+      setCenterName(data.company);
+      setDialogName(data.name);
+      setQuestion(data.main_question)
+      setText(data.answer);
+      if(data.btn_type){
+        btnList[0].selectedValue=commonSelectOptions.filter((e)=>{return e.value===data.btn_type;})[0];
+        btnList[0].inputValue=data.btn_name.split("**")[0];
+        btnList[0].detailValue=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
+      }
+      for(let i=0;i<=7;i++){
+        if(data["btn_type"+i]){
+          btnList[i].selectedValue=commonSelectOptions.filter((e)=>{return e.value===data["btn_type"+i];})[0];
+          btnList[i].inputValue=data["btn_name"+i].split("**")[0];
+          btnList[i].detailValue=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
+        }
+      }
+    };
+    // 수정 일때만
+    if(location.state.mode==='update'){
+       loadData();
+    }
+  
+  },[])
+// CustomAlert 상태 관리
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    title: '',
+    type: 'info',
+    message: '',
+    iconMode: 'warn',
+    confirmButton: true,
+    cancelButton: true,
+    onConfirm: () => {},
+    onCancel: () => {}
+  });
+
+  // Alert 닫기 함수
+  const hideAlert = () => {
+    setAlertState({
+      ...alertState,
+      isOpen: false
+    });
+  };
   /* 버튼 구성 (select) */
   // 버튼 공통 option
   const commonSelectOptions = [
-    { value: 'whole', label: '전체' },
-    { value: 'link', label: '웹링크' },
-    { value: 'dialog', label: '대화연결' },
-  ];
+    { value: null, label: '없음' },
+    { value: '웹링크', label: '웹링크' },
+    { value: '대화연결', label: '대화연결' },
+    { value: '지도', label: '지도' },
+    { value: '전화걸기', label: '전화걸기' },
 
+  ];
+  
   // 버튼 항목 리스트
   const [btnList, setBtnList] = useState([
     {
@@ -24,72 +86,72 @@ const DetailCardMainScenarioManagementRegister = () => {
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼2',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼2',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼3',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼4',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼5',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼6',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
     {
       name: '버튼7',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
       isInput: true,
-      inputValue: '',
+      inputValue: null,
       isDetailInput: true,
-      detailValue: '',
+      detailValue: null,
     },
   ]);
   const handleSelectChange = (value, index) => {
@@ -115,6 +177,9 @@ const DetailCardMainScenarioManagementRegister = () => {
   const [centerName, setCenterName] = useState("");
   // 대화명
   const [dialogName, setDialogName] = useState("");
+  // 대표 질문
+  const [dialogQuestion, setQuestion] = useState("");
+
 
   /* 답변 내용 */
   const [text, setText] = useState("");
@@ -130,6 +195,95 @@ const DetailCardMainScenarioManagementRegister = () => {
       setError("");
     }
   };
+  const handleRegister=async (e)=>{
+      if (text.length < 5) {
+        setError("최소 5자 이상 입력해주세요.");
+        return;
+      } else {
+        setError("");
+      }
+      const response = await api.post(location.state.mode==="register"?API_ENDPOINTS.Register:API_ENDPOINTS.Update, {
+        id:location.state.id,
+        company:centerName,
+        main_question:dialogQuestion,
+        name:dialogName,
+        answer:text,
+        big:location.state.type,
+        btn_type:btnList[0].selectedValue.value,
+        btn_name:btnList[0].inputValue?btnList[0].inputValue+"**"+btnList[0].detailValue:null,
+        btn_type1:btnList[1].selectedValue.value,
+        btn_name1:btnList[1].inputValue?btnList[1].inputValue+"**"+btnList[1].detailValue:null,
+        btn_type2:btnList[2].selectedValue.value,
+        btn_name2:btnList[2].inputValue?btnList[2].inputValue+"**"+btnList[2].detailValue:null,
+        btn_type3:btnList[3].selectedValue.value,
+        btn_name3:btnList[3].inputValue?btnList[3].inputValue+"**"+btnList[3].detailValue:null,
+        btn_type4:btnList[4].selectedValue.value,
+        btn_name4:btnList[4].inputValue?btnList[4].inputValue+"**"+btnList[4].detailValue:null,
+        btn_type5:btnList[5].selectedValue.value,
+        btn_name5:btnList[5].inputValue?btnList[5].inputValue+"**"+btnList[5].detailValue:null,
+        btn_type6:btnList[6].selectedValue.value,
+        btn_name6:btnList[6].inputValue?btnList[6].inputValue+"**"+btnList[6].detailValue:null,
+        btn_type7:btnList[7].selectedValue.value,
+        btn_name7:btnList[7].inputValue?btnList[7].inputValue+"**"+btnList[7].detailValue:null,
+      });
+      setAlertState({
+        isOpen: true,
+        title: location.state.mode==="register"?'등록 완료':'수정 완료',
+        message:  (
+          <>
+            {location.state.mode==="register"?location.state.type==='FAQ'+'가 정상적으로 등록되었습니다.'?'FAQ':'시나리오'+'가 정상적으로 등록되었습니다.':location.state.type==='FAQ'?'FAQ'+'가 정상적으로 수정되었습니다.':'시나리오'+'가 정상적으로 수정되었습니다.'}
+          </>
+        ),
+        iconMode: 'complete',
+        confirmButton: true,
+        cancelButton: false,
+        onConfirm: () =>location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+          type:location.state.type,
+          
+        }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+          type:location.state.type,
+          
+        }}),
+        onCancel: () => setAlertState({ isOpen: false })
+      });
+  }
+  const handleSubBtn=()=>{
+    if(location.state.mode==="register"){
+      location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+        type:location.state.type,
+        
+      }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+        type:location.state.type,
+        
+      }})
+      return;
+    }else{
+      setAlertState({
+        isOpen: true,
+        title: '취소 확인',
+        message:  (
+          <>         
+            <div>수정 중인 내용이 사라집니다.</div>
+            <div>취소하시겠습니까?</div>
+          </>
+        ),
+        iconMode: 'warn',
+        confirmButton: true,
+        cancelButton: true,
+        onConfirm: () => location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+          type:location.state.type,
+          
+        }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+          type:location.state.type,
+          
+        }}),
+        onCancel: () => setAlertState({ isOpen: false })
+      });
+
+    }
+
+  }
+
 
 
   return (
@@ -168,6 +322,26 @@ const DetailCardMainScenarioManagementRegister = () => {
             }}
           />
         </div>
+         {/* 대표 질문*/}
+         {
+          location.state.type==='FAQ'?<>
+          <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+          대표 질문
+          <span className="text-point-color">*</span>
+        </div>
+        <div className="py-[6px] px-[8px] col-span-7 border-b border-tb-br-color">
+          <Input
+            name="dialogQuestion"
+            value={dialogQuestion}
+            required
+            onChange={(e) => setQuestion(e.target.value)} // 이벤트를 받아서 상태 업데이트
+            options={{
+              isNormal: true
+            }}
+          />
+        </div>
+          </>:<></>
+         }
         {/* 답변 내용 */}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
           답변 내용
@@ -296,18 +470,32 @@ const DetailCardMainScenarioManagementRegister = () => {
         <Btn
           size="sm"
           minWidth="80px"
+          onClick={handleSubBtn}
         >
-          목록
+          {location.state.mode==="register"?'목록':'취소'}
         </Btn>
         <Btn
           size="sm"
           minWidth="80px"
           colorMode={true}
+          onClick={handleRegister}
         >
-          등록
+          {location.state.mode==='update'?"수정 완료":"등록"}
         </Btn>
+              <CustomAlert
+          title={alertState.title}
+          iconMode={alertState.iconMode}
+          message={alertState.message}
+          onClose={hideAlert}
+          isOpen={alertState.isOpen}
+          confirmButton={alertState.confirmButton}
+          cancelButton={alertState.cancelButton}
+          onConfirm={alertState.onConfirm}
+          onCancel={alertState.onCancel}
+        />
       </div>
     </Box>
+   
   )
 }
 export default DetailCardMainScenarioManagementRegister;

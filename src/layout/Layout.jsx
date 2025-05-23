@@ -1,9 +1,37 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import Breadcrumb from '../components/Breadcrumb'
+import { useEffect } from 'react'
+import { api,API_ENDPOINTS } from '../constants/api'
 
 export default function Layout() {
+  const location = useLocation();
+  const navigator= useNavigate()
+  const chkAuth=async ()=>{
+    // 아이디 가져오기로 토큰 검사
+    try{
+      const response = await api.get(API_ENDPOINTS.GETID)
+    }catch(response){
+      console.log(response)
+      if(response.status!==200){
+        try{
+          await api.get(API_ENDPOINTS.LOGOUT)
+          navigator("/login")
+
+        }catch(response){
+          navigator("/login")
+        }
+      
+      }
+    }
+   
+   
+  }
+
+  useEffect(() => {
+    chkAuth()
+  }, [location]);
   return (
     <div className="">
       {/* 헤더 */}
