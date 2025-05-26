@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 const Breadcrumb = () => {
   const location = useLocation(); // 현재 경로 가져오기
   const pathnames = location.pathname.split("/").filter((x) => x); // 경로를 배열로 분리 (빈 값 제거)
+  console.log(pathnames)
 
   // 경로명과 한글 매핑
   const routeNames = {
@@ -20,10 +21,10 @@ const Breadcrumb = () => {
 
   // 마지막 경로 가져오기
   let lastPathname = ''
-  if(pathnames.length === 2) {
+  if(pathnames.length === 3) {
     lastPathname = `${routeNames[pathnames[pathnames.length - 1]]}`; // 경로 배열의 마지막 값
   } else {
-    if(pathnames.length === 3 && pathnames[2] === 'register') {
+    if(pathnames.length === 4 && pathnames[3] === 'register') {
       lastPathname = `${routeNames[pathnames[pathnames.length - 3]]} > 등록`
     } else {
       lastPathname = `${routeNames[pathnames[pathnames.length - 2]]} > 상세보기`

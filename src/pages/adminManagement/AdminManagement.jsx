@@ -58,7 +58,7 @@ const AdminManagement = () => {
     } else if (selectedRows.length === 1) {
       const selectedRow = selectedRows[0];
       const basePath = location.pathname;
-      navigate(`/adminManagement/adminManagement/register`,{state:{mode:"update",id:selectedRow.id}});
+      navigate(`/ksponcoadministrator/adminManagement/adminManagement/register`,{state:{mode:"update",id:selectedRow.id}});
     }else{
       setAlertState({
         isOpen: true,
@@ -79,7 +79,7 @@ const AdminManagement = () => {
   }
   // 등록 버튼 클릭 시 실행될 함수
   const handleRegisterClick = () => {
-    navigate(`/adminManagement/adminManagement/register`,{state:{mode:"register"}});
+    navigate(`/ksponcoadministrator/adminManagement/adminManagement/register`,{state:{mode:"register"}});
   };
   // 데이터 삭제
   const handleDataUpdate = (updatedRows,gridApi) => {
@@ -191,7 +191,7 @@ const AdminManagement = () => {
         cancelButton: false,
         onConfirm: () => {
           setAlertState({ isOpen: false });
-          navigate('/scenarioManagement/mainScenarioManagement',{state:{
+          navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
             type:"big"
           }});
         },

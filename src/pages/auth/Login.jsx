@@ -96,7 +96,7 @@ const Login = () => {
           localStorage.removeItem('userId');
         }
         
-        navigate('/scenarioManagement/mainScenarioManagement',{state:{
+        navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
           type:"big"
         }});
       }catch(e){

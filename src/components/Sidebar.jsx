@@ -17,19 +17,19 @@ import ArrowActive from '../assets/images/icon/ico_arrow_active.svg?react'
 const menuData = [
   {
     title: '시나리오 관리',
-    path: '/menu1',
+    path: '/ksponcoadministrator/menu1',
     icon: {
       default: Icon1,
       active: Icon1Active,
     },
     subMenu: [
-      { title: '메인 시나리오 관리', path: '/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
-      { title: 'FAQ 관리', path: '/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
+      { title: '메인 시나리오 관리', path: '/ksponcoadministrator/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
+      { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
     ],
   },
   {
     title: '만족도 관리',
-    path: '/satisfactionManagement/satisfactionManagement',
+    path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
     icon: {
       default: Icon2,
       active: Icon2Active,
@@ -37,7 +37,7 @@ const menuData = [
   },
   {
     title: '관리자 관리',
-    path: '/adminManagement/adminManagement', // 하위 메뉴가 없음
+    path: '/ksponcoadministrator/adminManagement/adminManagement', // 하위 메뉴가 없음
     icon: {
       default: Icon3,
       active: Icon3Active,
@@ -45,15 +45,15 @@ const menuData = [
   },
   {
     title: '이력 관리',
-    path: '/menu1',
+    path: '/ksponcoadministrator/menu1',
     icon: {
       default: Icon4,
       active: Icon4Active,
     },
     subMenu: [
-      { title: '메인시나리오 수정이력 조회', path: '/historyManagement/mainScenarioHistory' },
-      { title: 'FAQ 수정이력 조회', path: '/historyManagement/faqModificationHistory' },
-      { title: '로그인 이력 조회', path: '/historyManagement/loginHistory' },
+      { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory' },
+      { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory' },
+      { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
     ],
   },
 ];
@@ -94,7 +94,7 @@ const Sidebar = () => {
   return (
     <div className="w-[220px] h-[100vh] fixed top-0 left-0 bg-primary-color">
       <h1 className="w-full h-[48px] flex items-center justify-center py-[10px] px-[22px] border-b border-gray1">
-        <Link to={"/scenarioManagement/mainScenarioManagement"} state={{type:'big'}}>
+        <Link to={"/ksponcoadministrator/scenarioManagement/mainScenarioManagement"} state={{type:'big'}}>
           <UserIcon />
         </Link>
       </h1>

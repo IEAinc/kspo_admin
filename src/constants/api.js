@@ -2,7 +2,7 @@ import axios from 'axios';
 
 
 // API Base URL
-export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":80";
+export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":8080";
 
 // Create axios instance with default settings
 export const api = axios.create({

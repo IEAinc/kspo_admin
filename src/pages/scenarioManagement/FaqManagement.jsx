@@ -16,7 +16,7 @@ const FaqManagement = () => {
   const [gridCount, setGridCount] = useState(0);
   // 등록 버튼 클릭 시 실행될 함수
   const handleRegisterClick = () => {
-    navigate(`/scenarioManagement/faqManagement/detail/register`);
+    navigate(`/ksponcoadministrator/scenarioManagement/faqManagement/register`);
   };
   // 상세보기
   const handleRowClick = (id) => {

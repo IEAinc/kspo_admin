@@ -237,10 +237,10 @@ const DetailCardMainScenarioManagementRegister = () => {
         iconMode: 'complete',
         confirmButton: true,
         cancelButton: false,
-        onConfirm: () =>location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+        onConfirm: () =>location.state.type==='FAQ'?navigate('/ksponcoadministrator/scenarioManagement/faqManagement', {state:{
           type:location.state.type,
           
-        }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+        }}):navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement', {state:{
           type:location.state.type,
           
         }}),
@@ -249,10 +249,10 @@ const DetailCardMainScenarioManagementRegister = () => {
   }
   const handleSubBtn=()=>{
     if(location.state.mode==="register"){
-      location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+      location.state.type==='FAQ'?navigate('/ksponcoadministrator/scenarioManagement/faqManagement', {state:{
         type:location.state.type,
         
-      }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+      }}):navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement', {state:{
         type:location.state.type,
         
       }})
@@ -270,10 +270,10 @@ const DetailCardMainScenarioManagementRegister = () => {
         iconMode: 'warn',
         confirmButton: true,
         cancelButton: true,
-        onConfirm: () => location.state.type==='FAQ'?navigate('/scenarioManagement/faqManagement', {state:{
+        onConfirm: () => location.state.type==='FAQ'?navigate('/ksponcoadministrator/scenarioManagement/faqManagement', {state:{
           type:location.state.type,
           
-        }}):navigate('/scenarioManagement/mainScenarioManagement', {state:{
+        }}):navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement', {state:{
           type:location.state.type,
           
         }}),

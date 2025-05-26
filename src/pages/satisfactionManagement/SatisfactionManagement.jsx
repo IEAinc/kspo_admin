@@ -37,7 +37,7 @@ const SatisfactionManagement = () => {
   const [gridCount, setGridCount] = useState(0);
   const handleRowClick = (id) => {
     const basePath = location.pathname; // 현재 경로 가져오기
-    navigate(`/satisfactionManagement/satisfactionManagement/detail`,{state:{id:id}}); // 동적 경로 생성
+    navigate(`/ksponcoadministrator/satisfactionManagement/satisfactionManagement/detail`,{state:{id:id}}); // 동적 경로 생성
   }
   
    // 날짜 포맷

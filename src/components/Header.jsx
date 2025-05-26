@@ -15,7 +15,7 @@ const Header = () => {
   }, []);
   const logOut=async ()=>{
     await api.get(API_ENDPOINTS.LOGOUT)
-    navigate("/login")
+    navigate("/ksponcoadministrator/login")
   }
   return (
     <header className="w-[calc(100%-220px)] h-[48px] flex items-center fixed top-0 left-[220px] py-[15px] px-[24px] border-b border-br-gray bg-white">

@@ -62,12 +62,12 @@ const MainScenarioManagement = () => {
   // 등록 버튼 클릭 시 실행될 함수
   const handleRegisterClick = () => {
     if(location.state.type==='FAQ'){
-      navigate(`/scenarioManagement/faqManagement/detail/register`, {state:{
+      navigate(`/ksponcoadministrator/scenarioManagement/faqManagement/register`, {state:{
         type:location.state.type,
         mode:'register'
       }});
     }else{
-      navigate(`/scenarioManagement/mainScenarioManagement/detail/register`, {state:{
+      navigate(`/ksponcoadministrator/scenarioManagement/mainScenarioManagement/register`, {state:{
         type:location.state.type,
         mode:'register'
       }});
@@ -78,12 +78,12 @@ const MainScenarioManagement = () => {
   const handleRowClick = (id) => {
     const basePath = location.pathname; // 현재 경로 가져오기
     if(location.state.type==='FAQ'){
-      navigate(`/scenarioManagement/faqManagement/detail`, {state:{
+      navigate(`/ksponcoadministrator/scenarioManagement/faqManagement/detail`, {state:{
         type:location.state.type,
         id:id
       }});
     }else{
-      navigate(`/scenarioManagement/mainScenarioManagement/detail`, {state:{
+      navigate(`/ksponcoadministrator/scenarioManagement/mainScenarioManagement/detail`, {state:{
         type:location.state.type,
         id:id
       }});
@@ -113,7 +113,7 @@ const MainScenarioManagement = () => {
       const selectedRow = selectedRows[0];
       const basePath = location.pathname;
       if(location.state.type==='FAQ'){
-        navigate(`/scenarioManagement/faqManagement/detail/edit`,{
+        navigate(`/ksponcoadministrator/scenarioManagement/faqManagement/detail/edit`,{
           state:{
            id:selectedRow.id,
            type:location.state.type,
@@ -121,7 +121,7 @@ const MainScenarioManagement = () => {
          }
          });
       }else{
-        navigate(`/scenarioManagement/mainScenarioManagement/detail/edit`,{
+        navigate(`/ksponcoadministrator/scenarioManagement/mainScenarioManagement/detail/edit`,{
           state:{
            id:selectedRow.id,
            type:location.state.type,

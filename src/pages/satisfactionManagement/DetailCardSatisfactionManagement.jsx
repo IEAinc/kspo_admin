@@ -13,7 +13,7 @@ const DetailCardSatisfactionManagement = () => {
   const [detailData, setDetailData] = useState({});
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate('/satisfactionManagement/satisfactionManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/ksponcoadministrator/satisfactionManagement/satisfactionManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
   };
   // 날짜 포맷
   const timeFormat=(timestamp)=>{

@@ -47,11 +47,11 @@ const DetailCardMainScenarioManagement = () => {
   },[])
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate('/scenarioManagement/mainScenarioManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
   };
   const handleEditClick = () => {
     if(location.state.type==='FAQ'){
-      navigate(`/scenarioManagement/faqManagement/detail/edit`,{
+      navigate(`/ksponcoadministrator/scenarioManagement/faqManagement/detail/edit`,{
         state:{
          id:location.state.id,
          type:location.state.type,
@@ -59,7 +59,7 @@ const DetailCardMainScenarioManagement = () => {
        }
        }); // 경로로 이동
     }else{
-      navigate(`/scenarioManagement/mainScenarioManagement/detail/edit`,{
+      navigate(`/ksponcoadministrator/scenarioManagement/mainScenarioManagement/detail/edit`,{
         state:{
          id:location.state.id,
          type:location.state.type,

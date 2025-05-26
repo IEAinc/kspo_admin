@@ -34,7 +34,7 @@ const DetailCardAdminManagement = () => {
     };
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate('/adminManagement/adminManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/ksponcoadministrator/adminManagement/adminManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
   };
   // 권한있는 id확인
     const chkAuth=async ()=>{
@@ -58,7 +58,7 @@ const DetailCardAdminManagement = () => {
           cancelButton: false,
           onConfirm: () => {
             setAlertState({ isOpen: false });
-            navigate('/scenarioManagement/mainScenarioManagement',{state:{
+            navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
               type:"big"
             }});
           },
@@ -266,7 +266,7 @@ const DetailCardAdminManagement = () => {
         iconMode: 'warn',
         confirmButton: true,
         cancelButton: false,
-        onConfirm: () => navigate('/adminManagement/adminManagement'),
+        onConfirm: () => navigate('/ksponcoadministrator/adminManagement/adminManagement'),
         onCancel: () => setAlertState({ isOpen: false })
       });
     

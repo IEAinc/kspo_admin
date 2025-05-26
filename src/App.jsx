@@ -45,19 +45,19 @@ function App() {
       <Route path='/' element={<ChatMain/>}/>
       {/* 관리자 페이지 */}
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/ksponcoadministrator/login" element={<Login />} />
  
       <Route
-        path="/"
+        path="/ksponcoadministrator"
         element={<Layout />}
       >
         {/* 시나리오 관리 */}
         <Route path="scenarioManagement/mainScenarioManagement" element={<MainScenarioManagement />} />{/* 메인시나리오 관리 */}
-        <Route path="scenarioManagement/mainScenarioManagement/detail/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
+        <Route path="scenarioManagement/mainScenarioManagement/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
         <Route path="scenarioManagement/mainScenarioManagement/detail/edit" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
         <Route path="scenarioManagement/mainScenarioManagement/detail" element={<DetailCardMainScenarioManagement />} /> {/* 메인시나리오 관리 > 상세보기 */}
         <Route path="scenarioManagement/faqManagement" element={<MainScenarioManagement />} />
-        <Route path="scenarioManagement/faqManagement/detail/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
+        <Route path="scenarioManagement/faqManagement/register" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 등록 */}
         <Route path="scenarioManagement/faqManagement/detail/edit" element={<DetailCardMainScenarioManagementRegister />} /> {/* 메인시나리오 관리 > 상세보기 > 수정 */}
         <Route path="scenarioManagement/faqManagement/detail" element={<DetailCardMainScenarioManagement />} />
 

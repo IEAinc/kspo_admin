@@ -5,7 +5,7 @@ import svgr from "vite-plugin-svgr";
 import svgLoader from 'vite-svg-loader';
 
 const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd());
-const API_BASE_URL = env.VITE_API_BASE_URL +":80"
+const API_BASE_URL = env.VITE_API_BASE_URL +":8080"
 
 
 
@@ -18,7 +18,7 @@ export default defineConfig({
   ],
   server: {
     host: '0.0.0.0',
-    port:'5173',
+    port:'80',
     proxy: {
       '/admin': {
         target: API_BASE_URL,
