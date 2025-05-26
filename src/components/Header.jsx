@@ -25,12 +25,15 @@ const Header = () => {
           {username}님 접속 중
         </p>
         <ul className="flex items-center">
-          <li>
+          {/* <li>
             <button type="button" className="text-[16px] text-gray font-medium">정보수정</button>
           </li>
           <li className="relative pl-[16px] before:content-[''] before:w-[1px] before:h-[10px] before:bg-br-gray2 before:absolute before:left-[8px] before:top-1/2 before:transform before:-translate-y-1/2">
             <button type="button" className="text-[16px] text-gray font-medium" onClick={logOut}>로그아웃</button>
-          </li>
+          </li> */}
+          <li>
+            <button type="button" className="text-[16px] text-gray font-medium" onClick={logOut}>로그아웃</button>
+          </li> 
         </ul>
       </div>
     </header>
