@@ -96,13 +96,18 @@ const AgGrid = (props) => {
     }
 
     // 1. 엑셀 헤더 (headerName) 추출
-    const headers = columnData.map(col => col.headerName);
+    const headers = columnData.map(col =>col.headerName!=='상세보기'?col.headerName:'');
 
     // 2. 각 row에서 field 값 추출해 headerName 기준으로 정리
     const exportData = rowData.map((row, rowIndex) => {
       const newRow = {};
-      columnData.forEach((col, colIndex) => {
+      for (let colIndex = 0; colIndex < columnData.length; colIndex++) {
+        const col = columnData[colIndex];
         let value;
+        console.log(col.headerName)
+        if(col.headerName==='상세보기'){
+          continue;
+        }
         // valueGetter가 있는 경우 계산해서 넣기
         if (typeof col.valueGetter === 'function') {
           value = col.valueGetter({
@@ -118,9 +123,10 @@ const AgGrid = (props) => {
         }
 
         newRow[col.headerName] = value;
-      });
+      };
       return newRow;
     });
+    console.log(exportData)
 
     // 3. 워크시트 생성
     const worksheet = XLSX.utils.json_to_sheet(exportData, { header: headers });

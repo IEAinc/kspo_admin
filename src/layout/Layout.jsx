@@ -17,10 +17,10 @@ export default function Layout() {
       if(response.status!==200){
         try{
           await api.get(API_ENDPOINTS.LOGOUT)
-          navigator("/login")
+          navigator("/ksponcoadministrator/login")
 
         }catch(response){
-          navigator("/login")
+          navigator("/ksponcoadministrator/login")
         }
       
       }
