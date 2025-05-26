@@ -66,6 +66,17 @@ const SearchWrap = ({onSearch}) => {
     const value = e.target.value;
     setSearchContent(value)
   }
+  const resetSearch=()=>{
+    //센터명
+    setSelectedCenter(selectCenterOptions[0]);
+    //내용
+    setSearchContent('');
+    //날짜
+    setDateRange([null,null])
+    //점수
+    setSelectSatisfactionScore(selectSatisfactionOptions[0])
+
+  }
   // 날자 관련
    const [dateRange, setDateRange] = useState([null,null]); 
   return (
@@ -155,6 +166,7 @@ const SearchWrap = ({onSearch}) => {
             size="sm"
             minWidth="81px"
             iconMode="reset"
+            onClick={resetSearch}
           >
             초기화
           </Btn>

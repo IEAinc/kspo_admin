@@ -32,5 +32,7 @@ export const API_ENDPOINTS = {
   SatisCompany:'/admin/chat-eval/company-list',
   LOGIN:'/admin/login',
   GETID:'/admin/get-userId',
-  LOGOUT:'/admin/logout'
+  LOGOUT:'/admin/logout',
+  LogLIst:'/admin/login-log/list',
+  LogCompany:'/admin/login-log/company-list'
 };

@@ -6,162 +6,67 @@ import Box from '../../components/common/boxs/Box'
 import AgGrid from '../../components/common/grids/AgGrid';
 
 import Btn from "../../components/common/forms/Btn.jsx";
+import { API_ENDPOINTS ,api} from '../../constants/api'
 const LoginHistory = () => {
 
   /* AgGrid */
   const [gridData, setGridData] = useState([]);
   const [gridColumns, setGridColumns] = useState([]);
   const [gridCount, setGridCount] = useState(0);
+  // 날짜 포맷
+  const timeFormat=(timestamp)=>{
+    const date = new Date(timestamp);
 
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+
+    const formatted = `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
+    return formatted;
+  }
+  // 날짜 포맷
+  const dayFormat=(date)=>{
+  
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
+
+    const formatted = `${yyyy}-${mm}-${dd}`;
+    return formatted;
+  }
   useEffect(() => {
-    /* 그리드 데이터 */
-    let grid_data = [
-      {
-        id: 'faq_modification_history_001',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_002',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_003',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_004',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_005',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_006',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_007',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_008',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_009',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_010',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_011',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_012',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_013',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_014',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_015',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_016',
-        centerName: '올림픽공원스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_017',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-      {
-        id: 'faq_modification_history_018',
-        centerName: '탄천스포츠센터',
-        userID: 'opsc_mgr',
-        logTime: '2025-04-22 9:12',
-        logInfo: 'login',
-        allowedIP: '210.97.70.57',
-      },
-    ];
-    /* 그리드 헤더 설정 */
+  
+    fetchListData()
+
+  },[])
+  const fetchListData = async (company = null, searchText = null,startDate= null,endDate= null) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.LogLIst, {
+        company: company || null,
+        startDate: startDate?dayFormat(startDate) : null,
+        endDate: endDate?dayFormat(endDate) : null,
+        searchText: searchText || null
+      });
+      const { data } = response;
+      
+      // API 응답 데이터를 그리드 데이터 형식에 맞게 변환
+      const grid_data = data.map(item => ({
+        company: item.company,
+        id: item.id,
+        created:timeFormat(item.created),
+        type: item.type,
+        ip: item.ip,
+      
+      }));
+
+      
+      /* 그리드 헤더 설정 */
     let grid_columns = [
       { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true,   valueGetter: (params) => {
           // 커스텀 pagination 값을 가져오기
@@ -173,21 +78,25 @@ const LoginHistory = () => {
           return (currentPage - 1) * pageSize + rowIndex + 1;
         },
       },
-      { headerName: "센터명", flex:1,field: "centerName", cellClass: 'text-center'},
-      { headerName: "접속 아이디", flex:1,field: "userID", cellClass: 'text-center'},
-      { headerName: "로그시간", flex:1,field: "logTime", cellClass: 'text-center'},
-      { headerName: "로그정보", flex:1,field: "logInfo", cellClass: 'text-center'},
-      { headerName: "접속IP", flex:1,field: "allowedIP", cellClass: 'text-center'},
+      { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
+      { headerName: "접속 아이디", flex:1,field: "id", cellClass: 'text-center'},
+      { headerName: "로그시간", flex:1,field: "created", cellClass: 'text-center'},
+      { headerName: "로그정보", flex:1,field: "type", cellClass: 'text-center'},
+      { headerName: "접속IP", flex:1,field: "ip", cellClass: 'text-center'},
     ];
-    setGridData(grid_data);
-    setGridColumns(grid_columns);
-    setGridCount(grid_data.length);
-  },[])
+
+      setGridData(grid_data);
+      setGridColumns(grid_columns);
+      setGridCount(grid_data.length);
+    } catch (error) {
+      console.error('데이터를 불러오는데 실패했습니다:', error);
+    }
+  };
 
   return (
     <div>
       <div className="w-full mb-[16px]">
-        <SearchWrap />
+        <SearchWrap   onSearch={fetchListData} />
       </div>
       <Box>
         <AgGrid

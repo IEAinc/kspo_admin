@@ -45,17 +45,25 @@ const menuData = [
   },
   {
     title: '이력 관리',
-    path: '/ksponcoadministrator/menu1',
+    path: '/ksponcoadministrator/historyManagement/loginHistory', // 하위 메뉴가 없음
     icon: {
-      default: Icon4,
-      active: Icon4Active,
+      default: Icon3,
+      active: Icon3Active,
     },
-    subMenu: [
-      { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory' },
-      { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory' },
-      { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
-    ],
   },
+  // {
+  //   title: '이력 관리',
+  //   path: '/ksponcoadministrator/menu1',
+  //   icon: {
+  //     default: Icon4,
+  //     active: Icon4Active,
+  //   },
+  //   subMenu: [
+  //     { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory' },
+  //     { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory' },
+  //     { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
+  //   ],
+  // },
 ];
 
 const Sidebar = () => {
