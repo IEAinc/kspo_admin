@@ -3,6 +3,7 @@ import axios from 'axios';
 // API Base URL
 export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":8080";
 
+
 // 서버에서 쿠키로 전달된 CSRF 토큰 읽기
 function getCsrfTokenFromCookie() {
   const name = 'XSRF-TOKEN=';
@@ -33,8 +34,8 @@ api.interceptors.request.use((config) => {
   const csrfToken = getCsrfTokenFromCookie();
   console.log("CSRF 토큰:", csrfToken);
   if (csrfToken) {
-    //config.headers['X-XSRF-TOKEN'] = csrfToken;
-    config.headers['X-CSRF-TOKEN'] = csrfToken; // 스프링이 두 헤더를 모두 체크하도록
+    config.headers['X-XSRF-TOKEN'] = csrfToken;
+    //config.headers['X-CSRF-TOKEN'] = csrfToken; // 스프링이 두 헤더를 모두 체크하도록
   }
   return config;
 }, (error) => Promise.reject(error));
