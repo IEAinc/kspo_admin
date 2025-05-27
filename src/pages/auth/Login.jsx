@@ -8,13 +8,13 @@ import Input from '../../components/common/forms/Input'
 import Logo from '../../assets/images/kspo_logo_color.svg?react';
 import CustomAlert from '../../components/common/modals/CustomAlert'
 import { API_ENDPOINTS ,api} from '../../constants/api'
-
+import Cookies from 'js-cookie';
 const mockUserDB = {
   userID : 'admin',
   userPassword : 'admin123'
 }
 const Login = () => {
-  const navigate = useNavigate();
+
   const [userId, setUserId] = useState('')
   const [userPassword, setUserPassword] = useState('')
   const [errorUserId, setErrorUserId] = useState('')
@@ -43,7 +43,12 @@ const Login = () => {
       };
       const getToken= async ()=>{
         const response = await api.get(API_ENDPOINTS.TEST)
-      
+        console.log(response)
+        Cookies.set('XSRF-TOKEN', response.data.token, {
+          path: '/',
+          secure: false, // HTTPS 환경에서만 동작하도록
+          sameSite: 'Lax', // 또는 'Lax' / 'None'
+        });
          
         
       }
@@ -104,9 +109,9 @@ const Login = () => {
           localStorage.removeItem('userId');
         }
         
-        navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
-          type:"big"
-        }});
+        // navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
+        //   type:"big"
+        // }});
       }catch(e){
         if(e.status===401){
           setAlertState({
