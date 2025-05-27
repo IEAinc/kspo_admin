@@ -15,8 +15,10 @@ const ChatWindow = () => {
     useEffect(() => {
      
         const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
-        const windowScript=makeScript('/resources/js/window.js')
-      
+        let windowScript;
+        jqueryScript.onload=()=>{
+          windowScript=makeScript('/resources/js/window.js')
+        }
         return () => {
           // 페이지에서 벗어날 때 스크립트 제거
           document.body.removeChild(windowScript);

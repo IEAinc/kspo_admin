@@ -23,7 +23,7 @@ $(function(){
       body: JSON.stringify({
         company:company,
         data:data,
-        session_id:get_cookie(company+"session_id")?get_cookie(company+"session_id"):"",
+        session_id:get_cookie(encodeURIComponent(company)+"session_id")?get_cookie(encodeURIComponent(company)+"session_id"):"",
         point:point,
         comment:comment
       }),

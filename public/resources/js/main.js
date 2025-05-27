@@ -53,8 +53,9 @@ function companyChanger(companyText){
 
   chatBot.classList.add(name.split("_")[1]);
   companyImgNames = name;
+  console.log(ChatBotHeaderChar.attributes)
   logoBox.href = location.href;
-  ChatBotHeaderChar.attributes[0].value = ChatBotHeaderChar.attributes[0].value.replace("char.png", `char${companyImgNames}.png`);
+  ChatBotHeaderChar.attributes[2].value = ChatBotHeaderChar.attributes[2].value.replace("char.png", `char${companyImgNames}.png`);
   favicon.href = `/resources/img/char${companyImgNames}.png`;
   title.innerHTML = `${companyText} 챗봇`;
 }
@@ -859,7 +860,7 @@ let company=new URL(window.location.href).searchParams.get("company")?new URL(wi
 
 
 //쿠키에 세션값 있는지 확인
-let jsession=get_cookie(company+"session_id");
+let jsession=get_cookie(encodeURIComponent(company)+"session_id");
 
 if(jsession===null){
   //완전 처음
@@ -926,7 +927,7 @@ if(jsession===null){
         },]
       createChat(companyText);
       //쿠키 저장
-      document.cookie = `${company}session_id=${jsession}; path=/; `;
+      document.cookie = `${encodeURIComponent(company)}session_id=${jsession}; path=/; `;
       //초기데이터 저장
       fetch(`${api_base}/insertHistory`, {
         method: "POST",
@@ -1013,7 +1014,7 @@ if(jsession===null){
               },]
             createChat(companyText);
             //쿠키 저장
-            document.cookie = `${company}session_id=${jsession}; path=/; `;
+            document.cookie = `${encodeURIComponent(company)}session_id=${jsession}; path=/; `;
             //초기데이터 저장
             fetch(`${api_base}/insertHistory`, {
               method: "POST",
