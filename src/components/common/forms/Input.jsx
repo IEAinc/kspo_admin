@@ -99,6 +99,7 @@ const Input = ({
           focus:outline-none
           focus:ring-1
           focus:ring-blue-500
+          border-solid
         `}
       />
       {error && <span className="block w-full text-red-500 text-[12px] text-left mt-1">{error}</span>}

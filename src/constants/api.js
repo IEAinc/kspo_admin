@@ -1,19 +1,45 @@
 import axios from 'axios';
 
-
 // API Base URL
 export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":8080";
 
-// Create axios instance with default settings
+// 서버에서 쿠키로 전달된 CSRF 토큰 읽기
+function getCsrfTokenFromCookie() {
+  const name = 'XSRF-TOKEN=';
+  const decodedCookie = decodeURIComponent(document.cookie);
+  const ca = decodedCookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i].trim();
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return null;
+}
+
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'X-XSRF-TOKEN': getCsrfTokenFromCookie()
   },
-  withCredentials: true 
+  withCredentials: true,
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN'
 });
 
+api.interceptors.request.use((config) => {
+  const csrfToken = getCsrfTokenFromCookie();
+  console.log("CSRF 토큰:", csrfToken);
+  if (csrfToken) {
+    //config.headers['X-XSRF-TOKEN'] = csrfToken;
+    config.headers['X-CSRF-TOKEN'] = csrfToken; // 스프링이 두 헤더를 모두 체크하도록
+  }
+  return config;
+}, (error) => Promise.reject(error));
+
+// API Endpoints
 // API Endpoints
 export const API_ENDPOINTS = {
   SELECTION_VALUES: '/admin/selection-values',
@@ -34,5 +60,6 @@ export const API_ENDPOINTS = {
   GETID:'/admin/get-userId',
   LOGOUT:'/admin/logout',
   LogLIst:'/admin/login-log/list',
-  LogCompany:'/admin/login-log/company-list'
+  LogCompany:'/admin/login-log/company-list',
+  TEST:'/admin/test'
 };

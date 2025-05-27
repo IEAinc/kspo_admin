@@ -91,6 +91,7 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
           focus:outline-none
           focus:ring-1
           focus:ring-blue-500
+          border-solid
     
           `}
         >
@@ -103,7 +104,7 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
         {/* 드롭다운 목록 */}
         {isOpen && (
           <ul
-            className={`absolute w-full border border-gray-200 rounded bg-white shadow-md z-50 ${
+            className={`absolute w-full border border-gray-200 rounded bg-white shadow-md z-50 overflow-y-auto max-h-[500px] ${
               openDirection === "top" ? "bottom-full mb-1" : "top-full mt-1"
             }`}
           >

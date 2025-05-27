@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createCookie, useNavigate } from 'react-router-dom'
 // 컴포넌트 모음
 import Btn from '../../components/common/forms/Btn'
 import Checkbox from '../../components/common/forms/Checkbox'
@@ -8,6 +8,7 @@ import Input from '../../components/common/forms/Input'
 import Logo from '../../assets/images/kspo_logo_color.svg?react';
 import CustomAlert from '../../components/common/modals/CustomAlert'
 import { API_ENDPOINTS ,api} from '../../constants/api'
+
 const mockUserDB = {
   userID : 'admin',
   userPassword : 'admin123'
@@ -40,7 +41,14 @@ const Login = () => {
           isOpen: false
         });
       };
+      const getToken= async ()=>{
+        const response = await api.get(API_ENDPOINTS.TEST)
+      
+         
+        
+      }
     useEffect(()=>{
+      getToken();
       let localChk=localStorage.getItem('rememberMe')
       if(localChk){
         setIsChecked(true);

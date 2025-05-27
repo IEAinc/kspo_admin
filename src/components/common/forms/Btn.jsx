@@ -67,6 +67,9 @@ const Btn = ({type = 'button', size, isFull,textColor, colorMode = false,  iconM
         ${height} 
         ${bgColor}
         transition-colors duration-200
+        border-solid
+        border-br-gray
+        
       `}
       style={{ minWidth: minWidthSize }}
       onClick={onClick}

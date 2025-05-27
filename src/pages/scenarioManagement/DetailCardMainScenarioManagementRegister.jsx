@@ -204,7 +204,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       }
       const response = await api.post(location.state.mode==="register"?API_ENDPOINTS.Register:API_ENDPOINTS.Update, {
         id:location.state.id,
-        company:centerName,
+        company:centerName.trim(),
         main_question:dialogQuestion,
         name:dialogName,
         answer:text,

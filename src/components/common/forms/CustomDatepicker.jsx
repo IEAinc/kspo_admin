@@ -116,7 +116,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
         >
           기간
         </label>
-        <div className={`${widthClass} w-full relative`}>
+        <div className={`${widthClass} w-full relative `}>
           <DatePicker
           selectsRange
           startDate={startDate}
@@ -134,6 +134,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
             font-normal
             border
             border-br-gray
+            border-solid
             p-[10px]
           `}
           />

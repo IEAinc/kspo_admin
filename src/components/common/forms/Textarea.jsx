@@ -56,6 +56,7 @@ const Textarea = ({
           focus:outline-none
           focus:ring-1
           focus:ring-blue-500
+          border-solid
           ${
             error ? "border-red-500 focus:ring-red-500" : "border-gray-300"
           }
