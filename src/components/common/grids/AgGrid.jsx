@@ -104,7 +104,6 @@ const AgGrid = (props) => {
       for (let colIndex = 0; colIndex < columnData.length; colIndex++) {
         const col = columnData[colIndex];
         let value;
-        console.log(col.headerName)
         if(col.headerName==='상세보기'){
           continue;
         }
@@ -126,7 +125,7 @@ const AgGrid = (props) => {
       };
       return newRow;
     });
-    console.log(exportData)
+
 
     // 3. 워크시트 생성
     const worksheet = XLSX.utils.json_to_sheet(exportData, { header: headers });

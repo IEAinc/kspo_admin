@@ -14,7 +14,7 @@ const mockUserDB = {
   userPassword : 'admin123'
 }
 const Login = () => {
-
+  const navigate=useNavigate();
   const [userId, setUserId] = useState('')
   const [userPassword, setUserPassword] = useState('')
   const [errorUserId, setErrorUserId] = useState('')
@@ -104,9 +104,10 @@ const Login = () => {
           localStorage.removeItem('userId');
         }
         
-         navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
-           type:"big"
-         }});
+        navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
+          type:"big"
+        }});
+        
       }catch(e){
         if(e.status===401){
           setAlertState({

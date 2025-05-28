@@ -32,7 +32,7 @@ export const api = axios.create({
 
 api.interceptors.request.use((config) => {
   const csrfToken = getCsrfTokenFromCookie();
-  console.log("CSRF 토큰:", csrfToken);
+
   if (csrfToken) {
     config.headers['X-XSRF-TOKEN'] = csrfToken;
     //config.headers['X-CSRF-TOKEN'] = csrfToken; // 스프링이 두 헤더를 모두 체크하도록
