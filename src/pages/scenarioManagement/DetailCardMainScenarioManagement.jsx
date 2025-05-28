@@ -209,28 +209,28 @@ const DetailCardMainScenarioManagement = () => {
                         <React.Fragment key={index}>
                           {/* 첫 번째 컬럼: 버튼 이름 */}
                           <div
-                            className={`col-span-2 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}
+                            className={`col-span-2 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color break-all`}
                           >
                             {item.name}
                           </div>
 
                           {/* 두 번째 컬럼: Select */}
                           <div
-                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
+                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}
                           >
                             {item.btnType}
                           </div>
 
                           {/* 세 번째 컬럼: Input */}
                           <div
-                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
+                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}
                           >
                             {item.btnName}
                           </div>
 
                           {/* 네 번째 컬럼: Detail Input */}
                           <div
-                            className={`col-span-4 px-[8px] py-[6px]] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color`}
+                            className={`col-span-4 px-[8px] py-[6px]] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color break-all`}
                           >
                             {item.btnDetail}
                           </div>
