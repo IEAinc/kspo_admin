@@ -20,7 +20,7 @@ let companyText = "올림픽스포츠센터";
 let companyImgNames = "";
 let chatCon=`https://o8z36.channel.io/home`;
 let evalList=[];
-document.cookie = `evalList=${JSON.stringify(evalList)}; path=/; `;
+document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
 if(location.href.split("?")[1] && location.href.split("?")[1].split("=")[1]){
   companyText = decodeURI(location.href.split("?")[1].split("=")[1]);
 }
@@ -53,7 +53,6 @@ function companyChanger(companyText){
 
   chatBot.classList.add(name.split("_")[1]);
   companyImgNames = name;
-  console.log(ChatBotHeaderChar.attributes)
   logoBox.href = location.href;
   ChatBotHeaderChar.attributes[2].value = ChatBotHeaderChar.attributes[2].value.replace("char.png", `char${companyImgNames}.png`);
   favicon.href = `/resources/img/char${companyImgNames}.png`;
@@ -270,7 +269,7 @@ async function chatSend(value) {
   createChat(companyText);
   sendMessage.value = "";
   evalList.push(JSON.parse(JSON.stringify(evalJson)));
-  document.cookie = `evalList=${JSON.stringify(evalList)}; path=/; `;
+  document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
   fetch(`${api_base}/insertHistory`, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
@@ -818,7 +817,7 @@ function btnPoint(value){
 
 function evalInsert(closePoint){
 
-  let data=JSON.parse(get_cookie('evalList'));
+  let data=JSON.parse(decodeURIComponent(get_cookie('evalList')));
   let comment=document.querySelector(`#comment`).value;
 
   fetch(`${api_base}/insertEval`, {
@@ -833,7 +832,7 @@ function evalInsert(closePoint){
     }),
   });
   evalList=[];
-  document.cookie = `evalList=${JSON.stringify(evalList)}; path=/; `;
+  document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
 }
 /* 채팅 초기 데이터 작업 */
 // 쿠키값 가져오기

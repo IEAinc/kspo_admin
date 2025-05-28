@@ -13,7 +13,7 @@ $(function(){
 
   //평가 보내기
   function evalInsert(){
-    let data=JSON.parse(get_cookie('evalList'));
+    let data=JSON.parse(decodeURIComponent(get_cookie('evalList')));
     //회사이름 가져오기
     let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽스포츠센터';
     let comment=document.querySelector(`#comment`).value;
@@ -29,7 +29,7 @@ $(function(){
       }),
     });
     evalList=[];
-    document.cookie = `evalList=${JSON.stringify(evalList)}; path=/; `;
+    document.cookie = `evalList=${JSON.stringify(encodeURIComponent(evalList))}; path=/; `;
   }
   $(document).on("click", ".rating-box .rate-btn", function(){
     const i = $(this).index();
