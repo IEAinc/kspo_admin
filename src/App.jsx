@@ -26,6 +26,7 @@ import DetailCardFaqModificationHistory from './pages/historyManagement/DetailCa
 import LoginHistory from './pages/historyManagement/LoginHistory'
 import ChatMain from './pages/userPage/templates/chatMain.jsx';
 import ChatWindow from './pages/userPage/templates/window.jsx';
+import ErrorPage from './pages/error/ErrorPage.jsx';
 
 function App() {
   let pagList=['olparksports','olparkswim','olparktennis','olparksoccer','ilsansports','bundangsports']
@@ -46,7 +47,9 @@ function App() {
       {/* 관리자 페이지 */}
 
       <Route path="/ksponcoadministrator/login" element={<Login />} />
- 
+
+      {/* 에러 관리 */}
+      <Route path="/*" element={<ErrorPage />} />
       <Route
         path="/ksponcoadministrator"
         element={<Layout />}

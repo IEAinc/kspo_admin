@@ -47,7 +47,9 @@ const DetailCardMainScenarioManagement = () => {
   },[])
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement'); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement',{state:{
+      type:location.state.type
+    }}); // 히스토리 스택에서 한 단계 뒤로 이동
   };
   const handleEditClick = () => {
     if(location.state.type==='FAQ'){
