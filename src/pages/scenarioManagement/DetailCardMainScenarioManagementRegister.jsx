@@ -202,30 +202,36 @@ const DetailCardMainScenarioManagementRegister = () => {
       } else {
         setError("");
       }
-      const response = await api.post(location.state.mode==="register"?API_ENDPOINTS.Register:API_ENDPOINTS.Update, {
+      let data={
         id:location.state.id,
         company:centerName.trim(),
         main_question:dialogQuestion,
         name:dialogName,
         answer:text,
-        big:location.state.type,
-        btn_type:btnList[0].selectedValue.value,
-        btn_name:btnList[0].inputValue?btnList[0].inputValue+"**"+btnList[0].detailValue:null,
-        btn_type1:btnList[1].selectedValue.value,
-        btn_name1:btnList[1].inputValue?btnList[1].inputValue+"**"+btnList[1].detailValue:null,
-        btn_type2:btnList[2].selectedValue.value,
-        btn_name2:btnList[2].inputValue?btnList[2].inputValue+"**"+btnList[2].detailValue:null,
-        btn_type3:btnList[3].selectedValue.value,
-        btn_name3:btnList[3].inputValue?btnList[3].inputValue+"**"+btnList[3].detailValue:null,
-        btn_type4:btnList[4].selectedValue.value,
-        btn_name4:btnList[4].inputValue?btnList[4].inputValue+"**"+btnList[4].detailValue:null,
-        btn_type5:btnList[5].selectedValue.value,
-        btn_name5:btnList[5].inputValue?btnList[5].inputValue+"**"+btnList[5].detailValue:null,
-        btn_type6:btnList[6].selectedValue.value,
-        btn_name6:btnList[6].inputValue?btnList[6].inputValue+"**"+btnList[6].detailValue:null,
-        btn_type7:btnList[7].selectedValue.value,
-        btn_name7:btnList[7].inputValue?btnList[7].inputValue+"**"+btnList[7].detailValue:null,
-      });
+      }
+      data["btn_type"]=btnList[0].selectedValue.value
+      if(btnList[0].inputValue!==null&&btnList[0].inputValue.trim()!==''){
+        if(btnList[0].detailValue!==null&&btnList[0].detailValue.trim()!==''){
+          data["btn_name"]=btnList[0].inputValue.trim()+"**"+btnList[0].detailValue.trim()
+        }else{
+          data["btn_name"]=btnList[0].inputValue.trim();
+        }
+       }else{
+        data["btn_name"]=null;
+       }
+      for(let i=1;i<=7;i++){
+        data["btn_type"+i]=btnList[i].selectedValue.value
+       if(btnList[i].inputValue!==null&&btnList[i].inputValue.trim()!==''){
+        if(btnList[i].detailValue!==null &&btnList[i].detailValue.trim()!==''){
+          data["btn_name"+i]=btnList[i].inputValue.trim()+"**"+btnList[i].detailValue.trim()
+        }else{
+          data["btn_name"+i]=btnList[i].inputValue.trim();
+        }
+       }else{
+        data["btn_name"+i]=null;
+       }
+      }
+      const response = await api.post(location.state.mode==="register"?API_ENDPOINTS.Register:API_ENDPOINTS.Update,data);
       setAlertState({
         isOpen: true,
         title: location.state.mode==="register"?'등록 완료':'수정 완료',
