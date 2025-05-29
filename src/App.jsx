@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react'
 import './App.css'
 // 페이지 경로
 import Layout from './layout/Layout'
@@ -29,6 +30,27 @@ import ChatWindow from './pages/userPage/templates/window.jsx';
 import ErrorPage from './pages/error/ErrorPage.jsx';
 
 function App() {
+  function removeKoreanCookies() {
+    const cookies = document.cookie.split(";");
+    console.log(cookies)
+    cookies.forEach((cookie) => {
+      const [rawName, ...rawValue] = cookie.split("=");
+      const name = decodeURIComponent(rawName.trim());
+      const value = decodeURIComponent(rawValue.join("=")?.trim());
+  
+      // 한글 포함 여부 검사 (정규식)
+      const hasKorean = /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(name) || /[ㄱ-ㅎㅏ-ㅣ가-힣]/.test(value);
+  
+      if (hasKorean) {
+        // 쿠키 삭제 (경로와 도메인에 따라 조정 가능)
+        document.cookie = `${name}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT;`;
+        console.log(`쿠키 삭제됨: ${name}`);
+      }
+    });
+  }
+  useEffect(() => {
+    removeKoreanCookies();
+  }, []);
   let pagList=['olparksports','olparkswim','olparktennis','olparksoccer','ilsansports','bundangsports']
   return (
     <Routes>
