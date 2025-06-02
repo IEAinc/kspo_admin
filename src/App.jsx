@@ -25,14 +25,13 @@ import DetailCardMainScenarioHistory from './pages/historyManagement/DetailCardM
 import FaqModificationHistory from './pages/historyManagement/FaqModificationHistory'
 import DetailCardFaqModificationHistory from './pages/historyManagement/DetailCardFaqModificationHistory'
 import LoginHistory from './pages/historyManagement/LoginHistory'
-import ChatMain from './pages/userPage/templates/chatMain.jsx';
-import ChatWindow from './pages/userPage/templates/window.jsx';
+import ChatMain from './pages/userPage/chatMain.jsx';
+import ChatWindow from './pages/userPage/window.jsx';
 import ErrorPage from './pages/error/ErrorPage.jsx';
 
 function App() {
   function removeKoreanCookies() {
     const cookies = document.cookie.split(";");
-    console.log(cookies)
     cookies.forEach((cookie) => {
       const [rawName, ...rawValue] = cookie.split("=");
       const name = rawName.trim();
