@@ -24,8 +24,12 @@ $(function(){
       name = "_bundang";
       chatCon='https://n1p7v.channel.io/home'
     }
-    const chatBot = document.querySelector(".satisfaction");
-    chatBot.classList.add(name.split("_")[1]);
+    const chatBot = document.querySelectorAll(".popup");
+    chatBot.forEach((e)=>{
+      e.classList.add(name.split("_")[1])
+    })
+    console.log(`/resources/img/char${name}.png`)
+    $(".satisfaction-confirmed img").attr("src", `/resources/img/char${name}.png`);
    
   }
   companyChanger(companyText);
@@ -56,7 +60,7 @@ $(function(){
       }),
     });
     evalList=[];
-    document.cookie = `evalList=${JSON.stringify(encodeURIComponent(evalList))}; path=/; `;
+    window.opener.document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
   }
   $(document).on("click", ".rating-box .rate-btn", function(){
     const i = $(this).index();
@@ -91,9 +95,7 @@ $(function(){
     $(".satisfaction-confirmed").addClass("active");
     //평가점수 로그
     evalInsert()
-    if(companyText !== "올림픽스포츠센터"){
-      $(".satisfaction-confirmed img").attr("src", `/resources/images/char${companyText}.png`);
-    }
+   
   });
 
   $(document).on("click", ".satisfaction-confirmed .confirm-btn", function(){

@@ -134,6 +134,7 @@ let isMake = false;
  */
 async function chatSend(value) {
   // 평가 기록 위한 데이터
+  evalList=JSON.parse(decodeURIComponent(get_cookie('evalList')))
   let evalJson = {};
   let myAnswer = {};
   chatInputBox.classList.add("loading");
@@ -688,6 +689,7 @@ $(function(){
   });
 
   $(document).on("click", ".btn.link", function(){
+    chatCount=0;
     setTimeout(() => {
       window.open(api_base.replace(":8080","")+"/window?company="+company, "_blank", "width=800, height=500");
     }, 500);
