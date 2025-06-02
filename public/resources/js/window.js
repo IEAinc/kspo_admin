@@ -2,8 +2,35 @@ let point=0;
 function btnPoint(value){
   point=value;
 }
+
+
 $(function(){
   companyText=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽스포츠센터';
+  function companyChanger(companyText){
+    let name = "";
+    if(companyText === "올림픽수영장"){
+      name = "_swim";
+      chatCon='https://olympicswimmimngpool.channel.io/home'
+    }else if(companyText === "테니스장"){
+      name = "_tennis";
+      chatCon='https://9v3q1.channel.io/home'
+    }else if(companyText === "축구장"){
+      name = "_soccer";
+      chatCon='https://vdo3q.channel.io/home'
+    }else if(companyText === "일산스포츠센터"){
+      name = "_ilsan";
+      chatCon='https://63zx2.channel.io/home'
+    }else if(companyText === "분당스포츠센터"){
+      name = "_bundang";
+      chatCon='https://n1p7v.channel.io/home'
+    }
+    const chatBot = document.querySelector(".satisfaction");
+    chatBot.classList.add(name.split("_")[1]);
+   
+  }
+  companyChanger(companyText);
+  
+  
   //쿠키 값 가져오기
   function get_cookie(name) {
     var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');

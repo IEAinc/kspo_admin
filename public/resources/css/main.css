@@ -317,11 +317,11 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot.swim .location:before{background:url(/resources/img/icon/location_swim.svg) no-repeat center/100%;}
 .chat-bot.swim .milestone:before{background:url(/resources/img/icon/milestone_swim.svg) no-repeat center/100%;}
 .chat-bot.swim .expand:before{background:url(/resources/img/icon/expand_swim.svg) no-repeat center/100%;}
-.chat-bot.swim .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_swim.svg) no-repeat center/100%;}
-.chat-bot.swim .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_swim.svg) no-repeat center/100%;}
-.chat-bot.swim .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_swim.svg) no-repeat center/100%;}
-.chat-bot.swim .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_swim.svg) no-repeat center/100%;}
-.chat-bot.swim .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_swim.svg) no-repeat center/100%;}
+.swim .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_swim.svg) no-repeat center/100%;}
+.swim .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_swim.svg) no-repeat center/100%;}
+.swim .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_swim.svg) no-repeat center/100%;}
+.swim .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_swim.svg) no-repeat center/100%;}
+.swim .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_swim.svg) no-repeat center/100%;}
 
 .chat-bot.tennis  .question:before{background:url(/resources/img/icon/question_tennis.svg) no-repeat center/100%;}
 .chat-bot.tennis .chat-box .chats .btn-wrap > .text:before{background:url(/resources/img/icon/chat_tennis.svg) no-repeat center/100%;}
@@ -329,11 +329,11 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot.tennis .location:before{background:url(/resources/img/icon/location_tennis.svg) no-repeat center/100%;}
 .chat-bot.tennis .milestone:before{background:url(/resources/img/icon/milestone_tennis.svg) no-repeat center/100%;}
 .chat-bot.tennis .expand:before{background:url(/resources/img/icon/expand_tennis.svg) no-repeat center/100%;}
-.chat-bot.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_tennis.svg) no-repeat center/100%;}
-.chat-bot.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_tennis.svg) no-repeat center/100%;}
-.chat-bot.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_tennis.svg) no-repeat center/100%;}
-.chat-bot.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_tennis.svg) no-repeat center/100%;}
-.chat-bot.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_tennis.svg) no-repeat center/100%;}
+.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_tennis.svg) no-repeat center/100%;}
+.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_tennis.svg) no-repeat center/100%;}
+.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_tennis.svg) no-repeat center/100%;}
+.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_tennis.svg) no-repeat center/100%;}
+.tennis .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_tennis.svg) no-repeat center/100%;}
 
 .chat-bot.soccer  .question:before{background:url(/resources/img/icon/question_soccer.svg) no-repeat center/100%;}
 .chat-bot.soccer .chat-box .chats .btn-wrap > .text:before{background:url(/resources/img/icon/chat_soccer.svg) no-repeat center/100%;}
@@ -341,11 +341,11 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot.soccer .location:before{background:url(/resources/img/icon/location_soccer.svg) no-repeat center/100%;}
 .chat-bot.soccer .milestone:before{background:url(/resources/img/icon/milestone_soccer.svg) no-repeat center/100%;}
 .chat-bot.soccer .expand:before{background:url(/resources/img/icon/expand_soccer.svg) no-repeat center/100%;}
-.chat-bot.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_soccer.svg) no-repeat center/100%;}
-.chat-bot.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_soccer.svg) no-repeat center/100%;}
-.chat-bot.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_soccer.svg) no-repeat center/100%;}
-.chat-bot.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_soccer.svg) no-repeat center/100%;}
-.chat-bot.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_soccer.svg) no-repeat center/100%;}
+.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_soccer.svg) no-repeat center/100%;}
+.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_soccer.svg) no-repeat center/100%;}
+.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_soccer.svg) no-repeat center/100%;}
+.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_soccer.svg) no-repeat center/100%;}
+.soccer .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_soccer.svg) no-repeat center/100%;}
 
 .chat-bot.ilsan  .question:before{background:url(/resources/img/icon/question_ilsan.svg) no-repeat center/100%;}
 .chat-bot.ilsan .chat-box .chats .btn-wrap > .text:before{background:url(/resources/img/icon/chat_ilsan.svg) no-repeat center/100%;}
@@ -353,11 +353,11 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot.ilsan .location:before{background:url(/resources/img/icon/location_ilsan.svg) no-repeat center/100%;}
 .chat-bot.ilsan .milestone:before{background:url(/resources/img/icon/milestone_ilsan.svg) no-repeat center/100%;}
 .chat-bot.ilsan .expand:before{background:url(/resources/img/icon/expand_ilsan.svg) no-repeat center/100%;}
-.chat-bot.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_ilsan.svg) no-repeat center/100%;}
-.chat-bot.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_ilsan.svg) no-repeat center/100%;}
-.chat-bot.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_ilsan.svg) no-repeat center/100%;}
-.chat-bot.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_ilsan.svg) no-repeat center/100%;}
-.chat-bot.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_ilsan.svg) no-repeat center/100%;}
+.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_ilsan.svg) no-repeat center/100%;}
+.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_ilsan.svg) no-repeat center/100%;}
+.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_ilsan.svg) no-repeat center/100%;}
+.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_ilsan.svg) no-repeat center/100%;}
+.ilsan .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_ilsan.svg) no-repeat center/100%;}
 
 .chat-bot.bundang  .question:before{background:url(/resources/img/icon/question_bundang.svg) no-repeat center/100%;}
 .chat-bot.bundang .chat-box .chats .btn-wrap > .text:before{background:url(/resources/img/icon/chat_bundang.svg) no-repeat center/100%;}
@@ -365,8 +365,8 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot.bundang .location:before{background:url(/resources/img/icon/location_bundang.svg) no-repeat center/100%;}
 .chat-bot.bundang .milestone:before{background:url(/resources/img/icon/milestone_bundang.svg) no-repeat center/100%;}
 .chat-bot.bundang .expand:before{background:url(/resources/img/icon/expand_bundang.svg) no-repeat center/100%;}
-.chat-bot.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_bundang.svg) no-repeat center/100%;}
-.chat-bot.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_bundang.svg) no-repeat center/100%;}
-.chat-bot.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_bundang.svg) no-repeat center/100%;}
-.chat-bot.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_bundang.svg) no-repeat center/100%;}
-.chat-bot.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_bundang.svg) no-repeat center/100%;}
+.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(1){background:url(/resources/img/contents/rate_01_on_bundang.svg) no-repeat center/100%;}
+.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(2){background:url(/resources/img/contents/rate_02_on_bundang.svg) no-repeat center/100%;}
+.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(3){background:url(/resources/img/contents/rate_03_on_bundang.svg) no-repeat center/100%;}
+.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(4){background:url(/resources/img/contents/rate_04_on_bundang.svg) no-repeat center/100%;}
+.bundang .rating-wrap .rating-box .rate-btn.active:nth-child(5){background:url(/resources/img/contents/rate_05_on_bundang.svg) no-repeat center/100%;}
