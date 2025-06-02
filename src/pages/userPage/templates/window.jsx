@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import '../resources/css/main.css'
+
 
 
 
@@ -12,6 +12,17 @@ const ChatWindow = () => {
         document.body.appendChild(script);
         return script
     }
+    const makeCSS = (href, integrity, crossorigin) => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      if (integrity) link.integrity = integrity;
+      if (crossorigin) link.crossOrigin = crossorigin;
+      link.type = 'text/css';
+      link.referrerPolicy = 'no-referrer'; // optional
+      document.head.appendChild(link);
+      return link;
+    };
     useEffect(() => {
      
         const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
@@ -19,10 +30,12 @@ const ChatWindow = () => {
         jqueryScript.onload=()=>{
           windowScript=makeScript('/resources/js/window.js')
         }
+        let maincss=makeCSS('/resources/css/main.css')
         return () => {
           // 페이지에서 벗어날 때 스크립트 제거
           document.body.removeChild(windowScript);
           document.body.removeChild(jqueryScript);
+          document.body.removeChild(maincss);
         };
       }, []);
 

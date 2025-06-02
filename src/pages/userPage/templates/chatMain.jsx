@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import '../resources/css/main.css'
+
 
 
 
@@ -12,6 +12,18 @@ const ChatMain = () => {
         document.body.appendChild(script);
         return script
     }
+    const makeCSS = (href, integrity, crossorigin) => {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      if (integrity) link.integrity = integrity;
+      if (crossorigin) link.crossOrigin = crossorigin;
+      link.type = 'text/css';
+      link.referrerPolicy = 'no-referrer'; // optional
+      document.head.appendChild(link);
+      return link;
+    };
+    let maincss=makeCSS('/resources/css/main.css')
     useEffect(() => {
      
         const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
@@ -33,6 +45,7 @@ const ChatMain = () => {
           document.body.removeChild(mainScript);
           document.body.removeChild(jqueryScript);
           document.body.removeChild(kakaoScript);
+          document.body.removeChild(maincss);
         };
       }, []);
 
@@ -43,8 +56,8 @@ const ChatMain = () => {
     <div class="chat-bot normal">
     <header>
       <a href="#" class="logo-box">
-        <img src="/src/pages/userPage/resources/img/char.png" class="char" alt=""/>
-        <img src="/src/pages/userPage/resources/img/logo.svg" class="logo" alt=""/>
+        <img src="/resources/img/char.png" class="char" alt=""/>
+        <img src="/resources/img/logo.svg" class="logo" alt=""/>
         <span>올림픽공원스포츠센터챗봇</span>
       </a>
       
@@ -132,7 +145,7 @@ const ChatMain = () => {
     <div class="popup satisfaction-confirmed">
       <div class="popup-box">
         <div class="pop-body">
-          <div class="char"><img src="/src/pages/userPage/resources/img/char.png" alt=""/></div>
+          <div class="char"><img src="/resources/img/char.png" alt=""/></div>
           <h4>만족도 설문조사에 응해주셔서 감사합니다.</h4>
         </div>
         <div class="pop-foot">
