@@ -29,12 +29,16 @@ const DetailCardMainScenarioManagement = () => {
 
       if(data.btn_type){
         btnList[0].btnType=data.btn_type;
+      }
+      if(data.btn_name){
         btnList[0].btnName=data.btn_name.split("**")[0];
         btnList[0].btnDetail=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
       }
       for(let i=0;i<=7;i++){
         if(data["btn_type"+i]){
           btnList[i].btnType=data["btn_type"+i];
+        }
+        if(data["btn_name"+i]){
           btnList[i].btnName=data["btn_name"+i].split("**")[0];
           btnList[i].btnDetail=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
         }

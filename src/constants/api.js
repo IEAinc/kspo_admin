@@ -62,5 +62,8 @@ export const API_ENDPOINTS = {
   LOGOUT:'/admin/logout',
   LogLIst:'/admin/login-log/list',
   LogCompany:'/admin/login-log/company-list',
+  ScenarioHistory:'/admin/getScenarioHistory',
+  ScenarioHistoryDetail:'/admin/getScenarioHistoryDetail',
+  ScenarioHistorySelect:'/admin/getScenarioHistorySelectionValues',
   TEST:'/admin/test'
 };

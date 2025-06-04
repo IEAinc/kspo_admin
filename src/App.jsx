@@ -98,8 +98,8 @@ function App() {
         {/* 이력 관리 */}
         <Route path="historyManagement/mainScenarioHistory" element={<MainScenarioHistory />} />
         <Route path="historyManagement/mainScenarioHistory/detail" element={<DetailCardMainScenarioHistory />} />
-        <Route path="historyManagement/faqModificationHistory" element={<FaqModificationHistory />} />
-        <Route path="historyManagement/faqModificationHistory/detail" element={<DetailCardFaqModificationHistory />} />
+        <Route path="historyManagement/faqModificationHistory" element={<MainScenarioHistory />} />
+        <Route path="historyManagement/faqModificationHistory/detail" element={<DetailCardMainScenarioHistory />} />
         <Route path="historyManagement/loginHistory" element={<LoginHistory />} />
       </Route>
     </Routes>

@@ -171,11 +171,15 @@ const MainScenarioManagement = () => {
         cancelButton: true,
         onConfirm: async () =>{
           let idList=[]
+          let companyList=[];
           selectedRows.map(e=>{
-            idList.push(e.id)
+            idList.push(e.id);
+            companyList.push(e.company);
           })
           const response = await api.post(API_ENDPOINTS.Delete, {
-            id:idList
+            id:idList,
+            company:companyList,
+            big:location.state.type,
           });
           setAlertState({ isOpen: false });
           setGridData(updatedData)

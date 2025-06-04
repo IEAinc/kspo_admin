@@ -29,18 +29,20 @@ const DetailCardMainScenarioManagementRegister = () => {
       setDialogName(data.name);
       setQuestion(data.main_question)
       setText(data.answer);
-      if(data.btn_type){
-        btnList[0].selectedValue=commonSelectOptions.filter((e)=>{return e.value===data.btn_type;})[0];
+           btnList[0].selectedValue= data.btn_type?{ value: data.btn_type, label: data.btn_type }:{ value: null, label: '없음22' };
+        if(data.btn_name){
         btnList[0].inputValue=data.btn_name.split("**")[0];
-        btnList[0].detailValue=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
-      }
-      for(let i=0;i<=7;i++){
-        if(data["btn_type"+i]){
-          btnList[i].selectedValue=commonSelectOptions.filter((e)=>{return e.value===data["btn_type"+i];})[0];
-          btnList[i].inputValue=data["btn_name"+i].split("**")[0];
-          btnList[i].detailValue=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
+          btnList[0].detailValue=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
         }
+      for(let i=1;i<=7;i++){
+  
+          btnList[i].selectedValue= data["btn_type"+i]?{ value: data["btn_type"+i], label: data["btn_type"+i] }:{ value: null, label: '없음' };
+          if(data["btn_name"+i]){
+            btnList[i].inputValue=data["btn_name"+i].split("**")[0];
+            btnList[i].detailValue=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
+          }
       }
+      console.log(btnList)
     };
     // 수정 일때만
     if(location.state.mode==='update'){
@@ -203,6 +205,7 @@ const DetailCardMainScenarioManagementRegister = () => {
         setError("");
       }
       let data={
+        big:location.state.type,
         id:location.state.id,
         company:centerName.trim(),
         main_question:dialogQuestion,
@@ -210,23 +213,21 @@ const DetailCardMainScenarioManagementRegister = () => {
         answer:text,
       }
       data["btn_type"]=btnList[0].selectedValue.value
-      if(btnList[0].inputValue!==null&&btnList[0].inputValue.trim()!==''){
-        if(btnList[0].detailValue!==null&&btnList[0].detailValue.trim()!==''){
-          data["btn_name"]=btnList[0].inputValue.trim()+"**"+btnList[0].detailValue.trim()
-        }else{
-          data["btn_name"]=btnList[0].inputValue.trim();
-        }
+      data["btn_name"]='';
+      if((btnList[0].inputValue&&btnList[0].inputValue.trim()!=='')||(btnList[0].detailValue&&btnList[0].detailValue.trim()!=='')){
+        if(btnList[0].inputValue&&btnList[0].inputValue.trim()!='') data["btn_name"]+=btnList[0].inputValue.trim();
+        data["btn_name"]+="**";
+        if(btnList[0].detailValue&&btnList[0].detailValue.trim()!='') data["btn_name"]+=btnList[0].detailValue.trim();
        }else{
         data["btn_name"]=null;
        }
       for(let i=1;i<=7;i++){
         data["btn_type"+i]=btnList[i].selectedValue.value
-       if(btnList[i].inputValue!==null&&btnList[i].inputValue.trim()!==''){
-        if(btnList[i].detailValue!==null &&btnList[i].detailValue.trim()!==''){
-          data["btn_name"+i]=btnList[i].inputValue.trim()+"**"+btnList[i].detailValue.trim()
-        }else{
-          data["btn_name"+i]=btnList[i].inputValue.trim();
-        }
+        data["btn_name"+i]='';
+       if((btnList[i].inputValue&&btnList[i].inputValue.trim()!=='')||(btnList[i].detailValue&&btnList[i].detailValue.trim()!=='')){
+        if(btnList[i].inputValue&&btnList[i].inputValue.trim()!='') data["btn_name"+i]+=btnList[i].inputValue.trim();
+        data["btn_name"+i]+="**";
+        if(btnList[i].detailValue&&btnList[i].detailValue.trim()!='') data["btn_name"+i]+=btnList[i].detailValue.trim();
        }else{
         data["btn_name"+i]=null;
        }

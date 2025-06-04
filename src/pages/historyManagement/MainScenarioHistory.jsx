@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
-
+import { API_ENDPOINTS ,api} from '../../constants/api'
 // 사용하는 컴포넌트 모음
 import SearchWrap from '../../components/searchWraps/historyManagement/mainScenarioHistory/SearchWrap';
 import Box from '../../components/common/boxs/Box';
@@ -15,220 +15,108 @@ const MainScenarioHistory = () => {
   const [gridColumns, setGridColumns] = useState([]);
   const [gridCount, setGridCount] = useState(0);
   // 상세보기
+
+
   const handleRowClick = (id) => {
     const basePath = location.pathname; // 현재 경로 가져오기
-    navigate(`${basePath}/detail/${String(id)}`); // 동적 경로 생성
+    if(location.state.type==='FAQ'){
+      navigate(`/ksponcoadministrator/historyManagement/mainScenarioHistory/detail`, {state:{
+        type:location.state.type,
+        id:id
+      }});
+    }else{
+      navigate(`/ksponcoadministrator/historyManagement/faqModificationHistory/detail`, {state:{
+        type:location.state.type,
+        id:id
+      }});
+    }
   }
-
   useEffect(() => {
-    /* 그리드 데이터 */
-    let grid_data = [
-      {
-        id: 'faq_modification_history_001',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_002',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
+    
+      fetchListData()
+  
+    },[location.pathname])
+  const dayFormat=(date)=>{
+  
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
 
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_003',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_004',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_005',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_006',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_007',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_008',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_009',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_010',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_011',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_012',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_013',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_014',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_015',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_016',
-        centerName: '올림픽공원스포츠센터',
-        dialogName: '강습별로 시간과 비용',
-        dialogAnswer: 'Q. 강습별로 시간과 비용이 다 다른가요?',
-        type: '등록',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_017',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '수정',
-        details: '',
-        colorMode: false,
-      },
-      {
-        id: 'faq_modification_history_018',
-        centerName: '탄천스포츠센터',
-        dialogName: '프로그램 종류',
-        dialogAnswer: 'Q. 프로그램은 어떤 종류의 강습이 있나요?',
-        type: '삭제',
-        details: '',
-        colorMode: false,
-      },
-    ]
-    /* 그리드 헤더 설정 */
-    let grid_columns = [
-      { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => params.node.rowIndex + 1,},
-      { headerName: "센터명", flex:1,field: "centerName", cellClass: 'text-center'},
-      { headerName: "대화명",flex:1, field: "dialogName", cellClass: 'text-left'},
-      { headerName: "답변 내용",flex:1, field: "dialogAnswer", cellClass: 'text-left' },
-      {
-        headerName: "답변유형",
-        width: 120,
-        field: "type",
-        suppressSizeToFit: true,
-        cellClass: 'text-center',
-        cellClassRules: {
-          'text-primary-blue': (params) => params.value === '등록',
-          'text-point-color': (params) => params.value === '삭제',
-          'text-black': (params) => params.value !== '등록' && params.value !== '삭제'
-        }
-      },
-      {
-        headerName: "상세보기",
-        field: 'detail',
-        width: 100,
-        suppressSizeToFit: true,
-        cellClass: 'flex-center',
-        cellRenderer: (params) => {
-          return (
-            <Btn size="xxs" onClick={() => handleRowClick(params.data.id)}>
-              상세보기
-            </Btn>
-          );
+    const formatted = `${yyyy}-${mm}-${dd}`;
+    return formatted;
+  }
+  const fetchListData = async (company = null, name = null, change_type=null,searchText = null,startDate= null,endDate= null) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.ScenarioHistory, {
+        big: location.state.type,
+        company: company || null,
+        name: name || null,
+        searchText: searchText || null,
+        startDate: startDate?dayFormat(startDate) : null,
+        endDate: endDate?dayFormat(endDate) : null,
+        change_type:change_type||null
+      });
+      console.log(response.data)
+      const { data } = response.data;
+      
+      // API 응답 데이터를 그리드 데이터 형식에 맞게 변환
+      const grid_data = data.map(item => ({
+        id: item.id,
+        company: item.company,
+        name: item.name,
+        answer: item.answer,
+        detail: item.id,
+        change_type:item.change_type
+      }));
+
+      /* 그리드 헤더 설정 */
+      let grid_columns = [
+        { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => params.node.rowIndex + 1,},
+        { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
+        { headerName: "대화명",flex:1, field: "name", cellClass: 'text-left'},
+        { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },
+        {
+          headerName: "답변유형",
+          width: 120,
+          field: "change_type",
+          suppressSizeToFit: true,
+          cellClass: 'text-center',
+          cellClassRules: {
+            'text-primary-blue': (params) => params.value === '등록',
+            'text-point-color': (params) => params.value === '삭제',
+            'text-black': (params) => params.value !== '등록' && params.value !== '삭제'
+          }
         },
-      },
-    ];
-    setGridData(grid_data);
-    setGridColumns(grid_columns);
-    setGridCount(grid_data.length);
-  },[])
+        {
+          headerName: "상세보기",
+          field: 'detail',
+          width: 100,
+          suppressSizeToFit: true,
+          cellClass: 'flex-center',
+          cellRenderer: (params) => {
+            return (
+              <Btn size="xxs" onClick={() => handleRowClick(params.data.id)}>
+                상세보기
+              </Btn>
+            );
+          },
+        },
+      ];
+      setGridData(grid_data);
+      setGridColumns(grid_columns);
+      setGridCount(grid_data.length);
+    } catch (error) {
+      console.error('데이터를 불러오는데 실패했습니다:', error);
+    }
+  };
   // 최종 반환
   return (
     <div>
       <div className="w-full mb-[16px]">
-        <SearchWrap />
+        <SearchWrap onSearch={fetchListData}/>
       </div>
       <Box>
         <AgGrid

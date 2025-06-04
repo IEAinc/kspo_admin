@@ -1,17 +1,104 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
+import { API_ENDPOINTS,api } from '../../constants/api'
 const DetailMainScenarioHistory = () => {
   const navigate = useNavigate();
+  const location=useLocation();
   // 버튼 클릭 핸들러
   const goBack = () => {
-    navigate(-1); // 히스토리 스택에서 한 단계 뒤로 이동
+    navigate(location.state.type==='FAQ'?`/ksponcoadministrator/faqModificationHistory/mainScenarioHistory`:`/ksponcoadministrator/historyManagement/mainScenarioHistory`, {state:{
+      type:location.state.type,
+    }});
   };
+  const [fixData,setFixData]=useState([{
+    main_question:"1",
+    name:"1",
+    answer:"1",
+  },{
+    main_question:"2",
+    name:"2",
+    answer:"2",
+  }])
+  useEffect(()=>{
+const loadData = async () => {
+      //수정시 초기 데이터 설정
+      const response = await api.post(API_ENDPOINTS.ScenarioHistoryDetail, {
+        id:location.state.id
+      });
+      let data=response.data
+      console.log(data)
+
+
+      if(data.btn_type){
+        btnList[0].btnType=data.btn_type;
+      }
+      if(data.btn_name){
+        btnList[0].btnName=data.btn_name.split("**")[0];
+        btnList[0].btnDetail=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
+      }
+      for(let i=0;i<=7;i++){
+        if(data["btn_type"+i]){
+          btnList[i].btnType=data["btn_type"+i];
+        }
+        if(data["btn_name"+i]){
+          btnList[i].btnName=data["btn_name"+i].split("**")[0];
+          btnList[i].btnDetail=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
+        }
+      }
+    };
+    
+    loadData();
+  },[location.pathname])
 
   // 버튼 항목 리스트
   const btnList = [
+    {
+      name: '버튼1',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼2',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼3',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼4',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼5',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼6',
+      type: '웹링크',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    },
+    {
+      name: '버튼7',
+      type: '대화연결',
+      btnName: '버튼명',
+      btnDetail: '버튼상세',
+    }
+  ]
+  const btnList2 = [
     {
       name: '버튼1',
       type: '웹링크',
@@ -66,7 +153,7 @@ const DetailMainScenarioHistory = () => {
         </div>
         <div className="p-4 col-span-3 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            올림픽수영장
+            {fixData[1].comapny}
           </div>
         </div>
         {/* 수정자명 */}
@@ -75,7 +162,7 @@ const DetailMainScenarioHistory = () => {
         </div>
         <div className="p-4 col-span-3 border-b border-tb-br-color ">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            홍길동
+          {fixData[1].creater}
           </div>
         </div>
         {/* 수정유형 */}
@@ -84,7 +171,7 @@ const DetailMainScenarioHistory = () => {
         </div>
         <div className="p-4 col-span-3 border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            등록
+          {fixData[1].change_type}
           </div>
         </div>
         {/* 수정일시 */}
@@ -93,7 +180,7 @@ const DetailMainScenarioHistory = () => {
         </div>
         <div className="p-4 col-span-3 border-tb-br-color ">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            2025-04-21 18:11:00
+          {fixData[1].created}
           </div>
         </div>
 
@@ -115,7 +202,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-                올림픽수영장
+              {fixData[0].company}
               </div>
             </div>
             {/* 대화명 */}
@@ -124,7 +211,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-                차량 안내
+              {fixData[0].name}
               </div>
             </div>
             {/* 답변 내용 */}
@@ -133,7 +220,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
-                ◼ 월 회원 1인 1차량에 한하여 등록 가능합니다.
+              {fixData[0].answer}
               </div>
             </div>
             {/* 버튼 구성 */}
@@ -204,7 +291,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-                올림픽수영장
+              {fixData[1].company}
               </div>
             </div>
             {/* 대화명 */}
@@ -213,7 +300,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-                차량 안내
+              {fixData[1].name}
               </div>
             </div>
             {/* 답변 내용 */}
@@ -222,7 +309,7 @@ const DetailMainScenarioHistory = () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
-                ◼ 월 회원 1인 1차량에 한하여 등록 가능합니다.
+              {fixData[1].answer}
               </div>
             </div>
             {/* 버튼 구성 */}
@@ -253,7 +340,7 @@ const DetailMainScenarioHistory = () => {
                   {/* 렌더링 되는 곳 */}
                   <div className="col-span-12">
                     <div className="grid grid-cols-12">
-                      {btnList.map((item, index) => {
+                      {btnList2.map((item, index) => {
                         const isLast = index === btnList.length - 1;
                         const borderClass = isLast ? '' : 'border-b';
 
