@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { format, parseISO } from 'date-fns';
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
@@ -13,135 +14,81 @@ const DetailMainScenarioHistory = () => {
       type:location.state.type,
     }});
   };
-  const [fixData,setFixData]=useState([{
-    main_question:"1",
-    name:"1",
-    answer:"1",
-  },{
-    main_question:"2",
-    name:"2",
-    answer:"2",
-  }])
+  /* 1. 상단 */
+  // 센터명
+  const [centerName, setCenterName] = useState("");
+  // id
+  const [userId, setUserId] = useState("");
+  // 수정유형
+  const [editType, setEditType] = useState("");
+  // 수정일시
+  const [editDate, setEditDate] = useState("");
+  /* 2-1. 수정전 */
+  /* 센터명 */
+  const [beforeCenterName, setBeforeCenterName] = useState("");
+  /* 대화명 */
+  const [beforeDialogName, setBeforeDialogName] = useState("");
+  /* 답변내용 */
+  const [beforeDialogAnswer, setBeforeDialogAnswer] = useState("");
+  /* 버튼구성 */
+  const [beforeButtons, setBeforeButtons] = useState([]);
+  /* 2-1. 수정후 */
+  /* 센터명 */
+  const [afterCenterName, setAfterCenterName] = useState("");
+  /* 대화명 */
+  const [afterDialogName, setAfterDialogName] = useState("");
+  /* 답변내용 */
+  const [afterDialogAnswer, setAfterDialogAnswer] = useState("");
+  /* 버튼구성 */
+  const [afterButtons, setAfterButtons] = useState([]);
+  /*----------------------------*/
+  const extractBtnListFromItem = (data) => {
+    const btnList = [];
+
+    for (let i = 1; i <= 7; i++) {
+      const isPlain = i === 1 && data.hasOwnProperty('btn_type') && !data.hasOwnProperty('btn_type1');
+
+      const btnTypeKey = isPlain ? 'btn_type' : `btn_type${i}`;
+      const btnNameKey = isPlain ? 'btn_name' : `btn_name${i}`;
+
+      const rawBtnName = data[btnNameKey] || '';
+      const [btnName, btnDetail] = rawBtnName.split('**');
+
+      btnList.push({
+        name: `버튼${i}`,
+        btnType: data[btnTypeKey] || null,
+        btnName: btnName || null,
+        btnDetail: btnDetail || null,
+      });
+    }
+
+    return btnList;
+  };
+
+
+
   useEffect(()=>{
-const loadData = async () => {
+    const loadData = async () => {
       //수정시 초기 데이터 설정
       const response = await api.post(API_ENDPOINTS.ScenarioHistoryDetail, {
         id:location.state.id
       });
-      let data=response.data
-      console.log(data)
-
-
-      if(data.btn_type){
-        btnList[0].btnType=data.btn_type;
-      }
-      if(data.btn_name){
-        btnList[0].btnName=data.btn_name.split("**")[0];
-        btnList[0].btnDetail=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
-      }
-      for(let i=0;i<=7;i++){
-        if(data["btn_type"+i]){
-          btnList[i].btnType=data["btn_type"+i];
-        }
-        if(data["btn_name"+i]){
-          btnList[i].btnName=data["btn_name"+i].split("**")[0];
-          btnList[i].btnDetail=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
-        }
-      }
+      let data=response.data.data
+      setCenterName(data[1].company);
+      setUserId(data[1].creater);
+      setEditType(data[1].change_type);
+      setEditDate(format(parseISO(data[1].created), 'yyyy-MM-dd HH:mm:ss'))
+      setBeforeCenterName(data[0].company)
+      setBeforeDialogName(data[0].name)
+      setBeforeDialogAnswer(data[0].answer)
+      setBeforeButtons(extractBtnListFromItem(data[0]));
+      setAfterCenterName(data[1].company)
+      setAfterDialogName(data[1].name)
+      setAfterDialogAnswer(data[1].answer)
+      setAfterButtons(extractBtnListFromItem(data[1]));
     };
-    
     loadData();
   },[location.pathname])
-
-  // 버튼 항목 리스트
-  const btnList = [
-    {
-      name: '버튼1',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼2',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼3',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼4',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼5',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼6',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼7',
-      type: '대화연결',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    }
-  ]
-  const btnList2 = [
-    {
-      name: '버튼1',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼2',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼3',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼4',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼5',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼6',
-      type: '웹링크',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    },
-    {
-      name: '버튼7',
-      type: '대화연결',
-      btnName: '버튼명',
-      btnDetail: '버튼상세',
-    }
-  ]
 
   return (
     <Box padding={{ px: 16, py: 16 }}>
@@ -153,7 +100,7 @@ const loadData = async () => {
         </div>
         <div className="p-4 col-span-3 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-            {fixData[1].comapny}
+            {centerName}
           </div>
         </div>
         {/* 수정자명 */}
@@ -162,7 +109,7 @@ const loadData = async () => {
         </div>
         <div className="p-4 col-span-3 border-b border-tb-br-color ">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-          {fixData[1].creater}
+          {userId}
           </div>
         </div>
         {/* 수정유형 */}
@@ -171,7 +118,7 @@ const loadData = async () => {
         </div>
         <div className="p-4 col-span-3 border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-          {fixData[1].change_type}
+          {editType}
           </div>
         </div>
         {/* 수정일시 */}
@@ -180,7 +127,7 @@ const loadData = async () => {
         </div>
         <div className="p-4 col-span-3 border-tb-br-color ">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
-          {fixData[1].created}
+          {editDate}
           </div>
         </div>
 
@@ -202,7 +149,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-              {fixData[0].company}
+              {beforeCenterName}
               </div>
             </div>
             {/* 대화명 */}
@@ -211,7 +158,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-              {fixData[0].name}
+              {beforeDialogName}
               </div>
             </div>
             {/* 답변 내용 */}
@@ -220,7 +167,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
-              {fixData[0].answer}
+              {beforeDialogAnswer}
               </div>
             </div>
             {/* 버튼 구성 */}
@@ -247,12 +194,11 @@ const loadData = async () => {
                   <div className="col-span-4 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
                     버튼상세
                   </div>
-
                   {/* 렌더링 되는 곳 */}
                   <div className="col-span-12">
                     <div className="grid grid-cols-12">
-                      {btnList.map((item, index) => {
-                        const isLast = index === btnList.length - 1;
+                      {beforeButtons.length > 0 && beforeButtons.map((item, index) => {
+                        const isLast = index === beforeButtons.length - 1;
                         const borderClass = isLast ? '' : 'border-b';
 
                         return (
@@ -261,7 +207,7 @@ const loadData = async () => {
                               {item.name}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
-                              {item.type}
+                              {item.btnType}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
                               {item.btnName}
@@ -291,7 +237,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-              {fixData[1].company}
+              {afterCenterName}
               </div>
             </div>
             {/* 대화명 */}
@@ -300,7 +246,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-center h-full text-black text-[14px] font-normal">
-              {fixData[1].name}
+              {afterDialogName}
               </div>
             </div>
             {/* 답변 내용 */}
@@ -309,7 +255,7 @@ const loadData = async () => {
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
               <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
-              {fixData[1].answer}
+              {afterDialogAnswer}
               </div>
             </div>
             {/* 버튼 구성 */}
@@ -340,9 +286,9 @@ const loadData = async () => {
                   {/* 렌더링 되는 곳 */}
                   <div className="col-span-12">
                     <div className="grid grid-cols-12">
-                      {btnList2.map((item, index) => {
-                        const isLast = index === btnList.length - 1;
-                        const borderClass = isLast ? '' : 'border-b';
+                      {afterButtons.length > 0 && afterButtons.map((item, index) => {
+                        const isLast = index === afterButtons.length - 1;
+                        const borderClass = afterButtons.length > 0 && isLast ? '' : 'border-b';
 
                         return (
                           <React.Fragment key={index}>
@@ -350,7 +296,7 @@ const loadData = async () => {
                               {item.name}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
-                              {item.type}
+                              {item.btnType}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
                               {item.btnName}
