@@ -19,7 +19,7 @@ const MainScenarioHistory = () => {
 
   const handleRowClick = (id) => {
     const basePath = location.pathname; // 현재 경로 가져오기
-    if(location.state.type==='FAQ'){
+    if(location.state.type!=='FAQ'){
       navigate(`/ksponcoadministrator/historyManagement/mainScenarioHistory/detail`, {state:{
         type:location.state.type,
         id:id
@@ -32,7 +32,7 @@ const MainScenarioHistory = () => {
     }
   }
   useEffect(() => {
-    
+    console.log(location.state)
       fetchListData()
   
     },[location.pathname])

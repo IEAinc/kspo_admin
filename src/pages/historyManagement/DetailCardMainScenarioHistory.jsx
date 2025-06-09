@@ -68,24 +68,39 @@ const DetailMainScenarioHistory = () => {
 
 
   useEffect(()=>{
+   
     const loadData = async () => {
       //수정시 초기 데이터 설정
       const response = await api.post(API_ENDPOINTS.ScenarioHistoryDetail, {
         id:location.state.id
       });
       let data=response.data.data
+      if(response.data.data.length>1){
       setCenterName(data[1].company);
       setUserId(data[1].creater);
       setEditType(data[1].change_type);
       setEditDate(format(parseISO(data[1].created), 'yyyy-MM-dd HH:mm:ss'))
-      setBeforeCenterName(data[0].company)
-      setBeforeDialogName(data[0].name)
-      setBeforeDialogAnswer(data[0].answer)
-      setBeforeButtons(extractBtnListFromItem(data[0]));
       setAfterCenterName(data[1].company)
       setAfterDialogName(data[1].name)
       setAfterDialogAnswer(data[1].answer)
       setAfterButtons(extractBtnListFromItem(data[1]));
+      
+      setBeforeCenterName(data[0].company)
+      setBeforeDialogName(data[0].name)
+      setBeforeDialogAnswer(data[0].answer)
+      setBeforeButtons(extractBtnListFromItem(data[0]));
+      }else{
+        setCenterName(data[0].company);
+        setUserId(data[0].creater);
+        setEditType(data[0].change_type);
+        setEditDate(format(parseISO(data[0].created), 'yyyy-MM-dd HH:mm:ss'))
+        setAfterCenterName(data[0].company)
+        setAfterDialogName(data[0].name)
+        setAfterDialogAnswer(data[0].answer)
+        setAfterButtons(extractBtnListFromItem(data[0]));
+        setBeforeButtons(extractBtnListFromItem({}));
+      }
+      
     };
     loadData();
   },[location.pathname])
@@ -144,7 +159,7 @@ const DetailMainScenarioHistory = () => {
           {/* 수정전 그리드 */}
           <div className="grid grid-cols-4 border border-tb-br-color rounded-[4px]">
             {/* 센터명 */}
-            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            <div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
               센터명
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
@@ -153,7 +168,7 @@ const DetailMainScenarioHistory = () => {
               </div>
             </div>
             {/* 대화명 */}
-            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            <div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px]  font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
               대화명
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
@@ -232,7 +247,7 @@ const DetailMainScenarioHistory = () => {
           {/* 수정 후 그리드 */}
           <div className="grid grid-cols-4 border border-tb-br-color rounded-[4px]">
             {/* 센터명 */}
-            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            <div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
               센터명
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
@@ -241,7 +256,7 @@ const DetailMainScenarioHistory = () => {
               </div>
             </div>
             {/* 대화명 */}
-            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            <div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px]  font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
               대화명
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
