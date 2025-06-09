@@ -41,6 +41,9 @@ const DetailMainScenarioHistory = () => {
   const [afterDialogAnswer, setAfterDialogAnswer] = useState("");
   /* 버튼구성 */
   const [afterButtons, setAfterButtons] = useState([]);
+  //대표 질문
+  const [beforeMainAnswer,setBeforeMainAnswer]=useState(""); 
+  const [afterMainAnswer,setAfterMainAnswer]=useState(""); 
   /*----------------------------*/
   const extractBtnListFromItem = (data) => {
     const btnList = [];
@@ -84,10 +87,12 @@ const DetailMainScenarioHistory = () => {
       setAfterDialogName(data[1].name)
       setAfterDialogAnswer(data[1].answer)
       setAfterButtons(extractBtnListFromItem(data[1]));
+      setAfterMainAnswer(data[1].main_question)
       
       setBeforeCenterName(data[0].company)
       setBeforeDialogName(data[0].name)
       setBeforeDialogAnswer(data[0].answer)
+      setBeforeMainAnswer(data[0].main_question)
       setBeforeButtons(extractBtnListFromItem(data[0]));
       }else{
         setCenterName(data[0].company);
@@ -97,6 +102,7 @@ const DetailMainScenarioHistory = () => {
         setAfterCenterName(data[0].company)
         setAfterDialogName(data[0].name)
         setAfterDialogAnswer(data[0].answer)
+        setAfterMainAnswer(data[0].main_question)
         setAfterButtons(extractBtnListFromItem(data[0]));
         setBeforeButtons(extractBtnListFromItem({}));
       }
@@ -120,7 +126,7 @@ const DetailMainScenarioHistory = () => {
         </div>
         {/* 수정자명 */}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-l border-b border-tb-br-color">
-          아이디
+          수정자명
         </div>
         <div className="p-4 col-span-3 border-b border-tb-br-color ">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
@@ -176,12 +182,22 @@ const DetailMainScenarioHistory = () => {
               {beforeDialogName}
               </div>
             </div>
-            {/* 답변 내용 */}
-            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-              답변 내용
+             {/* 대표 질문 */}
+           {  location.state.type==='FAQ'?<> <div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px]  font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            대표 질문
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
-              <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
+              <div className="flex items-center h-full text-black text-[14px] font-normal">
+              {beforeMainAnswer}
+              </div>
+            </div></>:<></>}
+            {/* 답변 내용 */}
+            <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color ">
+              답변 내용
+            </div>
+            
+            <div className="p-4 col-span-3 border-b border-tb-br-color">
+              <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal whitespace-pre-line">
               {beforeDialogAnswer}
               </div>
             </div>
@@ -264,12 +280,21 @@ const DetailMainScenarioHistory = () => {
               {afterDialogName}
               </div>
             </div>
+             {/* 대표 질문 */}
+           {  location.state.type==='FAQ'?<><div className="col-span-1 flex items-center justify-center text-[14px] min-h-[54px]  font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            대표 질문
+            </div>
+            <div className="p-4 col-span-3 border-b border-tb-br-color">
+              <div className="flex items-center h-full text-black text-[14px] font-normal">
+              {afterMainAnswer}
+              </div>
+            </div></>:<></>}
             {/* 답변 내용 */}
             <div className="col-span-1 flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
               답변 내용
             </div>
             <div className="p-4 col-span-3 border-b border-tb-br-color">
-              <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal">
+              <div className="flex items-start h-full min-h-[132px] text-black text-[14px] font-normal whitespace-pre-line">
               {afterDialogAnswer}
               </div>
             </div>
