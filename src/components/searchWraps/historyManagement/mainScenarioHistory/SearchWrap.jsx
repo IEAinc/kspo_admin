@@ -17,7 +17,8 @@ const SearchWrap = ({onSearch}) => {
      ]);
   const [selectedCenter, setSelectedCenter] = useState(selectCenterOptions[0]);
   const handleCenterChange = (selectedOption) => {
-    setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
+    setSelectedCenter(selectedOption);
+    fetchCenterOptions(selectedOption.value) // 선택된 옵션을 직접 값으로 받음
   };
 
 
@@ -59,35 +60,39 @@ const SearchWrap = ({onSearch}) => {
   const handleModificationChange = (selectedOption) => {
     setSelectModification(selectedOption);
   }
-  useEffect(() => {
-      const fetchCenterOptions = async () => {
-        try {
-          const response = await api.post(API_ENDPOINTS.ScenarioHistorySelect);
-          const {companies,names} = response.data.data; // ['1', '2'] 형식의 데이터
-          console.log(companies)
-          
-          // 옵션 배열 생성
-          let options = [
-            { value: null, label: '전체' },
-            ...companies.map(company => ({
-              value: company,
-              label: company
-            }))
-          ];
-          setSelectCenterOptions(options);
+  const fetchCenterOptions = async (company = null) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.ScenarioHistorySelect,{
+        big: location.state.type,
+        company: company || null,
+      });
+      const {companies,names} = response.data.data; // ['1', '2'] 형식의 데이터
+      console.log(companies)
+      
+      // 옵션 배열 생성
+      let options = [
+        { value: null, label: '전체' },
+        ...companies.map(company => ({
+          value: company,
+          label: company
+        }))
+      ];
+      setSelectCenterOptions(options);
 
-           options = [
-            { value: null, label: '전체' },
-            ...names.map(company => ({
-              value: company,
-              label: company
-            }))
-          ];
-          setSelectDialogOptions(options);
-        } catch (error) {
-          console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
-        }
-      };
+       options = [
+        { value: null, label: '전체' },
+        ...names.map(company => ({
+          value: company,
+          label: company
+        }))
+      ];
+      setSelectDialogOptions(options);
+    } catch (error) {
+      console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
+    }
+  };
+  useEffect(() => {
+     
   
       fetchCenterOptions();
       

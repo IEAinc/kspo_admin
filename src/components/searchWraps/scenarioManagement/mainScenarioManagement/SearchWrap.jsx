@@ -27,6 +27,7 @@ const SearchWrap = ({ onSearch}) => {
   // Select 컴포넌트의 onChange 핸들러
   const handleCenterChange = (selectedOption) => {
     setSelectedCenter(selectedOption?.value === '전체' ? null : selectedOption);
+    fetchSelectionValues(selectedOption?.value === '전체' ? null : selectedOption.value);
   };
 
   const handleDialogChange = (selectedOption) => {
@@ -34,43 +35,44 @@ const SearchWrap = ({ onSearch}) => {
   };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const fetchSelectionValues = async (company = null) => {
+    try {
+      const response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{
+        big: location.state.type,
+        company: company || null
+      });
+      const { companies, names } = response.data;
+      
+      // 센터명 옵션 설정
+      const centerOptions = [
+        { value: null, label: '전체' },
+        ...companies.map(company => ({
+          value: company,
+          label: company
+        }))
+      ];
+      setSelectCenterOptions(centerOptions);
+
+      // 대화명 옵션 설정
+      const dialogOptions = [
+        { value: null, label: '전체' },
+        ...names.map(answer => ({
+          value: answer,
+          label: answer
+        }))
+      ];
+      setSelectDialogOptions(dialogOptions);
+
+    } catch (err) {
+      setError('데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
+      console.error('데이터를 불러오는데 실패했습니다:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchSelectionValues = async () => {
-      try {
-        const response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{
-          big: location.state.type
-        });
-        const { companies, names } = response.data;
-        
-        // 센터명 옵션 설정
-        const centerOptions = [
-          { value: null, label: '전체' },
-          ...companies.map(company => ({
-            value: company,
-            label: company
-          }))
-        ];
-        setSelectCenterOptions(centerOptions);
-
-        // 대화명 옵션 설정
-        const dialogOptions = [
-          { value: null, label: '전체' },
-          ...names.map(answer => ({
-            value: answer,
-            label: answer
-          }))
-        ];
-        setSelectDialogOptions(dialogOptions);
-
-      } catch (err) {
-        setError('데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
-        console.error('데이터를 불러오는데 실패했습니다:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
+    
     fetchSelectionValues();
   }, [location.pathname]);
 
@@ -166,7 +168,7 @@ const SearchWrap = ({ onSearch}) => {
           <Btn size="sm" onClick={() => {
             // 검색 이벤트 핸들러 호출
             onSearch(selectedCenter?.value === '전체' ? null : selectedCenter?.value,selectDialog?.value === '전체' ? null : selectDialog?.value,searchText || null);
-      
+          
           }}>
             검색
           </Btn>
