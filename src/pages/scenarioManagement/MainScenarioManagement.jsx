@@ -9,17 +9,20 @@ import AgGrid from '../../components/common/grids/AgGrid'
 
 // 얼럿
 import CustomAlert from "../../components/common/modals/CustomAlert";
+import { allowIdList, fetchCommonData } from '../../constants/common';
 
 const MainScenarioManagement = () => {
   //모달 관련련
   const [modalText, setModalText] = useState("");
+ 
   const navigate = useNavigate();
   const location = useLocation();
   // 모달 임시추가
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const handleOpen = () => setIsModalOpen(true);
   const handleClose = () => setIsModalOpen(false);
- 
+  const [userCompany, setUserCompany] = useState("");
+    const [userId, setUserId] = useState("");
   // CustomAlert 상태 관리
   const [alertState, setAlertState] = useState({
     isOpen: false,
@@ -33,7 +36,14 @@ const MainScenarioManagement = () => {
     onCancel: () => {}
   });
   useEffect(()=>{
-    fetchListData()
+    const preProcess= async ()=>{
+      const { company, id } = await fetchCommonData();
+      setUserCompany(company);
+      setUserId(id);
+      fetchListData();
+    }
+    preProcess();
+
   },[location.pathname])
   // Alert 닫기 함수
   const hideAlert = () => {
@@ -155,6 +165,35 @@ const MainScenarioManagement = () => {
 
   const handleDataUpdate = (updatedData,gridApi) => {
     const selectedRows = gridApi.getSelectedRows();
+    let stop=false;
+    console.log(allowIdList.indexOf(userId))
+    // 회사명 검색후 금지지
+     if(allowIdList.indexOf(userId)===-1){
+      selectedRows.map((e)=>{
+        if(e.company!==userCompany)stop=true;
+          
+      })
+     }
+     console.log("stop",stop)
+     if(stop){
+      setAlertState({
+        isOpen: true,
+        title: '경고',
+        message:  (
+          <>
+            <div>선택한 항목 중 다른 센터의 {location.state.type==='FAQ'?'FAQ':'메인 시나리오'}가 포함되어 있습니다.</div>
+            <div>본인 센터의 {location.state.type==='FAQ'?'FAQ':'시나리오'}만 선택해 주세요.</div>
+          </>
+        ),
+        iconMode: 'warn',
+        confirmButton: true,
+        cancelButton: false,
+        onConfirm: () => setAlertState({ isOpen: false }),
+        onCancel: () => setAlertState({ isOpen: false })
+      });
+      return;
+     }
+
     
     if (selectedRows.length > 0) {
       setAlertState({

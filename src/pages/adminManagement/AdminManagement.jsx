@@ -170,7 +170,7 @@ const AdminManagement = () => {
   };
   // 권한있는 id확인
   const chkId=async ()=>{
-    const response = await api.get(API_ENDPOINTS.GETID);
+    const response = await api.post(API_ENDPOINTS.GETID);
 
     let allowIdList=['Admin','IEA_Admin']
     let myId=response.data

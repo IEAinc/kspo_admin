@@ -26,6 +26,7 @@ const Input = ({
     widthSize = 'full', // widthSize 추가 (기본값은 full)
     labelSize = 'full',
     fixedFull = false,
+    noTransformed = false
   } = options;
 
   // 2. widthSize에 따라 Tailwind CSS 스타일 매핑
@@ -57,8 +58,8 @@ const Input = ({
         items-center
         justify-start
         w-full
-        md:w-[calc(50%-10px)]
-       ${fixedFull ? 'lg:w-full' : (labelName && widthSize === 'full' ? 'lg:w-full' : 'lg:w-auto')}
+        ${noTransformed && widthSize === 'full' ? 'md:w-full lg:w-full' : 'md:w-[calc(50%-10px)]'}
+        ${fixedFull ? 'lg:w-full' : (labelName && widthSize === 'full' ? 'lg:w-full' : 'lg:w-auto')}
         ${isColumn ? 'flex-col gap-[6px]' : 'flex-row items-center'}
       `}
     >

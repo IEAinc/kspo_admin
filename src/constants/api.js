@@ -59,11 +59,13 @@ export const API_ENDPOINTS = {
   SatisCompany:'/admin/chat-eval/company-list',
   LOGIN:'/admin/login',
   GETID:'/admin/get-userId',
+  GETCompany:'/admin/get-userCompany',
   LOGOUT:'/admin/logout',
   LogLIst:'/admin/login-log/list',
   LogCompany:'/admin/login-log/company-list',
   ScenarioHistory:'/admin/getScenarioHistory',
   ScenarioHistoryDetail:'/admin/getScenarioHistoryDetail',
   ScenarioHistorySelect:'/admin/getScenarioHistorySelectionValues',
+  GETIP:'/admin/getAllIPs',
   TEST:'/admin/test'
 };

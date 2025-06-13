@@ -11,21 +11,40 @@ import { API_ENDPOINTS } from '../../constants/api'
 import { api } from '../../constants/api';
 // 얼럿
 import CustomAlert from "../../components/common/modals/CustomAlert";
+import { allowIdList, fetchCommonData } from '../../constants/common.js'
 const DetailCardMainScenarioManagementRegister = () => {
+  
    const navigate = useNavigate();
   //  파라미터 받아오기
   const location=useLocation();
+   const [userCompany, setUserCompany] = useState("");
+   const [userId, setUserId] = useState("");
+
   // 초기데이터 불러오기
  
   // 초기 값 설정
   useEffect( ()=>{
-    const loadData = async () => {
+    const loadData = async (company,id) => {
       //수정시 초기 데이터 설정
       const response = await api.post(API_ENDPOINTS.Detail, {
         id:location.state.id
       });
       let data=response.data
-      setCenterName(data.company);
+         // 유저 company 가져와서 검증증
+      
+
+      if(data.company!==company&&allowIdList.indexOf(id)===-1){
+        location.state.type==='FAQ'?navigate('/ksponcoadministrator/scenarioManagement/faqManagement', {state:{
+          type:location.state.type,
+          
+        }}):navigate('/ksponcoadministrator/scenarioManagement/mainScenarioManagement', {state:{
+          type:location.state.type,
+          
+        }})
+      }
+    
+
+      setSelectedCenter({value:data.company,label:data.company})
       setDialogName(data.name);
       setQuestion(data.main_question)
       setText(data.answer);
@@ -44,10 +63,18 @@ const DetailCardMainScenarioManagementRegister = () => {
       }
       console.log(btnList)
     };
-    // 수정 일때만
-    if(location.state.mode==='update'){
-       loadData();
+    const preProcess=async ()=>{
+      const { company, id } = await fetchCommonData();
+      setUserCompany(company);
+      setUserId(id)
+      // 수정 일때만
+      if(location.state.mode==='update'){
+         loadData(company,id);
+      }
+      fetchCenterOptions(company,id)
     }
+    preProcess();
+      
   
   },[])
 // CustomAlert 상태 관리
@@ -207,7 +234,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       let data={
         big:location.state.type,
         id:location.state.id,
-        company:centerName.trim(),
+        company:selectedCenter.value,
         main_question:dialogQuestion,
         name:dialogName,
         answer:text,
@@ -290,7 +317,37 @@ const DetailCardMainScenarioManagementRegister = () => {
     }
 
   }
+  const [selectedCenter, setSelectedCenter] = useState({value:null, label:'전체'});
+  const handleCenterChange = (selectedOption) => {
+    setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
+  };
+  const [selectCenterOptions,setSelectCenterOptions] =useState([]);
+ const fetchCenterOptions = async (cp,id) => {
+      try {
+        
+        const response = await api.post(API_ENDPOINTS.SELECTION_VALUES);
+        const companies = response.data.companies; // ['1', '2'] 형식의 데이터
 
+        
+        // 옵션 배열 생성
+        const options = [
+        
+          ...companies.filter(company=>cp===company||allowIdList.indexOf(id)>-1).map(company => {
+            return  {
+              value: company,
+              label: company
+            };
+          
+        })
+        ];
+        if(location.state.mode==="register")setSelectedCenter(options[0]);
+   
+        
+        setSelectCenterOptions(options);
+      } catch (error) {
+        console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
+      }
+    };
 
 
   return (
@@ -302,16 +359,18 @@ const DetailCardMainScenarioManagementRegister = () => {
           센터명
           <span className="text-point-color">*</span>
         </div>
-        <div className="py-[6px] px-[8px] col-span-7 border-b border-tb-br-color">
-          <Input
-            name="centerName"
-            value={centerName}
-            required
-            onChange={(e) => setCenterName(e.target.value)} // 이벤트를 받아서 상태 업데이트
-            options={{
-              isNormal: true
-            }}
-          />
+        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
+        
+            <Select
+              value={selectedCenter} // 현재 선택된 값
+              options={selectCenterOptions} // 옵션 리스트
+              uiOptions={{
+                widthSize: 'full',
+                noTransformed: true
+              }}
+              onChange={handleCenterChange} // 변경 핸들러
+            />
+       
         </div>
         {/* 대화명 */}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
@@ -325,7 +384,9 @@ const DetailCardMainScenarioManagementRegister = () => {
             required
             onChange={(e) => setDialogName(e.target.value)} // 이벤트를 받아서 상태 업데이트
             options={{
-              isNormal: true
+              isNormal: true,
+              widthSize: 'full',
+              noTransformed: true
             }}
           />
         </div>
@@ -343,7 +404,9 @@ const DetailCardMainScenarioManagementRegister = () => {
             required
             onChange={(e) => setQuestion(e.target.value)} // 이벤트를 받아서 상태 업데이트
             options={{
-              isNormal: true
+              isNormal: true,
+              widthSize: 'full',
+              noTransformed: true
             }}
           />
         </div>
@@ -419,7 +482,7 @@ const DetailCardMainScenarioManagementRegister = () => {
                                 options={commonSelectOptions}
                                 uiOptions={{
                                   widthSize:'full',
-                                  fixedFull:true,
+                                  noTransformed: true
                                 }}
                                 onChange={(value) => handleSelectChange(value, index)} // Select 변경 핸들러}
                               />
@@ -438,7 +501,7 @@ const DetailCardMainScenarioManagementRegister = () => {
                                 placeholder={item.placeholder || ''} // 플레이스홀더
                                 value={item.inputValue || ''} // 인풋 값
                                 onChange={(e) => handleInputChange(e, index)} // Input 변경 핸들러
-                                options={{ isNormal: true, widthSize:'full',fixedFull:true }}
+                                options={{ isNormal: true, widthSize:'full', noTransformed: true }}
                               />
                             ) : (
                               item.btnName // Input이 없으면 텍스트 출력
@@ -455,7 +518,7 @@ const DetailCardMainScenarioManagementRegister = () => {
                                 placeholder={item.placeholder || ''}
                                 value={item.detailValue || ''}
                                 onChange={(e) => handleDetailInputChange(e, index)} // Detail Input 핸들러
-                                options={{ isNormal: true, widthSize:'full',fixedFull:true }}
+                                options={{ isNormal: true, widthSize:'full',noTransformed:true }}
                               />
                             ) : (
                               item.btnDetail // Detail Input이 없으면 텍스트 출력

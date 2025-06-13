@@ -38,7 +38,7 @@ const DetailCardAdminManagement = () => {
   };
   // 권한있는 id확인
     const chkAuth=async ()=>{
-      const response = await api.get(API_ENDPOINTS.GETID);
+      const response = await api.post(API_ENDPOINTS.GETID);
       let allowIdList=['Admin','IEA_Admin']
       let myId=response.data
       if(allowIdList.indexOf(myId)==-1){

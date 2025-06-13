@@ -8,20 +8,30 @@ import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
 import { API_ENDPOINTS } from '../../constants/api'
 import { api } from '../../constants/api';
+import { allowIdList, fetchCommonData } from '../../constants/common.js'
 const DetailCardMainScenarioManagement = () => {
   const navigate = useNavigate();
   //  파라미터 받아오기
   const location=useLocation();
   // 초기데이터 불러오기
- 
+  const [isCompany,setIsCompany]=useState(false);
+
+
   // 초기 값 설정
   useEffect( ()=>{
     const loadData = async () => {
+       const { company, id } = await fetchCommonData();
+       
+           
       //수정시 초기 데이터 설정
       const response = await api.post(API_ENDPOINTS.Detail, {
         id:location.state.id
       });
       let data=response.data
+      // 회사가 동일한지 확인
+      if(company===data.company||allowIdList.indexOf(id)>-1){
+        setIsCompany(true);
+      }
       setCenterName(data.company);
       setDialogName(data.name);
       setText(data.answer);
@@ -44,6 +54,7 @@ const DetailCardMainScenarioManagement = () => {
         }
       }
     };
+   
     
     loadData();
     
@@ -260,14 +271,17 @@ const DetailCardMainScenarioManagement = () => {
         >
           목록
         </Btn>
-        <Btn
+        {
+          isCompany?<Btn
           size="sm"
           minWidth="80px"
           colorMode={true}
           onClick={handleEditClick}
         >
           수정
-        </Btn>
+        </Btn>:<></>
+        }
+   
       </div>
     </Box>
   )

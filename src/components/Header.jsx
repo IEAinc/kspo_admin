@@ -14,7 +14,7 @@ const Header = () => {
     }
   }, []);
   const logOut=async ()=>{
-    await api.get(API_ENDPOINTS.LOGOUT)
+    await api.post(API_ENDPOINTS.LOGOUT)
     navigate("/ksponcoadministrator/login")
   }
   return (

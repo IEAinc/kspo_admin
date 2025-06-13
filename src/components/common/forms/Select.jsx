@@ -6,6 +6,7 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
     widthSize = 'full', // widthSize 추가 (기본값은 full)
     labelSize = 'full',
     fixedFull = false,
+    noTransformed  = false
   } = uiOptions;
 
   const [isOpen, setIsOpen] = useState(false);
@@ -58,14 +59,14 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
         items-center
         justify-start
         w-full
-        md:w-[calc(50%-10px)]
+        ${noTransformed && widthSize === 'full' ? 'md:w-full lg:w-full' : 'md:w-[calc(50%-10px)]'}
         ${fixedFull ? 'lg:w-full' : (label && widthSize === 'full' ? 'lg:w-full' : 'lg:w-auto')}
       `}
     >
       {label && (
         <label
           className={`
-          text-[14px] font-bold text-black min-w-[50px]
+          text-[14px] font-bold text-black min-w-[50px] 
           ${labelClass}
         `}
         >
@@ -95,7 +96,7 @@ const Select = ({ label, size, value, onChange, options, openDirection = "bottom
     
           `}
         >
-          <span className="text-[14px] text-black font-normal">
+          <span className="text-[14px] text-black font-normal overflow-hidden whitespace-nowrap">
             {currentOption.label || '선택하세요'} {/* 선택된 옵션의 텍스트 */}
           </span>
           <SelectArrow />
