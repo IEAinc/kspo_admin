@@ -10,7 +10,6 @@ export default function Layout() {
   const navigator= useNavigate()
   const chkAuth=async ()=>{
     // 아이디 가져오기로 토큰 검사
-    console.log("Here")
     try{
       const response = await api.post(API_ENDPOINTS.GETID)
       const ip = (await api.post(API_ENDPOINTS.GETIP)).data.data;

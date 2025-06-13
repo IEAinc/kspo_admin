@@ -1,6 +1,6 @@
 import { api, API_ENDPOINTS } from "./api";
 
-export const allowIdList=['Asdmin','IEA_Admin'];
+export const allowIdList=['Admin','IEA_Admin'];
 
 async function fetchUserCompany() {
 const res = await   api.post(API_ENDPOINTS.GETCompany);

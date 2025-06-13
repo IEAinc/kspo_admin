@@ -12,70 +12,71 @@ import Icon4 from '../assets/images/sidebar/ico_time.svg?react'
 import Icon4Active from '../assets/images/sidebar/ico_time_active.svg?react'
 import Arrow from '../assets/images/icon/ico_arrow.svg?react'
 import ArrowActive from '../assets/images/icon/ico_arrow_active.svg?react'
+import { allowIdList, fetchCommonData } from '../constants/common';
 
 // 메뉴 데이터 모음
-const menuData = [
-  {
-    title: '시나리오 관리',
-    path: '/ksponcoadministrator/menu1',
-    icon: {
-      default: Icon1,
-      active: Icon1Active,
-    },
-    subMenu: [
-      { title: '메인 시나리오 관리', path: '/ksponcoadministrator/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
-      { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
-    ],
-  },
-  {
-    title: '만족도 관리',
-    path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
-    icon: {
-      default: Icon2,
-      active: Icon2Active,
-    },
-  },
-  {
-    title: '관리자 관리',
-    path: '/ksponcoadministrator/adminManagement/adminManagement', // 하위 메뉴가 없음
-    icon: {
-      default: Icon3,
-      active: Icon3Active,
-    },
-  },
-  {
-    title: '이력 관리',
-    path: '/ksponcoadministrator/menu1',
-    icon: {
-      default: Icon4,
-      active: Icon4Active,
-    },
-    subMenu: [
-      { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory',state:{type:'big'} },
-      { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory',state:{type:'FAQ'} },
-      { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
-    ],
-  },
-  // {
-  //   title: '이력 관리',
-  //   path: '/ksponcoadministrator/menu1',
-  //   icon: {
-  //     default: Icon4,
-  //     active: Icon4Active,
-  //   },
-  //   subMenu: [
-  //     { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory' },
-  //     { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory' },
-  //     { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
-  //   ],
-  // },
-];
+
 
 const Sidebar = () => {
   // 아코디언 메뉴의 상태 관리
   const [openMenu, setOpenMenu] = useState(null);
   const location = useLocation(); // 현재 경로 가져오기
-
+  const [menuData,setMenuData ]= useState([
+    {
+      title: '시나리오 관리',
+      path: '/ksponcoadministrator/menu1',
+      icon: {
+        default: Icon1,
+        active: Icon1Active,
+      },
+      subMenu: [
+        { title: '메인 시나리오 관리', path: '/ksponcoadministrator/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
+        { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
+      ],
+    },
+    {
+      title: '만족도 관리',
+      path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+      icon: {
+        default: Icon2,
+        active: Icon2Active,
+      },
+    },
+    {
+      title: '관리자 관리',
+      path: '/ksponcoadministrator/adminManagement/adminManagement', // 하위 메뉴가 없음
+      icon: {
+        default: Icon3,
+        active: Icon3Active,
+      },
+    },
+    {
+      title: '이력 관리',
+      path: '/ksponcoadministrator/menu1',
+      icon: {
+        default: Icon4,
+        active: Icon4Active,
+      },
+      subMenu: [
+        { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory',state:{type:'big'} },
+        { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory',state:{type:'FAQ'} },
+        { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
+      ],
+    },
+    // {
+    //   title: '이력 관리',
+    //   path: '/ksponcoadministrator/menu1',
+    //   icon: {
+    //     default: Icon4,
+    //     active: Icon4Active,
+    //   },
+    //   subMenu: [
+    //     { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory' },
+    //     { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory' },
+    //     { title: '로그인 이력 조회', path: '/ksponcoadministrator/historyManagement/loginHistory' },
+    //   ],
+    // },
+  ]);
   // 현재 활성화된 메뉴의 인덱스를 찾아 설정
   useEffect(() => {
     const activeMenuIndex = menuData.findIndex((menu) => {
@@ -93,6 +94,49 @@ const Sidebar = () => {
       }
       return false;
     });
+    const makeMenu= async ()=>{
+      const { company, id } = await fetchCommonData();
+      console.log(allowIdList.indexOf(id))
+      if(allowIdList.indexOf(id)===-1){
+        setMenuData([
+          {
+            title: '시나리오 관리',
+            path: '/ksponcoadministrator/menu1',
+            icon: {
+              default: Icon1,
+              active: Icon1Active,
+            },
+            subMenu: [
+              { title: '메인 시나리오 관리', path: '/ksponcoadministrator/scenarioManagement/mainScenarioManagement',state:{type:'big'} },
+              { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
+            ],
+          },
+          {
+            title: '만족도 관리',
+            path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+            icon: {
+              default: Icon2,
+              active: Icon2Active,
+            },
+          },
+     
+          {
+            title: '이력 관리',
+            path: '/ksponcoadministrator/menu1',
+            icon: {
+              default: Icon4,
+              active: Icon4Active,
+            },
+            subMenu: [
+              { title: '메인시나리오 수정이력 조회', path: '/ksponcoadministrator/historyManagement/mainScenarioHistory',state:{type:'big'} },
+              { title: 'FAQ 수정이력 조회', path: '/ksponcoadministrator/historyManagement/faqModificationHistory',state:{type:'FAQ'} },
+            ],
+          },
+        
+        ]);
+      }
+    }
+    makeMenu();
 
     // 활성화된 메뉴를 찾아 openMenu로 설정 (없다면 null)
     setOpenMenu(activeMenuIndex !== -1 ? activeMenuIndex : null);
@@ -113,7 +157,7 @@ const Sidebar = () => {
       </h1>
       {/* 동적 메뉴 렌더링 */}
       <div className="py-[10px]">
-        {menuData.map((menu, index) => {
+        {menuData?menuData.map((menu, index) => {
           const isMenuActive = location.pathname.startsWith(menu.path); // 상위 메뉴 활성화 여부
           const isSubMenuActive =
             menu.subMenu &&
@@ -190,7 +234,7 @@ const Sidebar = () => {
               )}
             </div>
           );
-        })}
+        }):(<></>)}
       </div>
     </div>
   );
