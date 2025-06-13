@@ -147,7 +147,12 @@ const Login = () => {
       setLoginSuccess(false);
     
   }
-
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin()
+      // 여기에 원하는 동작 수행
+    }
+  };
   return (
     <div className="w-full h-[100vh] relative flex items-center justify-center bg-primary-blue-light">
      <div className="w-full min-h-[575px] max-w-[calc(100%-48px)] md:max-w-[600px] mx-auto py-[80px] px-[24px] md:px-[100px] lg:px-[100px] bg-white border border-br-gray rounded-[8px]">
@@ -179,6 +184,7 @@ const Login = () => {
             onChange={handlePasswordChange}
             required
             error={errorUserPassword}
+            onKeyDown={handleKeyDown}
             options={{
               isColumn: true,
               widthSize: 'full',

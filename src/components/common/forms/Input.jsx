@@ -13,6 +13,7 @@ const Input = ({
                  error,
                  onChange,
                  onInput,
+                 onKeyDown,
                  options = {}
                }) => {
   // 고유 ID 생성
@@ -81,6 +82,7 @@ const Input = ({
         name={name}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         onInput={onInput}
         placeholder={placeholder}
         disabled={disabled}
