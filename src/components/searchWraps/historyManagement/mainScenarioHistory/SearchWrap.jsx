@@ -7,7 +7,8 @@ import Select from '../../../common/forms/Select.jsx'
 import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
 import { useLocation } from 'react-router-dom';
 import { API_ENDPOINTS,api } from '../../../../constants/api.js';
-
+import { fetchCommonData } from '../../../../constants/common.js';
+import Cookies from "js-cookie";
 const SearchWrap = ({onSearch}) => {
   const location= useLocation()
   // 검색조건
@@ -19,6 +20,10 @@ const SearchWrap = ({onSearch}) => {
   const handleCenterChange = (selectedOption) => {
     setSelectedCenter(selectedOption);
     fetchCenterOptions(selectedOption.value) // 선택된 옵션을 직접 값으로 받음
+    Cookies.set('admincompany', selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
   };
 
 
@@ -28,6 +33,10 @@ const SearchWrap = ({onSearch}) => {
   const [selectDialog, setSelectDialog] = useState(selectDialogOptions[0]);
   const handleDialogChange = (selectedOption) => {
     setSelectDialog(selectedOption);
+    Cookies.set('adminName', selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
   }
   // (select) > 수정 유형
   const selectModificationOptions = [
@@ -60,7 +69,7 @@ const SearchWrap = ({onSearch}) => {
   const handleModificationChange = (selectedOption) => {
     setSelectModification(selectedOption);
   }
-  const fetchCenterOptions = async (company = null) => {
+  const fetchCenterOptions = async (company = null,isFirst=false) => {
     try {
       const response = await api.post(API_ENDPOINTS.ScenarioHistorySelect,{
         big: location.state.type,
@@ -87,14 +96,54 @@ const SearchWrap = ({onSearch}) => {
         }))
       ];
       setSelectDialogOptions(options);
+      //초기값 구분 시나리오 같은경우  해당 회사가 없을경우가 존재하지 않으나 여기는 없을 수 있음
+      if(isFirst){
+      // 회사 초기값 세팅
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        if(companies.indexOf(initCompany)>-1){
+          setSelectedCenter( { value: initCompany, label: initCompany })
+          Cookies.set('admincompany', initCompany, { 
+            path: '/', 
+            sameSite: 'Strict' 
+          });
+        }else{
+          fetchCenterOptions(null,false)
+          initCompany=null;
+          setSelectedCenter( { value: initCompany, label: '전체' })
+        }
+        let cookieName=Cookies.get("adminName")
+        if(names.indexOf(cookieName)>-1){
+          if(cookieName!==undefined)setSelectDialog({ value: cookieName, label: cookieName });
+          if(cookieName===null)setSelectDialog({ value: null, label: "전체" });
+        }else{
+          cookieName=null;
+        }
+        //대화명 세팅       
+        onSearch(initCompany,cookieName)
+      }else{
+        if(names.indexOf(selectDialog)===-1){
+          setSelectDialog({ value: null, label: "전체" })
+        }
+      }
     } catch (error) {
       console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
     }
   };
   useEffect(() => {
      
-  
-      fetchCenterOptions();
+      const preProcess= async ()=>{
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        fetchCenterOptions(initCompany,true);
+      }
+      preProcess();
       
     }, [location.pathname]); 
   // (input) > 내용

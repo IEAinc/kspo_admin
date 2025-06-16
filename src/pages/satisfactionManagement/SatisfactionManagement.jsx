@@ -8,6 +8,8 @@ import AgGrid from "../../components/common/grids/AgGrid.jsx";
 import { API_ENDPOINTS ,api} from '../../constants/api'
 // 얼럿
 import CustomAlert from "../../components/common/modals/CustomAlert";
+import { fetchCommonData } from '../../constants/common.js';
+import Cookies from "js-cookie";
 const SatisfactionManagement = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -81,13 +83,14 @@ const SatisfactionManagement = () => {
       
       // API 응답 데이터를 그리드 데이터 형식에 맞게 변환
       const grid_data = data.map(item => ({
+        ...item,
         id: item.id,
         company: item.company,
         name: item.name,
         answer: item.answer,
         created: timeFormat(item.created),
         point:item.point,
-        ip:item.ip
+        ip:item.ip,
       }));
 
       /* 그리드 헤더 설정 */
@@ -98,7 +101,7 @@ const SatisfactionManagement = () => {
         { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },
         { headerName: "점수",width: 80,suppressSizeToFit: true ,field: "point", cellClass: 'text-center' },
         { headerName: "IP",width: 140,suppressSizeToFit: true , field: "ip", cellClass: 'text-center' },
-        {
+           {
           headerName: "상세보기",
           field: 'id',
           width: 100,
@@ -111,8 +114,11 @@ const SatisfactionManagement = () => {
               </Btn>
             );
           },
+          
         },
-      ];
+        { headerName: "피드백",width: 140,suppressSizeToFit: true , field: "comment", cellClass: 'text-center',hide:true },
+
+           ];
       setGridData(grid_data);
       setGridColumns(grid_columns);
       setGridCount(grid_data.length);
@@ -122,7 +128,12 @@ const SatisfactionManagement = () => {
   };
 
   useEffect(() => {
-    fetchListData()
+  
+    const preProcess=async ()=>{
+     
+      fetchListData()
+    }
+    preProcess();
   },[])
 
   // 최종 반환

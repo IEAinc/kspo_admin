@@ -10,6 +10,7 @@ import AgGrid from '../../components/common/grids/AgGrid'
 // 얼럿
 import CustomAlert from "../../components/common/modals/CustomAlert";
 import { allowIdList, fetchCommonData } from '../../constants/common';
+import Cookies from 'js-cookie';
 
 const MainScenarioManagement = () => {
   //모달 관련련
@@ -36,13 +37,7 @@ const MainScenarioManagement = () => {
     onCancel: () => {}
   });
   useEffect(()=>{
-    const preProcess= async ()=>{
-      const { company, id } = await fetchCommonData();
-      setUserCompany(company);
-      setUserId(id);
-      fetchListData();
-    }
-    preProcess();
+
 
   },[location.pathname])
   // Alert 닫기 함수
@@ -247,7 +242,7 @@ const MainScenarioManagement = () => {
 
 
   const fetchListData = async (company = null, name = null, searchText = null) => {
-    try {
+  
       const response = await api.post(API_ENDPOINTS.LIST, {
         big: location.state.type,
         company: company || null,
@@ -257,15 +252,27 @@ const MainScenarioManagement = () => {
       const { data } = response;
       
       // API 응답 데이터를 그리드 데이터 형식에 맞게 변환
-      const grid_data = data.map(item => ({
-        id: item.id,
-        company: item.company,
-        name: item.name,
-        answer: item.answer,
-        detail: item.id,
-        main_question:item.main_question
-      }));
-
+      const grid_data = data.map(item => {
+        let data={
+          ...item,
+          id: item.id,
+          company: item.company,
+          name: item.name,
+          answer: item.answer,
+          detail: item.id,
+          main_question:item.main_question
+        };
+        //버튼  데이터 추가
+        data.btn_detail=data.btn_name?.split("**")[1]?data.btn_name.split("**")[1]:null
+        data.btn_name=data.btn_name?.split("**")[0]
+        for(let i=0;i<=7;i++){
+          data["btn_detail"+i]=data["btn_name"+i]?.split("**")[1]?data["btn_name"+i]?.split("**")[1]:null
+          data["btn_name"+i]=data["btn_name"+i]?.split("**")[0]
+        }
+        
+        return data
+    });
+    console.log(grid_data)
       /* 그리드 헤더 설정 */
       const grid_columns = [
         { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
@@ -287,13 +294,20 @@ const MainScenarioManagement = () => {
           },
         },
       ];
-
+      //버튼 그리트 추가가
+      grid_columns.push( { headerName: "버튼 유형", flex:1,field: "btn_type", cellClass: 'text-center',hide:true});
+      grid_columns.push( { headerName: "버튼 명", flex:1,field: "btn_name", cellClass: 'text-center',hide:true});
+      grid_columns.push( { headerName: "버튼 상세", flex:1,field: "btn_detail", cellClass: 'text-center',hide:true});
+      for(let i=0;i<=7;i++){
+        grid_columns.push( { headerName: "버튼"+ i +" 유형", flex:1,field: "btn_type"+i, cellClass: 'text-center',hide:true});
+        grid_columns.push( { headerName: "버튼"+ i +"  명", flex:1,field: "btn_name"+i, cellClass: 'text-center',hide:true});
+        grid_columns.push( { headerName: "버튼"+ i +"  상세", flex:1,field: "btn_detail+i", cellClass: 'text-center',hide:true});
+      }
+      
       setGridData(grid_data);
       setGridColumns(grid_columns);
       setGridCount(grid_data.length);
-    } catch (error) {
-      console.error('데이터를 불러오는데 실패했습니다:', error);
-    }
+   
   };
 
 

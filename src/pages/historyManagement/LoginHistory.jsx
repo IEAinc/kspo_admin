@@ -42,8 +42,7 @@ const LoginHistory = () => {
   }
   useEffect(() => {
   
-    fetchListData()
-
+  
   },[])
   const fetchListData = async (company = null, searchText = null,startDate= null,endDate= null) => {
     try {

@@ -5,7 +5,8 @@ import Btn from '../../common/forms/Btn.jsx'
 import Input from '../../common/forms/Input.jsx'
 import Select from '../../common/forms/Select.jsx'
 import { api, API_ENDPOINTS } from '../../../constants/api'
-
+import { fetchCommonData } from "../../../constants/common.js";
+import Cookies from "js-cookie";
 const SearchWrap = ({onSearchClick}) => {
  
   // 검색조건
@@ -33,16 +34,43 @@ const SearchWrap = ({onSearchClick}) => {
             label: company
           }))
         ];
+        // 회사 초기값 세팅
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        if(companies.indexOf(initCompany)>-1){
+          setSelectedCenter( { value: initCompany, label: initCompany })
+          Cookies.set('admincompany', initCompany, { 
+            path: '/', 
+            sameSite: 'Strict' 
+          });
+          onSearchClick(initCompany)
+        }else{
+          onSearchClick()
+        }
+       
         
         setSelectCenterOptions(options);
       } catch (error) {
         console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
       }
     };
+    const preprocess=async ()=>{
+     await fetchCenterOptions();
 
-    fetchCenterOptions();
+    }
+
+    preprocess();
+
+   
   }, []);
   const handleCenterChange = (selectedOption) => {
+    Cookies.set('admincompany', selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
     setSelectedCenter(selectedOption);
   };
   

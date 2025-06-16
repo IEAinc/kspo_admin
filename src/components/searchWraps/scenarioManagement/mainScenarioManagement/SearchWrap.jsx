@@ -7,7 +7,9 @@ import Btn from '../../../common/forms/Btn.jsx'
 import Input from '../../../common/forms/Input.jsx'
 import Select from '../../../common/forms/Select.jsx'
 import { useLocation } from "react-router-dom";
-
+import { fetchCommonData } from "../../../../constants/common.js";
+import Cookies from 'js-cookie';
+   
 const SearchWrap = ({ onSearch}) => {
   const [selectCenterOptions, setSelectCenterOptions] = useState([
     { value: null, label: '전체' }
@@ -15,8 +17,8 @@ const SearchWrap = ({ onSearch}) => {
   const [selectDialogOptions, setSelectDialogOptions] = useState([
     { value: null, label: '전체' }
   ]);
-  const [selectedCenter, setSelectedCenter] = useState(null);
-  const [selectDialog, setSelectDialog] = useState(null);
+  const [selectedCenter, setSelectedCenter] = useState( { value: null, label: '전체' });
+  const [selectDialog, setSelectDialog] = useState( { value: null, label: '전체' });
   const [searchText, setSearchText] = useState(null);
   const location=useLocation();
   const resetSearch=()=>{
@@ -26,23 +28,31 @@ const SearchWrap = ({ onSearch}) => {
   }
   // Select 컴포넌트의 onChange 핸들러
   const handleCenterChange = (selectedOption) => {
+    Cookies.set('admincompany', selectedOption?.value === '전체' ? null : selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
     setSelectedCenter(selectedOption?.value === '전체' ? null : selectedOption);
     fetchSelectionValues(selectedOption?.value === '전체' ? null : selectedOption.value);
   };
 
   const handleDialogChange = (selectedOption) => {
     setSelectDialog(selectedOption?.value === '전체' ? null : selectedOption);
+    Cookies.set('adminName', selectedOption?.value === '전체' ? null : selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
   };
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const fetchSelectionValues = async (company = null) => {
+  const fetchSelectionValues = async (company = null,isFirst=false) => {
     try {
       const response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{
         big: location.state.type,
         company: company || null
       });
       const { companies, names } = response.data;
-      
+
       // 센터명 옵션 설정
       const centerOptions = [
         { value: null, label: '전체' },
@@ -62,6 +72,42 @@ const SearchWrap = ({ onSearch}) => {
         }))
       ];
       setSelectDialogOptions(dialogOptions);
+      console.log("selectDialog",selectDialog)
+      if(isFirst){
+      // 회사 초기값 세팅
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        if(companies.indexOf(initCompany)>-1){
+          console.log("hre")
+          setSelectedCenter( { value: initCompany, label: initCompany })
+          Cookies.set('admincompany', initCompany, { 
+            path: '/', 
+            sameSite: 'Strict' 
+          });
+        }else{
+          fetchSelectionValues(null,false)
+          initCompany=null;
+          setSelectedCenter( { value: initCompany, label: '전체' })
+        }
+        let cookieName=Cookies.get("adminName")
+        if(names.indexOf(cookieName)>-1){
+          if(cookieName!==undefined)setSelectDialog({ value: cookieName, label: cookieName });
+          if(cookieName===null)setSelectDialog({ value: null, label: "전체" });
+        }else{
+          cookieName=null;
+          setSelectDialog( { value: cookieName, label: '전체' })
+        }
+        //대화명 세팅
+        onSearch(initCompany,cookieName)
+      }else{
+     
+        if(names.indexOf(selectDialog)===-1){
+          setSelectDialog({ value: null, label: "전체" })
+        }
+      }
 
     } catch (err) {
       setError('데이터를 불러오는데 실패했습니다. 잠시 후 다시 시도해주세요.');
@@ -72,8 +118,18 @@ const SearchWrap = ({ onSearch}) => {
   };
 
   useEffect(() => {
+    const preprocess= async ()=>{
+      console.log("first")
+      const { company, id } = await fetchCommonData();
+      let initCompany=company;
+      let cookieCompany=Cookies.get("admincompany")
+      if(cookieCompany!==undefined)initCompany=cookieCompany;
+      if(cookieCompany==='null')initCompany=null;
+      fetchSelectionValues(initCompany,true);
+     
+    }
     
-    fetchSelectionValues();
+    preprocess()
   }, [location.pathname]);
 
 

@@ -6,7 +6,8 @@ import Input from '../../common/forms/Input.jsx'
 import Select from '../../common/forms/Select.jsx'
 import CustomDatePicker from '../../common/forms/CustomDatepicker.jsx'
 import { API_ENDPOINTS,api } from "../../../constants/api.js";
-
+import { fetchCommonData } from "../../../constants/common.js";
+import Cookies from "js-cookie";
 const SearchWrap = ({onSearch}) => {
   
   // 검색조건}
@@ -16,7 +17,11 @@ const SearchWrap = ({onSearch}) => {
 
   ]);
   const [selectedCenter, setSelectedCenter] = useState(selectCenterOptions[0]);
-  const handleCenterChange = (selectedOption) => {
+  const handleCenterChange = (selectedOption) => { 
+     Cookies.set('admincompany', selectedOption?.value === '전체' ? null : selectedOption.value, { 
+          path: '/', 
+          sameSite: 'Strict' 
+        });
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
   };
 
@@ -53,12 +58,33 @@ const SearchWrap = ({onSearch}) => {
         ];
         
         setSelectCenterOptions(options);
+        // 회사 초기값 세팅
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        if(companies.indexOf(initCompany)>-1){
+          setSelectedCenter( { value: initCompany, label: initCompany===null?"전체":initCompany })
+          Cookies.set('admincompany', initCompany, { 
+            path: '/', 
+            sameSite: 'Strict' 
+          }); 
+        }
+       
+
       } catch (error) {
         console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
       }
     };
+    const preprocess= async ()=>{
+          //대화명 세팅
+        await  fetchCenterOptions();
+ 
+         
+    }
 
-    fetchCenterOptions();
+    preprocess();
   }, []);
   // (input) > 검색 키워드
   const [searchContent, setSearchContent] = useState('')

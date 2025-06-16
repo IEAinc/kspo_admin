@@ -391,8 +391,7 @@ const DetailCardMainScenarioManagementRegister = () => {
           />
         </div>
          {/* 대표 질문*/}
-         {
-          location.state.type==='FAQ'?<>
+        
           <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
           대표 질문
           <span className="text-point-color">*</span>
@@ -410,8 +409,7 @@ const DetailCardMainScenarioManagementRegister = () => {
             }}
           />
         </div>
-          </>:<></>
-         }
+         
         {/* 답변 내용 */}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
           답변 내용

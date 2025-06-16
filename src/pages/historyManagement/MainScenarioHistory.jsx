@@ -32,8 +32,7 @@ const MainScenarioHistory = () => {
     }
   }
   useEffect(() => {
-    console.log(location.state)
-      fetchListData()
+
   
     },[location.pathname])
   const dayFormat=(date)=>{

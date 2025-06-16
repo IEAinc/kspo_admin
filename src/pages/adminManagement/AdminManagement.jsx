@@ -199,7 +199,7 @@ const AdminManagement = () => {
       });
     }else{
        /* 그리드 데이터 */
-    handleSearchClick()
+
     /* 그리드 헤더 설정 */
     let grid_columns = [
       { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},

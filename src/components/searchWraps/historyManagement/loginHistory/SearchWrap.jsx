@@ -6,7 +6,8 @@ import Input from '../../../common/forms/Input.jsx'
 import Select from '../../../common/forms/Select.jsx'
 import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
 import { api,API_ENDPOINTS } from "../../../../constants/api.js";
-
+import { fetchCommonData } from "../../../../constants/common.js";
+import Cookies from "js-cookie";
 const SearchWrap = ({onSearch}) => {
   // 검색조건
   // (select) > 센터명
@@ -16,6 +17,10 @@ const SearchWrap = ({onSearch}) => {
   const [selectedCenter, setSelectedCenter] = useState(selectCenterOptions[0]);
   const handleCenterChange = (selectedOption) => {
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
+    Cookies.set('admincompany', selectedOption.value, { 
+      path: '/', 
+      sameSite: 'Strict' 
+    });
   };
    const [dateRange, setDateRange] = useState([null,null]); 
   // (input) > 내용
@@ -47,7 +52,22 @@ const SearchWrap = ({onSearch}) => {
             label: company
           }))
         ];
-        
+        // 회사 초기값 세팅
+        const { company, id } = await fetchCommonData();
+        let initCompany=company;
+        let cookieCompany=Cookies.get("admincompany")
+        if(cookieCompany!==undefined)initCompany=cookieCompany;
+        if(cookieCompany==='null')initCompany=null;
+        if(companies.indexOf(initCompany)>-1){
+          setSelectedCenter( { value: initCompany, label: initCompany })
+          Cookies.set('admincompany', initCompany, { 
+            path: '/', 
+            sameSite: 'Strict' 
+          });
+          onSearchClick(initCompany)
+        }else{
+          onSearchClick()
+        }
         setSelectCenterOptions(options);
       } catch (error) {
         console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
