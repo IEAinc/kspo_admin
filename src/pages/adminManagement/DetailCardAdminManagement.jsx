@@ -337,197 +337,226 @@ const DetailCardAdminManagement = () => {
   return (
     <Box padding={{ px: 16, py: 16 }}>
       {/* 카드 (필터 영역) */}
-      <div className="grid grid-cols-8 border border-tb-br-color rounded-[4px]">
+      <div className="border border-tb-br-color rounded-[4px]">
         {/* 센터명 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          센터명
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px]">
-            <Select
-              value={selectedCenter} // 현재 선택된 값
-              options={selectCenterOptions} // 옵션 리스트
-              uiOptions={{
-                widthSize:'full',
-              }}
-              onChange={handleCenterChange} // 변경 핸들러
-            />
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            센터명
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px]">
+              <Select
+                value={selectedCenter} // 현재 선택된 값
+                options={selectCenterOptions} // 옵션 리스트
+                uiOptions={{
+                  widthSize:'full',
+                  noTransformed: true
+                }}
+                onChange={handleCenterChange} // 변경 핸들러
+              />
+            </div>
           </div>
         </div>
         {/* 성함 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          성함
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px]">
-            <Input
-              id='dialogName'
-              placeholder=''
-              value={inputJson.name}
-              onInput={(e)=>setInputJson({...inputJson,name:e.target.value.replaceAll(" ","")})}
-              options={{
-                isNormal:true
-              }}
-            />
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            성함
+            <span className="text-point-color">*</span>
           </div>
-        </div>
-        {/* 아이디 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          아이디
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px] flex items-center gap-[4px]">
-            <Input
-              id='dialogName'
-              // placeholder=''
-              value={inputJson.id}
-              readonly={inputJson.chkId}
-              onInput={(e)=>setInputJson({...inputJson,id:e.target.value.replaceAll(" ","")})}
-              options={{
-                isNormal:true,
-                fixedFull:true
-              }}
-            />
-            <Btn
-              size="sm"
-              colorMode={true}
-              minWidth="78px"
-              onClick={chkId}
-            >
-              중복확인
-            </Btn>
-          </div>
-        </div>
-        {/* 비밀번호 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          비밀번호
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px]">
-            <Input
-              id='dialogName'
-              placeholder=''
-              type='password'
-              value={inputJson.password}
-              onInput={(e)=>setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}
-              onChange={(e)=>{setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}}
-              options={{
-                isNormal:true
-              }}
-            />
-          </div>
-        </div>
-        {/* 비밀번호 확인 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          비밀번호 확인
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px]">
-            <Input
-              id='dialogName'
-              placeholder=''
-              type='password'
-              value={inputJson.chkPassword}
-              onInput={(e)=>setInputJson({...inputJson,chkPassword:e.target.value.replaceAll(" ","")})}
-              options={{
-                isNormal:true
-              }}
-            />
-          </div>
-        </div>
-        {/* 이메일 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          이메일
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px] flex justify-between items-center gap-[4px]">
-            <div className="w-[calc(50%-5px)]">
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px]">
               <Input
                 id='dialogName'
-                // placeholder=''
-                value={inputJson.email}
-                onInput={(e)=>setInputJson({...inputJson,email:e.target.value.replaceAll(" ","")})}
+                placeholder=''
+                value={inputJson.name}
+                onInput={(e)=>setInputJson({...inputJson,name:e.target.value.replaceAll(" ","")})}
                 options={{
                   isNormal:true,
-                  widthSize:'full',
+                  noTransformed: true
                 }}
               />
             </div>
-            <span className="inline-block">
+          </div>
+        </div>
+
+        {/* 아이디 */}
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            아이디
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px] flex items-center gap-[4px]">
+              <Input
+                id='dialogName'
+                // placeholder=''
+                value={inputJson.id}
+                readonly={inputJson.chkId}
+                onInput={(e)=>setInputJson({...inputJson,id:e.target.value.replaceAll(" ","")})}
+                options={{
+                  isNormal:true,
+                  fixedFull:true,
+                  noTransformed: true
+                }}
+              />
+              <Btn
+                size="sm"
+                colorMode={true}
+                minWidth="78px"
+                onClick={chkId}
+              >
+                중복확인
+              </Btn>
+            </div>
+          </div>
+        </div>
+
+        {/* 비밀번호 */}
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            비밀번호
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px]">
+              <Input
+                id='dialogName'
+                placeholder=''
+                type='password'
+                value={inputJson.password}
+                onInput={(e)=>setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}
+                onChange={(e)=>{setInputJson({...inputJson,password:e.target.value.replaceAll(" ","")})}}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        {/* 비밀번호 확인 */}
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            비밀번호 확인
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px]">
+              <Input
+                id='dialogName'
+                placeholder=''
+                type='password'
+                value={inputJson.chkPassword}
+                onInput={(e)=>setInputJson({...inputJson,chkPassword:e.target.value.replaceAll(" ","")})}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        {/* 이메일 */}
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            이메일
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px] flex justify-between items-center gap-[4px]">
+              <div className="w-[calc(50%-5px)]">
+                <Input
+                  id='dialogName'
+                  // placeholder=''
+                  value={inputJson.email}
+                  onInput={(e)=>setInputJson({...inputJson,email:e.target.value.replaceAll(" ","")})}
+                  options={{
+                    isNormal:true,
+                    widthSize:'full',
+                    noTransformed: true
+                  }}
+                />
+              </div>
+              <span className="inline-block">
               @
             </span>
-            <div className="w-[calc(50%-5px)]">
-              <Select
-                value={selectedEmail} // 현재 선택된 값
-                options={selectEmailOptions} // 옵션 리스트
-                uiOptions={{
-                  widthSize:'full',
-                }}
-                onChange={handleEmailChange} // 변경 핸들러
-              />
+              <div className="w-[calc(50%-5px)]">
+                <Select
+                  value={selectedEmail} // 현재 선택된 값
+                  options={selectEmailOptions} // 옵션 리스트
+                  uiOptions={{
+                    widthSize:'full',
+                    noTransformed: true
+                  }}
+                  onChange={handleEmailChange} // 변경 핸들러
+                />
+              </div>
             </div>
           </div>
         </div>
         {/* 연락처 */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-          연락처
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-b border-tb-br-color">
-          <div className="w-full max-w-[321px] flex items-center gap-[4px]">
-            <Input
-              id='dialogName'
-              // placeholder=''
-              value={inputJson.tel1}
-              onInput={(e)=>setInputJson({...inputJson,tel1:sanitizeAndLimit(e.target.value.replaceAll(" ",""),3)})}
-              options={{
-                isNormal:true
-              }}
-            />
-            -
-            <Input
-              id='dialogName'
-              // placeholder=''
-              value={inputJson.tel2}
-              onInput={(e)=>setInputJson({...inputJson,tel2:sanitizeAndLimit(e.target.value.replaceAll(" ",""),4)})}
-              options={{
-                isNormal:true
-              }}
-            />
-            -
-            <Input
-              id='dialogName'
-              // placeholder=''
-              value={inputJson.tel3}
-              onInput={(e)=>setInputJson({...inputJson,tel3:sanitizeAndLimit(e.target.value.replaceAll(" ",""),4)})}
-              options={{
-                isNormal:true
-              }}
-            />
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+            연락처
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-b border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px] flex items-center gap-[4px]">
+              <Input
+                id='dialogName'
+                // placeholder=''
+                value={inputJson.tel1}
+                onInput={(e)=>setInputJson({...inputJson,tel1:sanitizeAndLimit(e.target.value.replaceAll(" ",""),3)})}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+              -
+              <Input
+                id='dialogName'
+                // placeholder=''
+                value={inputJson.tel2}
+                onInput={(e)=>setInputJson({...inputJson,tel2:sanitizeAndLimit(e.target.value.replaceAll(" ",""),4)})}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+              -
+              <Input
+                id='dialogName'
+                // placeholder=''
+                value={inputJson.tel3}
+                onInput={(e)=>setInputJson({...inputJson,tel3:sanitizeAndLimit(e.target.value.replaceAll(" ",""),4)})}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+            </div>
           </div>
         </div>
         {/* 허용IP */}
-        <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-tb-br-color">
-          허용IP
-          <span className="text-point-color">*</span>
-        </div>
-        <div className="px-[8px] py-[6px] col-span-7 border-tb-br-color">
-          <div className="w-full max-w-[321px]">
-            <Input
-              id='dialogName'
-              placeholder=''
-              value={inputJson.ip}
-              onInput={(e)=>setInputJson({...inputJson,ip:e.target.value.replaceAll(" ","")})}
-              options={{
-                isNormal:true
-              }}
-            />
+        <div className="w-full flex">
+          <div className="min-w-[120px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-tb-br-color">
+            허용IP
+            <span className="text-point-color">*</span>
+          </div>
+          <div className="w-full px-[8px] py-[6px] border-tb-br-color">
+            <div className="w-full lg:max-w-[321px] md:max-w-[321px]">
+              <Input
+                id='dialogName'
+                placeholder=''
+                value={inputJson.ip}
+                onInput={(e)=>setInputJson({...inputJson,ip:e.target.value.replaceAll(" ","")})}
+                options={{
+                  isNormal:true,
+                  noTransformed: true
+                }}
+              />
+            </div>
           </div>
         </div>
       </div>
