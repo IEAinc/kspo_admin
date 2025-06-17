@@ -234,7 +234,7 @@ const DetailMainScenarioHistory = () => {
 
                         return (
                           <React.Fragment key={index}>
-                            <div className={`col-span-2 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
                               {item.name}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
@@ -332,7 +332,7 @@ const DetailMainScenarioHistory = () => {
 
                         return (
                           <React.Fragment key={index}>
-                            <div className={`col-span-2 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
                               {item.name}
                             </div>
                             <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>

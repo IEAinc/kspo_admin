@@ -339,9 +339,6 @@ const MainScenarioManagement = () => {
           sortable={true}
         />
       </Box>
-      <button onClick={handleOpen} className="btn">
-        모달 열기
-      </button>
       <CustomAlert
         title={alertState.title}
         iconMode={alertState.iconMode}

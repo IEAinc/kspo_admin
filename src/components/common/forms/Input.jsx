@@ -99,9 +99,8 @@ const Input = ({
           font-regular
           text-[14px]
           ${widthClass}
-          focus:outline-none
-          focus:ring-1
-          focus:ring-blue-500
+          ${error ? 'focus:ring-red-500' : 'focus:ring-blue-500'}
+          focus:outline-none focus:ring-1 
           border-solid
         `}
       />

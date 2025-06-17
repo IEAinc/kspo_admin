@@ -128,7 +128,7 @@ const SearchWrap = ({onSearchClick}) => {
               onChange={(e) => setSearchContent(e.target.value)}
               options={{
                 isNormal: true,
-                widthSize: 'lg',
+                widthSize: 'mg2',
                 labelSize: 'lg',
               }}
             />
@@ -148,7 +148,7 @@ const SearchWrap = ({onSearchClick}) => {
         ">
           <Btn
             size="sm"
-            minWidth="80px"
+            minWidth="82px"
             iconMode="reset"
             onClick={resetSearch}
           >

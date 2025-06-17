@@ -190,7 +190,7 @@ const SearchWrap = ({onSearch}) => {
         ">
           <Btn
             size="sm"
-            minWidth="81px"
+            minWidth="82px"
             iconMode="reset"
             onClick={resetSearch}
           >
