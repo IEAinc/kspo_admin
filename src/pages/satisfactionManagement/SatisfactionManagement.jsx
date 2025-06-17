@@ -100,6 +100,7 @@ const SatisfactionManagement = () => {
         { headerName: "사용자 질문",flex:1, field: "name", cellClass: 'text-left'},
         { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },
         { headerName: "점수",width: 80,suppressSizeToFit: true ,field: "point", cellClass: 'text-center' },
+        { headerName: "피드백",width: 140,suppressSizeToFit: true , field: "comment", cellClass: 'text-center',hide:true },
         { headerName: "IP",width: 140,suppressSizeToFit: true , field: "ip", cellClass: 'text-center' },
            {
           headerName: "상세보기",
@@ -116,7 +117,7 @@ const SatisfactionManagement = () => {
           },
           
         },
-        { headerName: "피드백",width: 140,suppressSizeToFit: true , field: "comment", cellClass: 'text-center',hide:true },
+        
 
            ];
       setGridData(grid_data);

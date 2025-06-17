@@ -48,6 +48,8 @@ const Login = () => {
         
       }
     useEffect(()=>{
+      Cookies.remove('admincompany');
+      Cookies.remove('adminName');
       getToken();
       let localChk=localStorage.getItem('rememberMe')
       if(localChk){

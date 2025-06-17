@@ -277,7 +277,7 @@ const MainScenarioManagement = () => {
       const grid_columns = [
         { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
         { headerName: "대화명",flex:1, field: "name", cellClass: 'text-left'},
-        ...(location.state.type==='FAQ'?[{headerName: "대표질문",flex:1, field: "main_question", cellClass: 'text-left'}]:[]),
+        {headerName: "대표질문",flex:1, field: "main_question", cellClass: 'text-left',hide:location.state.type!=='FAQ'},
         { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },
         {
           headerName: "상세보기",
@@ -295,13 +295,13 @@ const MainScenarioManagement = () => {
         },
       ];
       //버튼 그리트 추가가
-      grid_columns.push( { headerName: "버튼 유형", flex:1,field: "btn_type", cellClass: 'text-center',hide:true});
-      grid_columns.push( { headerName: "버튼 명", flex:1,field: "btn_name", cellClass: 'text-center',hide:true});
-      grid_columns.push( { headerName: "버튼 상세", flex:1,field: "btn_detail", cellClass: 'text-center',hide:true});
+      grid_columns.push( { headerName: "버튼1 유형", flex:1,field: "btn_type", cellClass: 'text-center',hide:true});
+      grid_columns.push( { headerName: "버튼1 명", flex:1,field: "btn_name", cellClass: 'text-center',hide:true});
+      grid_columns.push( { headerName: "버튼1 상세", flex:1,field: "btn_detail", cellClass: 'text-center',hide:true});
       for(let i=0;i<=7;i++){
-        grid_columns.push( { headerName: "버튼"+ i +" 유형", flex:1,field: "btn_type"+i, cellClass: 'text-center',hide:true});
-        grid_columns.push( { headerName: "버튼"+ i +"  명", flex:1,field: "btn_name"+i, cellClass: 'text-center',hide:true});
-        grid_columns.push( { headerName: "버튼"+ i +"  상세", flex:1,field: "btn_detail+i", cellClass: 'text-center',hide:true});
+        grid_columns.push( { headerName: "버튼"+ (i+1) +" 유형", flex:1,field: "btn_type"+i, cellClass: 'text-center',hide:true});
+        grid_columns.push( { headerName: "버튼"+ (i+1) +" 명", flex:1,field: "btn_name"+i, cellClass: 'text-center',hide:true});
+        grid_columns.push( { headerName: "버튼"+ (i+1) +" 상세", flex:1,field: "btn_detail+i", cellClass: 'text-center',hide:true});
       }
       
       setGridData(grid_data);

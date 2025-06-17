@@ -69,7 +69,7 @@ const DetailCardSatisfactionManagement = () => {
         </div>
         {/* 질문 내용*/}
         <div className="flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
-        질문 내용
+        사용자 질문
         </div>
         <div className="p-4 col-span-7 border-b border-tb-br-color">
           <div className="flex items-center h-full gap-2 text-black text-[14px] font-normal">
