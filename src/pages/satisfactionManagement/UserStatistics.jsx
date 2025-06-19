@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useNavigate, useLocation} from 'react-router-dom';
 // 사용하는 컴포넌트 모음
-import SearchWrap from '../../components/searchWraps/satisfactionMangement/userSearchWrap'
+import SearchWrap from '../../components/searchWraps/satisfactionMangement/userStatistics/searchWrap'
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import AgGrid from "../../components/common/grids/AgGrid.jsx";
@@ -139,7 +139,9 @@ const UserStatistics = () => {
   // 최종 반환
   return (
     <div>
-      <SearchWrap />
+      <div className="w-full mb-[16px]">
+        <SearchWrap />
+      </div>
       {/* 검색 필터링 */}
       <div className="flex items-stretch gap-[18px] w-full mb-[16px]">
         {/* 일별 방문자 */}

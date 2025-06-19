@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 // 사용한 컴포넌트 모음
-import Box from '../../common/boxs/Box.jsx'
-import Btn from '../../common/forms/Btn.jsx'
-import Input from '../../common/forms/Input.jsx'
-import Select from '../../common/forms/Select.jsx'
-import CustomDatePicker from '../../common/forms/CustomDatepicker.jsx'
+import Box from '../../../common/boxs/Box.jsx'
+import Btn from '../../../common/forms/Btn.jsx'
+import Input from '../../../common/forms/Input.jsx'
+import Select from '../../../common/forms/Select.jsx'
+import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
 
 const SearchWrap = () => {
   // 검색조건
