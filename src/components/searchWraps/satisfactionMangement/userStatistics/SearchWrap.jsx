@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 // 사용한 컴포넌트 모음
-import Box from '../../../common/boxs/Box.jsx'
-import Btn from '../../../common/forms/Btn.jsx'
-import Input from '../../../common/forms/Input.jsx'
-import Select from '../../../common/forms/Select.jsx'
-import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
+import Box from '../../common/boxs/Box.jsx'
+import Btn from '../../common/forms/Btn.jsx'
+import Input from '../../common/forms/Input.jsx'
+import Select from '../../common/forms/Select.jsx'
+import CustomDatePicker from '../../common/forms/CustomDatepicker.jsx'
 
 const SearchWrap = () => {
   // 검색조건
@@ -19,39 +19,23 @@ const SearchWrap = () => {
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
   };
 
-  // (select) > 대화명
-  const selectDialogOptions = [
+  // (select) > 만족도 점수
+  const selectSatisfactionOptions = [
     {value:'whole', label:'전체'},
     {value:'option1', label:'옵션1'},
     {value:'option2', label:'옵션2'},
   ];
-  const [selectDialog, setSelectDialog] = useState(selectDialogOptions[0]);
+  const [selectSatisfactionScore, setSelectSatisfactionScore] = useState(selectSatisfactionOptions[0]);
   const handleDialogChange = (selectedOption) => {
-    setSelectDialog(selectedOption);
+    setSelectSatisfactionScore(selectedOption);
   }
-  // (select) > 수정 유형
-  const selectModificationOptions = [
-    {value:'whole', label:'전체'},
-    {value:'option1', label:'옵션1'},
-    {value:'option2', label:'옵션2'},
-  ];
-  const [selectModification, setSelectModification] = useState(selectModificationOptions[0]);
-  const handleModificationChange = (selectedOption) => {
-    setSelectModification(selectedOption);
-  }
-  // (input) > 내용
+
+  // (input) > 검색 키워드
   const [searchContent, setSearchContent] = useState('')
- const customOptions = [
-  { key: "today", label: "오늘" },
-  { key: "week", label: "1주" },
-  { key: "15days", label: "15일" },
-  { key: "month", label: "1개월" },
-  { key: "3months", label: "3개월" },
-  { key: "6months", label: "6개월" },
-  { key: "year", label: "1년" },
-];
-
-
+  const handlerChange = (e) => {
+    const value = e.target.value;
+    setSearchContent(value)
+  }
   return (
     <Box padding={{ px: 16, py: 16 }}>
       <div className="
@@ -71,13 +55,18 @@ const SearchWrap = () => {
             flex-wrap
             items-center
             gap-[20px]
-            mb-[10px]
             md:flex-row
             lg:flex-1
             lg:flex-row
             lg:gap-[40px]
             lg:mt-[0]"
           >
+            <CustomDatePicker
+              options={{
+                widthSize:'md',
+                labelSize: 'sm',
+              }}
+            />
             <Select
               value={selectedCenter} // 현재 선택된 값
               options={selectCenterOptions} // 옵션 리스트
@@ -90,47 +79,31 @@ const SearchWrap = () => {
               onChange={handleCenterChange} // 변경 핸들러
             />
             <Select
-              value={selectDialog}
-              options={selectDialogOptions}
+              value={selectSatisfactionScore}
+              options={selectSatisfactionOptions}
               width='160px'
-              label='대화명'
-              uiOptions={{
-                widthSize:'md',
-                labelSize: 'sm',
-              }}
-              onChange={handleDialogChange} // 변경 핸들러
-            />
-            <Select
-              value={selectModification}
-              options={selectModificationOptions}
-              width='160px'
-              label='수정 유형'
+              label='만족도 점수'
               uiOptions={{
                 widthSize:'md',
                 labelSize: 'lg',
               }}
-              onChange={handleModificationChange} // 변경 핸들러
+              onChange={handleDialogChange} // 변경 핸들러
             />
             <Input
-              labelName="내용"
+              labelName="검색 키워드"
               type="text"
               name="searchContent"
-              placeholder="대화명/대표 질문/답변 내용 키워드"
+              placeholder="질문/답변 키워드"
               value={searchContent}
+              onChange={handlerChange}
               options={{
                 isNormal: true,
-                widthSize: 'lg',
-                labelSize: 'sm',
+                widthSize: 'md2',
+                labelSize: 'lg',
               }}
             />
           </div>
-          <CustomDatePicker
-            rangeOptions={customOptions}
-            options={{
-              widthSize:'md',
-              labelSize: 'sm',
-            }}
-          />
+
         </div>
 
         <div className="
@@ -146,7 +119,7 @@ const SearchWrap = () => {
         ">
           <Btn
             size="sm"
-            minWidth="80px"
+            minWidth="81px"
             iconMode="reset"
           >
             초기화

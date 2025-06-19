@@ -36,11 +36,15 @@ const Sidebar = () => {
     },
     {
       title: '만족도 관리',
-      path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+      path: '/ksponcoadministrator/menu1',
       icon: {
         default: Icon2,
         active: Icon2Active,
       },
+      subMenu: [
+        {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
+        {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/userStatistics'}
+      ]
     },
     {
       title: '관리자 관리',
@@ -113,11 +117,15 @@ const Sidebar = () => {
           },
           {
             title: '만족도 관리',
-            path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+            path: '/ksponcoadministrator/menu1',
             icon: {
               default: Icon2,
               active: Icon2Active,
             },
+            subMenu: [
+              {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
+              {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/userStatistics'}
+            ]
           },
      
           {

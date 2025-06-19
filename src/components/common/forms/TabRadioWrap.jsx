@@ -3,7 +3,7 @@ const TabRadioWrap = ({options, selectedValue, onChange}) => {
     <div className="flex">
       {options.map((option,index) => (
         <div
-          key={option}
+          key={option.key}
           className={`
           flex
           items-center
@@ -15,7 +15,7 @@ const TabRadioWrap = ({options, selectedValue, onChange}) => {
           border-b
           border-t
           cursor-pointer ${
-            selectedValue === option ? "bg-primary-blue text-white" : "bg-white text-black"
+            selectedValue === option.key ? "bg-primary-blue text-white" : "bg-white text-black"
           }
          ${index === 0
             ? "rounded-l-[4px] border-l border-br-gray border-r"
@@ -24,9 +24,9 @@ const TabRadioWrap = ({options, selectedValue, onChange}) => {
               : "border-r"}
           `}
 
-          onClick={() => onChange(option)}
+          onClick={() => onChange(option.key)}
         >
-          {option}
+          {option.label}
         </div>
       ))}
     </div>

@@ -17,6 +17,8 @@ export default {
         'primary-blue': '#2D72E2',
         'primary-blue-light': '#F5F6FA',
         'primary-blue-dark': '#076DC5',
+        'light-blue': '#77A5F4',
+        'soft-blue': '#A4C7F9',
         'white': '#ffffff',
         'black': '#333333',
         'gray1': '#666666',

@@ -107,6 +107,15 @@ const DetailCardMainScenarioManagementRegister = () => {
     { value: '전화걸기', label: '전화걸기' },
 
   ];
+
+  // 버튼명 공통 option
+  const commonInputOptions = [
+    { value: null, label: '없음' },
+    { value: '직접입력', label: '직접입력' },
+    { value: '대화1', label: '대화1' },
+    { value: '대화2', label: '대화2' },
+    { value: '대화3', label: '대화3' },
+  ]
   
   // 버튼 항목 리스트
   const [btnList, setBtnList] = useState([
@@ -114,6 +123,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼1',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -123,6 +133,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼2',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -132,6 +143,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼2',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -141,6 +153,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼3',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -150,6 +163,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼4',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -159,6 +173,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼5',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -168,6 +183,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼6',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -177,6 +193,7 @@ const DetailCardMainScenarioManagementRegister = () => {
       name: '버튼7',
       isSelect: true,
       selectedValue: commonSelectOptions[0],
+      selectedButtonName: commonInputOptions[0],
       isInput: true,
       inputValue: null,
       isDetailInput: true,
@@ -189,6 +206,12 @@ const DetailCardMainScenarioManagementRegister = () => {
     updatedBtnList[index].selectedValue = value;
     setBtnList(updatedBtnList);
   };
+  const handleSelectButtonNameChange = (value, index) => {
+    // Select 값 변경 핸들러
+    const updatedBtnList = [...btnList];
+    updatedBtnList[index].selectedButtonName = value;
+    setBtnList(updatedBtnList);
+  }
   const handleInputChange = (e, index) => {
     const updatedBtnList = [...btnList];
     updatedBtnList[index].inputValue = e.target.value; // 입력 값 갱신
@@ -440,11 +463,11 @@ const DetailCardMainScenarioManagementRegister = () => {
                   구분
                 </div>
                 {/* 버튼 유형 */}
-                <div className="col-span-3 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+                <div className="col-span-2 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
                   버튼유형
                 </div>
                 {/* 버튼명 */}
-                <div className="col-span-3 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
+                <div className="col-span-4 p-[15px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r border-b border-tb-br-color">
                   버튼명
                 </div>
                 {/* 버튼상세 */}
@@ -471,7 +494,7 @@ const DetailCardMainScenarioManagementRegister = () => {
 
                           {/* 두 번째 컬럼: Select */}
                           <div
-                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
+                            className={`col-span-2 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
                           >
                             {item.isSelect ? (
                               <Select
@@ -491,16 +514,28 @@ const DetailCardMainScenarioManagementRegister = () => {
 
                           {/* 세 번째 컬럼: Input */}
                           <div
-                            className={`col-span-3 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
+                            className={`col-span-4 px-[8px] py-[6px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}
                           >
                             {item.isInput ? (
-                              <Input
-                                id={`input-${index}`} // 고유 id
-                                placeholder={item.placeholder || ''} // 플레이스홀더
-                                value={item.inputValue || ''} // 인풋 값
-                                onChange={(e) => handleInputChange(e, index)} // Input 변경 핸들러
-                                options={{ isNormal: true, widthSize:'full', noTransformed: true }}
-                              />
+                              <div className="flex items-center gap-[8px] w-full">
+                                <Select
+                                  key={index}
+                                  value={item.selectedButtonName} // 선택된 값
+                                  options={commonInputOptions}
+                                  uiOptions={{
+                                    widthSize:'full',
+                                    noTransformed: true
+                                  }}
+                                  onChange={(value) => handleSelectButtonNameChange(value, index)} // Select 변경 핸들러}
+                                />
+                                <Input
+                                  id={`input-${index}`} // 고유 id
+                                  placeholder={item.placeholder || ''} // 플레이스홀더
+                                  value={item.inputValue || ''} // 인풋 값
+                                  onChange={(e) => handleInputChange(e, index)} // Input 변경 핸들러
+                                  options={{ isNormal: true, widthSize:'full', noTransformed: true }}
+                                />
+                              </div>
                             ) : (
                               item.btnName // Input이 없으면 텍스트 출력
                             )}

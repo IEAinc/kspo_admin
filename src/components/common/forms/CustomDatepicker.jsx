@@ -40,52 +40,41 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
   // const [rangeOptions, setRangeOptions] = useState(["오늘", "1주", "15일", "1개월", "3개월", "6개월", "1년"]); // 기본 옵션
 
   // 라디오 버튼 날짜 값을 설정하는 함수
-  const handleRangeSelection = (range) => {
+  // 라디오 버튼 날짜 값을 설정하는 함수
+  const handleRangeSelection = (rangeKey) => {
     const now = new Date();
     let newStartDate = null;
     let newEndDate = now;
 
-    switch (range) {
-      case "오늘":
+    switch (rangeKey) {
+      case "today":
         newStartDate = now;
         break;
-
-      case "1주":
+      case "week":
         newStartDate = new Date(now.setDate(now.getDate() - 7));
-        newEndDate = new Date();
         break;
-
-      case "15일":
+      case "15days":
         newStartDate = new Date(now.setDate(now.getDate() - 15));
-        newEndDate = new Date();
         break;
-
-      case "1개월":
+      case "month":
         newStartDate = new Date(now.setMonth(now.getMonth() - 1));
-        newEndDate = new Date();
         break;
-
-      case "3개월":
+      case "3months":
         newStartDate = new Date(now.setMonth(now.getMonth() - 3));
-        newEndDate = new Date();
         break;
-
-      case "6개월":
+      case "6months":
         newStartDate = new Date(now.setMonth(now.getMonth() - 6));
-        newEndDate = new Date();
         break;
-
-      case "1년":
+      case "year":
         newStartDate = new Date(now.setFullYear(now.getFullYear() - 1));
-        newEndDate = new Date();
         break;
-
       default:
         break;
     }
+
     // Range 업데이트
     setDateRange([newStartDate, newEndDate]);
-    setSelectedRange(range); // 현재 선택된 옵션 표시
+    setSelectedRange(rangeKey); // 선택된 범위 반영
   };
 
   // 날짜 변경 처리: 무결성(logical integrity) 유지

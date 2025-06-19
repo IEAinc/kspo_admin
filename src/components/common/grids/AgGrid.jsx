@@ -212,6 +212,8 @@ const AgGrid = (props) => {
           headerHeight={40}
           defaultColDef={defaultColDef}
           suppressMovableColumns={true} // 셀 이동 비활성화
+          overlayNoRowsTemplate={`<span style="font-size:16px;">표시할 데이터가 없습니다.</span>`}
+
           context={{
             currentPage: currentPage, // 현재 페이지
             pageSize: pageSize,       // 한 페이지당 데이터 크기

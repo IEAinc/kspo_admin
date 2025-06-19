@@ -3,6 +3,7 @@ import { useNavigate,useLocation } from 'react-router-dom'
 // 사용한 컴포넌트 모음
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
+import TabRadioWrap from '@/components/common/forms/TabRadioWrap.jsx';
 import Input from '../../components/common/forms/Input'
 import Textarea from '../../components/common/forms/Textarea.jsx'
 import Select from "../../components/common/forms/Select.jsx";
@@ -15,14 +16,17 @@ const DetailCardMainScenarioManagement = () => {
   const location=useLocation();
   // 초기데이터 불러오기
   const [isCompany,setIsCompany]=useState(false);
-
-
+  const [selectedActive, setSelectedActive] = useState(""); // 라디오 버튼 선택 값
+  const activeOptions = [
+    { key: 'active', label: '활성화' },
+    { key: 'inactive', label: '비활성화' }
+  ];
   // 초기 값 설정
   useEffect( ()=>{
     const loadData = async () => {
        const { company, id } = await fetchCommonData();
        
-           
+
       //수정시 초기 데이터 설정
       const response = await api.post(API_ENDPOINTS.Detail, {
         id:location.state.id
@@ -54,11 +58,8 @@ const DetailCardMainScenarioManagement = () => {
         }
       }
     };
-   
-    
+
     loadData();
-    
-  
   },[])
   // 버튼 클릭 핸들러
   const goBack = () => {
@@ -85,6 +86,10 @@ const DetailCardMainScenarioManagement = () => {
        }); // 경로로 이동
     };
     }
+  const handleRangeSelection = (value) => {
+    console.log(value,'선택된 값');
+    setSelectedActive(value);
+  }
    
 //
 
@@ -146,6 +151,17 @@ const DetailCardMainScenarioManagement = () => {
 
   return (
     <Box padding={{ px: 16, py: 16 }}>
+      {/* 노출 선택란 */}
+      <div className="mb-4 flex items-center justify-end gap-4 border-tb-br-color">
+        <p className="text-black text-[14px] font-bold">활성화 여부:</p>
+        <div className="flex items-center  h-full gap-2 text-black text-[14px] font-normal">
+          <TabRadioWrap
+            options={activeOptions} // 라디오 옵션 전달
+            selectedValue={selectedActive} // 현재 선택된 값 전달
+            onChange={handleRangeSelection} // 클릭 시 동작 전달
+          />
+        </div>
+      </div>
       {/* 카드 (필터 영역) */}
       <div className="grid grid-cols-8 border border-tb-br-color rounded-[4px]">
         {/* 센터명 */}

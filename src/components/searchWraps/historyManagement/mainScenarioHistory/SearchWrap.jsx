@@ -148,7 +148,16 @@ const SearchWrap = ({onSearch}) => {
     }, [location.pathname]); 
   // (input) > 내용
   const [searchContent, setSearchContent] = useState('')
-  const customOptions = ['오늘', '1주', '15일', '1개월','3개월','6개월','1년']; // 원하는 옵션만 선택
+ const customOptions = [
+  { key: "today", label: "오늘" },
+  { key: "week", label: "1주" },
+  { key: "15days", label: "15일" },
+  { key: "month", label: "1개월" },
+  { key: "3months", label: "3개월" },
+  { key: "6months", label: "6개월" },
+  { key: "year", label: "1년" },
+];
+
 const [dateRange, setDateRange] = useState([null,null]); 
   return (
     <Box padding={{ px: 16, py: 16 }}>
