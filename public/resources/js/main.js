@@ -688,12 +688,12 @@ $(function(){
     $(this).closest(".popup").removeClass("active");
   });
 
-  $(document).on("click", ".btn.link", function(){
-    chatCount=0;
-    setTimeout(() => {
-      window.open(api_base.replace(":8080","")+"/window?company="+company, "_blank", "width=800, height=500");
-    }, 500);
-  });
+  // $(document).on("click", ".btn.link", function(){
+  //   chatCount=0;
+  //   setTimeout(() => {
+  //     window.open(api_base.replace(":8080","")+"/window?company="+company, "_blank", "width=800, height=500");
+  //   }, 500);
+  // });
 
   $(document).on("click", ".btn.text", function(){
     chatCount++;

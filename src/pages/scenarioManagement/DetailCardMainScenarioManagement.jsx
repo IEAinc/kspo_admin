@@ -4,9 +4,6 @@ import { useNavigate,useLocation } from 'react-router-dom'
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import TabRadioWrap from '@/components/common/forms/TabRadioWrap.jsx';
-import Input from '../../components/common/forms/Input'
-import Textarea from '../../components/common/forms/Textarea.jsx'
-import Select from "../../components/common/forms/Select.jsx";
 import { API_ENDPOINTS } from '../../constants/api'
 import { api } from '../../constants/api';
 import { allowIdList, fetchCommonData } from '../../constants/common.js'
@@ -21,6 +18,7 @@ const DetailCardMainScenarioManagement = () => {
     { key: 'active', label: '활성화' },
     { key: 'inactive', label: '비활성화' }
   ];
+  let statusUpdate=false;
   // 초기 값 설정
   useEffect( ()=>{
     const loadData = async () => {
@@ -40,7 +38,12 @@ const DetailCardMainScenarioManagement = () => {
       setDialogName(data.name);
       setText(data.answer);
       setQuestion(data.main_question)
-
+      if(data.in_use==='1'){
+        setSelectedActive("active")
+      }else{
+        setSelectedActive("inactive")
+      }
+      
       if(data.btn_type){
         btnList[0].btnType=data.btn_type;
       }
@@ -86,9 +89,30 @@ const DetailCardMainScenarioManagement = () => {
        }); // 경로로 이동
     };
     }
-  const handleRangeSelection = (value) => {
+  const handleRangeSelection = async (value) => {
+    if(statusUpdate)return;
+    statusUpdate=true;
+    console.log(value,'선택된 ㅜㅜ값');
+    if(value===selectedActive){
+      // 현재 값과 동일하면 작동하지 않음
+      statusUpdate=false;
+      return;
+    }
     console.log(value,'선택된 값');
+    let data={
+      id:location.state.id,
+      in_use:'1'
+    }
+    if(value==='active'){
+      //활성화
+      data.in_use='1';
+    }else{
+      //비활성화
+      data.in_use='0';
+    }
+    await api.post(API_ENDPOINTS.updateScenarioInUse,data);
     setSelectedActive(value);
+    statusUpdate=false;
   }
    
 //

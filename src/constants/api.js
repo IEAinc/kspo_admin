@@ -67,5 +67,6 @@ export const API_ENDPOINTS = {
   ScenarioHistoryDetail:'/admin/getScenarioHistoryDetail',
   ScenarioHistorySelect:'/admin/getScenarioHistorySelectionValues',
   GETIP:'/admin/getAllIPs',
+  updateScenarioInUse:'/admin/updateChatScenarioInUse',
   TEST:'/admin/test'
 };
