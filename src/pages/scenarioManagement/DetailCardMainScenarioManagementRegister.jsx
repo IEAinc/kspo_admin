@@ -21,7 +21,7 @@ const DetailCardMainScenarioManagementRegister = () => {
    const [userId, setUserId] = useState("");
 
   // 초기데이터 불러오기
- 
+  const [selectCenterOptions,setSelectCenterOptions] =useState([]);
   // 초기 값 설정
   useEffect( ()=>{
     const loadData = async (company,id) => {
@@ -61,7 +61,7 @@ const DetailCardMainScenarioManagementRegister = () => {
             btnList[i].detailValue=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
           }
       }
-      console.log(btnList)
+      
     };
     const preProcess=async ()=>{
       const { company, id } = await fetchCommonData();
@@ -109,13 +109,8 @@ const DetailCardMainScenarioManagementRegister = () => {
   ];
 
   // 버튼명 공통 option
-  const commonInputOptions = [
-    { value: null, label: '없음' },
-    { value: '직접입력', label: '직접입력' },
-    { value: '대화1', label: '대화1' },
-    { value: '대화2', label: '대화2' },
-    { value: '대화3', label: '대화3' },
-  ]
+  const [commonInputOptions,setCommonInputOptions]=useState([ { value: "", label: '직접입력' }])
+
   
   // 버튼 항목 리스트
   const [btnList, setBtnList] = useState([
@@ -264,9 +259,10 @@ const DetailCardMainScenarioManagementRegister = () => {
       }
       data["btn_type"]=btnList[0].selectedValue.value
       data["btn_name"]='';
-      if((btnList[0].inputValue&&btnList[0].inputValue.trim()!=='')||(btnList[0].detailValue&&btnList[0].detailValue.trim()!=='')){
+      if((btnList[0].selectedButtonName.value&&btnList[0].selectedButtonName.value!=='')||(btnList[0].inputValue&&btnList[0].inputValue.trim()!=='')||(btnList[0].detailValue&&btnList[0].detailValue.trim()!=='')){
+        if(btnList[0].selectedButtonName.value&&btnList[0].selectedButtonName.value!=='') data["btn_name"]+=btnList[0].selectedButtonName.value;
         if(btnList[0].inputValue&&btnList[0].inputValue.trim()!='') data["btn_name"]+=btnList[0].inputValue.trim();
-        data["btn_name"]+="**";
+        if(btnList[0].detailValue&&btnList[0].detailValue.trim()!='')data["btn_name"]+="**";
         if(btnList[0].detailValue&&btnList[0].detailValue.trim()!='') data["btn_name"]+=btnList[0].detailValue.trim();
        }else{
         data["btn_name"]=null;
@@ -274,9 +270,10 @@ const DetailCardMainScenarioManagementRegister = () => {
       for(let i=1;i<=7;i++){
         data["btn_type"+i]=btnList[i].selectedValue.value
         data["btn_name"+i]='';
-       if((btnList[i].inputValue&&btnList[i].inputValue.trim()!=='')||(btnList[i].detailValue&&btnList[i].detailValue.trim()!=='')){
+       if((btnList[i].selectedButtonName.value&&btnList[i].selectedButtonName.value!=='')||(btnList[i].inputValue&&btnList[i].inputValue.trim()!=='')||(btnList[i].detailValue&&btnList[i].detailValue.trim()!=='')){
+        if(btnList[i].selectedButtonName.value&&btnList[i].selectedButtonName.value!=='') data["btn_name"]+=btnList[i].selectedButtonName.value;
         if(btnList[i].inputValue&&btnList[i].inputValue.trim()!='') data["btn_name"+i]+=btnList[i].inputValue.trim();
-        data["btn_name"+i]+="**";
+        if(btnList[i].detailValue&&btnList[i].detailValue.trim()!='')data["btn_name"+i]+="**";
         if(btnList[i].detailValue&&btnList[i].detailValue.trim()!='') data["btn_name"+i]+=btnList[i].detailValue.trim();
        }else{
         data["btn_name"+i]=null;
@@ -341,12 +338,24 @@ const DetailCardMainScenarioManagementRegister = () => {
 
   }
   const [selectedCenter, setSelectedCenter] = useState({value:null, label:'전체'});
-  const handleCenterChange = (selectedOption) => {
+  const handleCenterChange = async (selectedOption) => {
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
-  };
-  const [selectCenterOptions,setSelectCenterOptions] =useState([]);
- const fetchCenterOptions = async (cp,id) => {
+    //선택 조회 조건
+    const sel_response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{
+      big: location.state.type,
+      company: selectedOption.value|| null
+    });
+    setCommonInputOptions([{ value: "", label: '직접입력' },...sel_response.data.names.map(name => {
+      return  {
+        value: name,
+        label: name
+     };
+    })])
+  }
+
+  const fetchCenterOptions = async (cp,id) => {
       try {
+        
         
         const response = await api.post(API_ENDPOINTS.SELECTION_VALUES);
         const companies = response.data.companies; // ['1', '2'] 형식의 데이터
@@ -364,7 +373,18 @@ const DetailCardMainScenarioManagementRegister = () => {
         })
         ];
         if(location.state.mode==="register")setSelectedCenter(options[0]);
-   
+        //선택 조회 조건
+        const sel_response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{
+          big: location.state.type,
+          company: location.state.mode==="register"?options[0].value || null:cp|| null
+        });
+        setCommonInputOptions([{ value: "", label: '직접입력' },...sel_response.data.names.map(name => {
+          return  {
+            value: name,
+            label: name
+         };
+        
+      })])
         
         setSelectCenterOptions(options);
       } catch (error) {
