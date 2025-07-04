@@ -34,26 +34,26 @@ const Sidebar = () => {
         { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
       ],
     },
-    // {
-    //   title: '만족도 관리',
-    //   path: '/ksponcoadministrator/menu1',
-    //   icon: {
-    //     default: Icon2,
-    //     active: Icon2Active,
-    //   },
-    //   subMenu: [
-    //     {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
-    //     {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/userStatistics'}
-    //   ]
-    // },
     {
       title: '만족도 관리',
-      path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+      path: '/ksponcoadministrator/menu1',
       icon: {
         default: Icon2,
         active: Icon2Active,
       },
+      subMenu: [
+        {title:'챗봇 이용자 만족도 조회', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
+        {title:'상담 연결 횟수 조회', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
+      ]
     },
+    // {
+    //   title: '만족도 관리',
+    //   path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+    //   icon: {
+    //     default: Icon2,
+    //     active: Icon2Active,
+    //   },
+    // },
     {
       title: '관리자 관리',
       path: '/ksponcoadministrator/adminManagement/adminManagement', // 하위 메뉴가 없음
@@ -123,27 +123,27 @@ const Sidebar = () => {
               { title: 'FAQ 관리', path: '/ksponcoadministrator/scenarioManagement/faqManagement',state:{type:'FAQ'}  },
             ],
           },
-          // {
-          //   title: '만족도 관리',
-          //   path: '/ksponcoadministrator/menu1',
-          //   icon: {
-          //     default: Icon2,
-          //     active: Icon2Active,
-          //   },
-          //   subMenu: [
-          //     {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
-          //     {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/userStatistics'}
-          //   ]
-          // },
-          //
           {
             title: '만족도 관리',
-            path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+            path: '/ksponcoadministrator/menu1',
             icon: {
               default: Icon2,
               active: Icon2Active,
             },
+            subMenu: [
+              {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
+              {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
+            ]
           },
+
+          // {
+          //   title: '만족도 관리',
+          //   path: '/ksponcoadministrator/satisfactionManagement/satisfactionManagement',
+          //   icon: {
+          //     default: Icon2,
+          //     active: Icon2Active,
+          //   },
+          // },
           {
             title: '이력 관리',
             path: '/ksponcoadministrator/menu1',

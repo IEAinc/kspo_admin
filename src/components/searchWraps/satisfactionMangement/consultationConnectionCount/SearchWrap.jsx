@@ -2,7 +2,6 @@ import React, {useState} from "react";
 // 사용한 컴포넌트 모음
 import Box from '../../../common/boxs/Box.jsx'
 import Btn from '../../../common/forms/Btn.jsx'
-import Input from '../../../common/forms/Input.jsx'
 import Select from '../../../common/forms/Select.jsx'
 import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
 
@@ -18,24 +17,17 @@ const SearchWrap = () => {
   const handleCenterChange = (selectedOption) => {
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
   };
+  // 날짜 관련
+  const [dateRange, setDateRange] = useState([null,null]);
 
-  // (select) > 만족도 점수
-  const selectSatisfactionOptions = [
-    {value:'whole', label:'전체'},
-    {value:'option1', label:'옵션1'},
-    {value:'option2', label:'옵션2'},
-  ];
-  const [selectSatisfactionScore, setSelectSatisfactionScore] = useState(selectSatisfactionOptions[0]);
-  const handleDialogChange = (selectedOption) => {
-    setSelectSatisfactionScore(selectedOption);
+  // 초기화
+  const resetSearch=()=>{
+    //센터명
+    setSelectedCenter(selectCenterOptions[0]);
+    //날짜
+    setDateRange([null,null]);
   }
 
-  // (input) > 검색 키워드
-  const [searchContent, setSearchContent] = useState('')
-  const handlerChange = (e) => {
-    const value = e.target.value;
-    setSearchContent(value)
-  }
   return (
     <Box padding={{ px: 16, py: 16 }}>
       <div className="
@@ -62,10 +54,12 @@ const SearchWrap = () => {
             lg:mt-[0]"
           >
             <CustomDatePicker
-              options={{
-                widthSize:'md',
-                labelSize: 'sm',
-              }}
+                options={{
+                  widthSize:'md',
+                  labelSize: 'sm',
+                }}
+                dateRange={dateRange}
+                setDateRange={setDateRange}
             />
             <Select
               value={selectedCenter} // 현재 선택된 값
@@ -77,30 +71,6 @@ const SearchWrap = () => {
                 labelSize: 'sm',
               }}
               onChange={handleCenterChange} // 변경 핸들러
-            />
-            <Select
-              value={selectSatisfactionScore}
-              options={selectSatisfactionOptions}
-              width='160px'
-              label='만족도 점수'
-              uiOptions={{
-                widthSize:'md',
-                labelSize: 'lg',
-              }}
-              onChange={handleDialogChange} // 변경 핸들러
-            />
-            <Input
-              labelName="검색 키워드"
-              type="text"
-              name="searchContent"
-              placeholder="질문/답변 키워드"
-              value={searchContent}
-              onChange={handlerChange}
-              options={{
-                isNormal: true,
-                widthSize: 'md2',
-                labelSize: 'lg',
-              }}
             />
           </div>
 
@@ -121,6 +91,7 @@ const SearchWrap = () => {
             size="sm"
             minWidth="81px"
             iconMode="reset"
+            onClick={resetSearch}
           >
             초기화
           </Btn>

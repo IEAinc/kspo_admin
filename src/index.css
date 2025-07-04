@@ -53,3 +53,5 @@ body {
 .ag-checkbox-input-wrapper.ag-checked::after{color:#2D72E2!important;}
 .ag-row-selected {background-color: #E4E4E4!important;}
 .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within {border:1px solid #2d72e2 !important;}
+
+/* ag chart */

@@ -15,7 +15,7 @@ import DetailCardFaqManagementRegister from './pages/scenarioManagement/DetailCa
 import DetailCardFaqManagement from './pages/scenarioManagement/DetailCardFaqManagementRegister.jsx' // FAQ 관리 > 상세
 // 만족도 관리
 import SatisfactionManagement from './pages/satisfactionManagement/SatisfactionManagement'
-import UserStatistics from './pages/satisfactionManagement/UserStatistics'
+import ConsultationConnectionCount from './pages/satisfactionManagement/ConsultationConnectionCount'
 import DetailCardSatisfactionManagement from './pages/satisfactionManagement/DetailCardSatisfactionManagement'
 // 관리자 관리
 import AdminManagement from './pages/adminManagement/AdminManagement'
@@ -90,7 +90,7 @@ function App() {
 
         {/* 만족도 관리 */}
         <Route path="satisfactionManagement/satisfactionManagement" element={<SatisfactionManagement />} />
-        <Route path="satisfactionManagement/userStatistics" element={<UserStatistics />} />
+        <Route path="satisfactionManagement/consultationConnectionCount" element={<ConsultationConnectionCount />} />
         <Route path="satisfactionManagement/satisfactionManagement/detail" element={<DetailCardSatisfactionManagement />} />
 
         {/* 관리자 관리 */}

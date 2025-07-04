@@ -18,7 +18,7 @@ const Header = () => {
     navigate("/ksponcoadministrator/login")
   }
   return (
-    <header className="w-[calc(100%-220px)] h-[48px] flex items-center fixed top-0 left-[220px] py-[15px] px-[24px] border-b border-br-gray bg-white">
+    <header className="w-[calc(100%-220px)] h-[48px] flex items-center fixed top-0 left-[220px] py-[15px] px-[24px] border-b border-br-gray bg-white z-10">
       <div className="w-full flex items-center justify-end gap-[28px]">
         <p className="flex items-center gap-[4px] text-[16px] text-gray font-medium">
           <UserIcon />
