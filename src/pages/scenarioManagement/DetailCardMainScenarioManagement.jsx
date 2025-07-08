@@ -92,13 +92,11 @@ const DetailCardMainScenarioManagement = () => {
   const handleRangeSelection = async (value) => {
     if(statusUpdate)return;
     statusUpdate=true;
-    console.log(value,'선택된 ㅜㅜ값');
     if(value===selectedActive){
       // 현재 값과 동일하면 작동하지 않음
       statusUpdate=false;
       return;
     }
-    console.log(value,'선택된 값');
     let data={
       id:location.state.id,
       in_use:'1'

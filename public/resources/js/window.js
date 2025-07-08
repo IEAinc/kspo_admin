@@ -28,7 +28,6 @@ $(function(){
     chatBot.forEach((e)=>{
       e.classList.add(name.split("_")[1])
     })
-    console.log(`/resources/img/char${name}.png`)
     $(".satisfaction-confirmed img").attr("src", `/resources/img/char${name}.png`);
    
   }

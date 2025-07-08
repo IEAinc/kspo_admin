@@ -71,7 +71,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
       default:
         break;
     }
-
+ 
     // Range 업데이트
     setDateRange([newStartDate, newEndDate]);
     setSelectedRange(rangeKey); // 선택된 범위 반영
@@ -79,6 +79,8 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
 
   // 날짜 변경 처리: 무결성(logical integrity) 유지
   const handleStartDateChange = (date) => {
+ 
+   
     // 시작 날짜가 종료 날짜를 초과하지 않도록 설정
     if (!endDate || date <= endDate) {
       setDateRange([date, endDate]);

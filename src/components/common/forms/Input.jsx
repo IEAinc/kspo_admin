@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { useEffect, useId, useState } from 'react';
 
 const Input = ({
                  id,
@@ -50,7 +50,10 @@ const Input = ({
     full: 'w-full' // Full Width
   };
   const labelClass = labelClassMap[labelSize] || 'sm'; // 기본값은 full
-
+  const [disable,setDisable] =useState(disabled);
+  useEffect(()=>{
+    setDisable(disabled)
+  },[disabled])
   // 3. 컴포넌트 렌더링
   return (
     <div
