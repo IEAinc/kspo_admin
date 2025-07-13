@@ -44,29 +44,38 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
   const handleRangeSelection = (rangeKey) => {
     const now = new Date();
     let newStartDate = null;
-    let newEndDate = now;
+    let newEndDate = new Date();
 
     switch (rangeKey) {
       case "today":
-        newStartDate = now;
+        newStartDate = new Date(now); // 새 객체 생성
         break;
       case "week":
-        newStartDate = new Date(now.setDate(now.getDate() - 7));
+        // 새 객체를 생성하고 7일 전으로 설정
+        newStartDate = new Date(now);
+        newStartDate.setDate(now.getDate() - 7);
         break;
       case "15days":
-        newStartDate = new Date(now.setDate(now.getDate() - 15));
+        // 새 객체를 생성하고 15일 전으로 설정
+        newStartDate = new Date(now);
+        newStartDate.setDate(now.getDate() - 15);
         break;
       case "month":
-        newStartDate = new Date(now.setMonth(now.getMonth() - 1));
+        // 새 객체를 생성하고 1개월 전으로 설정
+        newStartDate = new Date(now);
+        newStartDate.setMonth(now.getMonth() - 1);
         break;
       case "3months":
-        newStartDate = new Date(now.setMonth(now.getMonth() - 3));
+        newStartDate = new Date(now);
+        newStartDate.setMonth(now.getMonth() - 3);
         break;
       case "6months":
-        newStartDate = new Date(now.setMonth(now.getMonth() - 6));
+        newStartDate = new Date(now);
+        newStartDate.setMonth(now.getMonth() - 6);
         break;
       case "year":
-        newStartDate = new Date(now.setFullYear(now.getFullYear() - 1));
+        newStartDate = new Date(now);
+        newStartDate.setFullYear(now.getFullYear() - 1);
         break;
       default:
         break;
