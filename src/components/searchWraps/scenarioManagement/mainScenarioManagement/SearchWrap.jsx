@@ -72,7 +72,6 @@ const SearchWrap = ({ onSearch}) => {
         }))
       ];
       setSelectDialogOptions(dialogOptions);
-      console.log("selectDialog",selectDialog)
       if(isFirst){
       // 회사 초기값 세팅
         const { company, id } = await fetchCommonData();
@@ -81,7 +80,6 @@ const SearchWrap = ({ onSearch}) => {
         if(cookieCompany!==undefined)initCompany=cookieCompany;
         if(cookieCompany==='null')initCompany=null;
         if(companies.indexOf(initCompany)>-1){
-          console.log("hre")
           setSelectedCenter( { value: initCompany, label: initCompany })
           Cookies.set('admincompany', initCompany, { 
             path: '/', 
@@ -119,7 +117,6 @@ const SearchWrap = ({ onSearch}) => {
 
   useEffect(() => {
     const preprocess= async ()=>{
-      console.log("first")
       const { company, id } = await fetchCommonData();
       let initCompany=company;
       let cookieCompany=Cookies.get("admincompany")

@@ -58,7 +58,6 @@ const MainScenarioHistory = () => {
         endDate: endDate?dayFormat(endDate) : null,
         change_type:change_type||null
       });
-      console.log(response.data)
       const { data } = response.data;
       
       // API 응답 데이터를 그리드 데이터 형식에 맞게 변환

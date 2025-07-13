@@ -13,7 +13,6 @@ export default function Layout() {
     try{
       const response = await api.post(API_ENDPOINTS.GETID)
       const ip = (await api.post(API_ENDPOINTS.GETIP)).data.data;
-      console.log(ip);
     }catch(response){
 
       if(response.status!==200){

@@ -76,7 +76,6 @@ const SearchWrap = ({onSearch}) => {
         company: company || null,
       });
       const {companies,names} = response.data.data; // ['1', '2'] 형식의 데이터
-      console.log(companies)
       
       // 옵션 배열 생성
       let options = [

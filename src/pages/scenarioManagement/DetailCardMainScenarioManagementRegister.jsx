@@ -30,9 +30,12 @@ const DetailCardMainScenarioManagementRegister = () => {
         id:location.state.id
       });
       let data=response.data
-         // 유저 company 가져와서 검증증
+      //  기본 선택옵션 유저 기준이아닌 선택한 시나리오 기준
+      // 버튼 선택지 가져오기기
+      let option=(await fetchCenterOptions(data.company,id)).map(e=>e.value);
+      // 유저 company 가져와서 검증증
       
-
+      
       if(data.company!==company&&allowIdList.indexOf(id)===-1){
         location.state.type==='FAQ'?navigate('/ksponcoadministrator/scenarioManagement/faqManagement', {state:{
           type:location.state.type,
@@ -50,14 +53,27 @@ const DetailCardMainScenarioManagementRegister = () => {
       setText(data.answer);
            btnList[0].selectedValue= data.btn_type?{ value: data.btn_type, label: data.btn_type }:{ value: null, label: '없음22' };
         if(data.btn_name){
-        btnList[0].inputValue=data.btn_name.split("**")[0];
+          if(option.indexOf(data.btn_name.split("**")[0])>-1&&data.btn_name.split("**")[0]!==""){
+            // 버튼 선택지가 없음음
+            btnList[0].selectedButtonName={value:data.btn_name.split("**")[0],label:data.btn_name.split("**")[0]}
+          }else{
+            // 버튼 선택지가 잇음음
+            btnList[0].inputValue=data.btn_name.split("**")[0];
+          }
+      
           btnList[0].detailValue=data.btn_name.split("**")[1]?data.btn_name.split("**")[1]:null;
         }
       for(let i=1;i<=7;i++){
   
           btnList[i].selectedValue= data["btn_type"+i]?{ value: data["btn_type"+i], label: data["btn_type"+i] }:{ value: null, label: '없음' };
           if(data["btn_name"+i]){
-            btnList[i].inputValue=data["btn_name"+i].split("**")[0];
+            if(option.indexOf(data["btn_name"+i].split("**")[0])>-1&&data["btn_name"+i].split("**")[0]!==""){
+              // 버튼 선택지가 없음음
+              btnList[i].selectedButtonName={value:data["btn_name"+i].split("**")[0],label:data["btn_name"+i].split("**")[0]}
+            }else{
+              // 버튼 선택지가 잇음음
+              btnList[i].inputValue=data["btn_name"+i].split("**")[0];
+            }
             btnList[i].detailValue=data["btn_name"+i].split("**")[1]?data["btn_name"+i].split("**")[1]:null;
           }
       }
@@ -70,8 +86,10 @@ const DetailCardMainScenarioManagementRegister = () => {
       // 수정 일때만
       if(location.state.mode==='update'){
          loadData(company,id);
+      }else{
+        fetchCenterOptions(company,id)
       }
-      fetchCenterOptions(company,id)
+      
     }
     preProcess();
       
@@ -205,7 +223,8 @@ const DetailCardMainScenarioManagementRegister = () => {
     // Select 값 변경 핸들러
     const updatedBtnList = [...btnList];
     updatedBtnList[index].selectedButtonName = value;
-    setBtnList(updatedBtnList);
+    if(value.value!=="")  updatedBtnList[index].inputValue="";
+    setBtnList(JSON.parse(JSON.stringify(updatedBtnList)));
   }
   const handleInputChange = (e, index) => {
     const updatedBtnList = [...btnList];
@@ -271,7 +290,7 @@ const DetailCardMainScenarioManagementRegister = () => {
         data["btn_type"+i]=btnList[i].selectedValue.value
         data["btn_name"+i]='';
        if((btnList[i].selectedButtonName.value&&btnList[i].selectedButtonName.value!=='')||(btnList[i].inputValue&&btnList[i].inputValue.trim()!=='')||(btnList[i].detailValue&&btnList[i].detailValue.trim()!=='')){
-        if(btnList[i].selectedButtonName.value&&btnList[i].selectedButtonName.value!=='') data["btn_name"]+=btnList[i].selectedButtonName.value;
+        if(btnList[i].selectedButtonName.value&&btnList[i].selectedButtonName.value!=='') data["btn_name"+i]+=btnList[i].selectedButtonName.value;
         if(btnList[i].inputValue&&btnList[i].inputValue.trim()!='') data["btn_name"+i]+=btnList[i].inputValue.trim();
         if(btnList[i].detailValue&&btnList[i].detailValue.trim()!='')data["btn_name"+i]+="**";
         if(btnList[i].detailValue&&btnList[i].detailValue.trim()!='') data["btn_name"+i]+=btnList[i].detailValue.trim();
@@ -351,6 +370,9 @@ const DetailCardMainScenarioManagementRegister = () => {
         label: name
      };
     })])
+    btnList.forEach(element => {
+      element.selectedButtonName={ value: "", label: '직접입력' };
+    });
   }
 
   const fetchCenterOptions = async (cp,id) => {
@@ -378,15 +400,17 @@ const DetailCardMainScenarioManagementRegister = () => {
           big: location.state.type,
           company: location.state.mode==="register"?options[0].value || null:cp|| null
         });
-        setCommonInputOptions([{ value: "", label: '직접입력' },...sel_response.data.names.map(name => {
+        let sel_option=[{ value: "", label: '직접입력' },...sel_response.data.names.map(name => {
           return  {
             value: name,
             label: name
          };
         
-      })])
+      })]
+        setCommonInputOptions(sel_option)
         
         setSelectCenterOptions(options);
+        return sel_option;
       } catch (error) {
         console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
       }
@@ -554,6 +578,7 @@ const DetailCardMainScenarioManagementRegister = () => {
                                   value={item.inputValue || ''} // 인풋 값
                                   onChange={(e) => handleInputChange(e, index)} // Input 변경 핸들러
                                   options={{ isNormal: true, widthSize:'full', noTransformed: true }}
+                                  disabled={item.selectedButtonName.value!==""}
                                 />
                               </div>
                             ) : (

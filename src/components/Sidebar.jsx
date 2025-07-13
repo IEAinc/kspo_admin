@@ -108,7 +108,6 @@ const Sidebar = () => {
     });
     const makeMenu= async ()=>{
       const { company, id } = await fetchCommonData();
-      console.log(allowIdList.indexOf(id))
       if(allowIdList.indexOf(id)===-1){
         setMenuData([
           {

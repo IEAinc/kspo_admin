@@ -41,18 +41,25 @@ const ConsultationConnectionCount = () => {
     };
   /* AgChart */
   // 가상의 데이터 호출 함수
-  const fetchChartData = async (startDate, endDate) => {
+  const fetchChartData = async (initCompany = null,startDate=null,endDate=null) => {
     // 실제로는 API 호출이 여기 들어갈 것
-    return [
-      {
-        date: "6/20",
-        userCount: 250,
-      },
-
-    ];
+    // 그리드
+    const gridData = (await api.post(API_ENDPOINTS.GridChatHistory,{company:initCompany,endDate:dayFormat(endDate)||null,startDate:dayFormat(startDate)||null})).data.data;
+    setGridData(gridData);
+    setGridCount(gridData.length);
+    // 상단 전체 
+    const allData = (await api.post(API_ENDPOINTS.AllChatHistory,{company:initCompany,endDate:dayFormat(endDate)||null,startDate:dayFormat(startDate)||null})).data.data;
+    setCountAll([allData.user_count,allData.usage_count])
+    // 상단 그래프
+    const graphData = (await api.post(API_ENDPOINTS.DateChatHistory,{company:initCompany,endDate:dayFormat(endDate)||null,startDate:dayFormat(startDate)||null})).data.data;
+    await setChartData([...graphData.map(e=>{
+      return {date: e.created.split("-")[1]+"-"+e.created.split("-")[2],
+        userCount: e.user_count}
+    })])
+   
   };
   
-  const chartData = [
+  const [chartData,setChartData] = useState([
     {
       date: "6/20",
       userCount: 250,
@@ -86,7 +93,8 @@ const ConsultationConnectionCount = () => {
       userCount: 250,
     },
 
-  ];
+  ]);
+  const [countAll,setCountAll]=useState([0,0]);
 
   // 시리즈 설정 - 필요에 따라 동적으로 변경 가능
   const chartSeries = [
@@ -107,142 +115,39 @@ const ConsultationConnectionCount = () => {
   const [gridData, setGridData] = useState([]);
   const [gridColumns, setGridColumns] = useState([]);
   const [gridCount, setGridCount] = useState(0);
-  const handleRowClick = (id) => {
-    const basePath = location.pathname; // 현재 경로 가져오기
-    navigate(`/ksponcoadministrator/satisfactionManagement/satisfactionManagement/detail`,{state:{id:id}}); // 동적 경로 생성
-  }
-  
- // 날짜 포맷
-  const timeFormat=(timestamp)=>{
-      const date = new Date(timestamp);
-  
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      const hh = String(date.getHours()).padStart(2, '0');
-      const mi = String(date.getMinutes()).padStart(2, '0');
-      const ss = String(date.getSeconds()).padStart(2, '0');
-  
-      const formatted = `${yyyy}-${mm}-${dd} ${hh}:${mi}:${ss}`;
-      return formatted;
-    }
-  // 날짜 포맷
   const dayFormat=(date)=>{
-     
-      const yyyy = date.getFullYear();
-      const mm = String(date.getMonth() + 1).padStart(2, '0');
-      const dd = String(date.getDate()).padStart(2, '0');
-      const hh = String(date.getHours()).padStart(2, '0');
-      const mi = String(date.getMinutes()).padStart(2, '0');
-      const ss = String(date.getSeconds()).padStart(2, '0');
-  
-      const formatted = `${yyyy}-${mm}-${dd}`;
-      return formatted;
-    }
-  // AG grid
-  /* 그리드 데이터 */
+     if(date===null)return null;
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    const hh = String(date.getHours()).padStart(2, '0');
+    const mi = String(date.getMinutes()).padStart(2, '0');
+    const ss = String(date.getSeconds()).padStart(2, '0');
 
-  // const fetchListData = async (company = null, point = null, searchText = null,startDate= null,endDate= null) => {
-  //   try {
-  //
-  //     const response = await api.post(API_ENDPOINTS.SatisList, {
-  //       company: company || null,
-  //       startDate: startDate?dayFormat(startDate) : null,
-  //       endDate: endDate?dayFormat(endDate) : null,
-  //       point: point || null,
-  //       searchText: searchText || null
-  //     });
-  //     const { data } = response;
-  //
-  //     // API 응답 데이터를 그리드 데이터 형식에 맞게 변환
-  //     const grid_data = data.map(item => ({
-  //       ...item,
-  //       id: item.id,
-  //       company: item.company,
-  //       name: item.name,
-  //       answer: item.answer,
-  //       created: timeFormat(item.created),
-  //       point:item.point,
-  //       ip:item.ip,
-  //     }));
-  //
-  //     /* 그리드 헤더 설정 */
-  //     let grid_columns = [
-  //       {headerName:'날짜',flex:1,field:'created',cellClass: 'text-center'},
-  //       { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
-  //       { headerName: "사용자 질문",flex:1, field: "name", cellClass: 'text-left'},
-  //       { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },
-  //       { headerName: "점수",width: 80,suppressSizeToFit: true ,field: "point", cellClass: 'text-center' },
-  //       { headerName: "IP",width: 140,suppressSizeToFit: true , field: "ip", cellClass: 'text-center' },
-  //          {
-  //         headerName: "상세보기",
-  //         field: 'id',
-  //         width: 100,
-  //         suppressSizeToFit: true,
-  //         cellClass: 'flex-center',
-  //         cellRenderer: (params) => {
-  //           return (
-  //             <Btn size="xxs" onClick={() => handleRowClick(params.data.id)}>
-  //               상세보기
-  //             </Btn>
-  //           );
-  //         },
-  //
-  //       },
-  //       { headerName: "피드백",width: 140,suppressSizeToFit: true , field: "comment", cellClass: 'text-center',hide:true },
-  //
-  //          ];
-  //     setGridData(grid_data);
-  //     setGridColumns(grid_columns);
-  //     setGridCount(grid_data.length);
-  //   } catch (error) {
-  //     console.error('데이터를 불러오는데 실패했습니다:', error);
-  //   }
-  // };
+    const formatted = `${yyyy}-${mm}-${dd}`;
+    return formatted;
+  }
 
   useEffect(() => {
-    let grid_data = [
-      {id:'main_s_1',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_2',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_3',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_4',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_5',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_6',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_7',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_8',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_9',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_10',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_11',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_12',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_13',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_14',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_15',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_16',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_17',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_18',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_19',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_20',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-      {id:'main_s_21',date: '2025-06-27', centerName:'올림픽스포츠센터',userCount:50, questionCount:40,},
-    ];
-
+   
+    
     /* 그리드 헤더 설정 */
     let grid_columns = [
       { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => params.node.rowIndex + 1,},
-      { headerName: "날짜", flex:1,field: "date", cellClass: 'text-center'},
-      { headerName: "센터명", flex:1,field: "centerName", cellClass: 'text-center'},
-      { headerName: "사용자수",flex:1, field: "userCount", cellClass: 'text-center'},
-      { headerName: "질문 횟수",flex:1, field: "questionCount", cellClass: 'text-center'},
+      { headerName: "날짜", flex:1,field: "created", cellClass: 'text-center'},
+      { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
+      { headerName: "사용자수",flex:1, field: "user_count", cellClass: 'text-center'},
+      { headerName: "질문 횟수",flex:1, field: "usage_count", cellClass: 'text-center'},
     ];
-    setGridData(grid_data);
     setGridColumns(grid_columns);
-    setGridCount(grid_data.length);
+    
   },[])
 
   // 최종 반환
   return (
     <div>
       <div className="w-full mb-[16px]">
-        <SearchWrap />
+        <SearchWrap onSearch={fetchChartData} />
       </div>
       {/* 검색 필터링 */}
       <div className="flex items-stretch gap-[18px] w-full mb-[16px]">
@@ -252,7 +157,7 @@ const ConsultationConnectionCount = () => {
             <p className="text-[24px] font-bold text-black ]">일별 방문자 </p>
           </div>
           <div className="flex justify-between items-end gap-2">
-            <p className="text-[50px] font-medium text-black leading-none">1200</p>
+            <p className="text-[50px] font-medium text-black leading-none">{countAll[0]}</p>
             <UserCount style={{ width: '80px',position:'relative',bottom:'-20px' }} />
           </div>
         </div>
@@ -262,7 +167,7 @@ const ConsultationConnectionCount = () => {
             <p className="text-[24px] font-bold text-black ]">질문 개수</p>
           </div>
           <div className="flex justify-between items-end gap-2">
-            <p className="text-[50px] font-medium text-black leading-none">1200</p>
+            <p className="text-[50px] font-medium text-black leading-none">{countAll[1]}</p>
             <Question style={{ width: '80px',position:'relative',bottom:'-20px'}} />
           </div>
         </div>

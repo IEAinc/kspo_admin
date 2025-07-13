@@ -1,24 +1,47 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 // 사용한 컴포넌트 모음
 import Box from '../../../common/boxs/Box.jsx'
 import Btn from '../../../common/forms/Btn.jsx'
 import Select from '../../../common/forms/Select.jsx'
 import CustomDatePicker from '../../../common/forms/CustomDatepicker.jsx'
-
-const SearchWrap = () => {
+import { api, API_ENDPOINTS } from "../../../../constants/api.js";
+import { fetchCommonData } from "../../../../constants/common.js";
+import Cookies from "js-cookie";
+const SearchWrap = ({onSearch}) => {
   // 검색조건
   // (select) > 센터명
-  const selectCenterOptions = [
-    {value:'whole', label:'전체'},
-    {value:'option1', label:'옵션1'},
-    {value:'option2', label:'옵션2'},
-  ];
+  const [selectCenterOptions,setSelectCenterOptions] =useState([
+    {value:null, label:'전체'},
+
+  ]);
   const [selectedCenter, setSelectedCenter] = useState(selectCenterOptions[0]);
   const handleCenterChange = (selectedOption) => {
     setSelectedCenter(selectedOption); // 선택된 옵션을 직접 값으로 받음
   };
   // 날짜 관련
   const [dateRange, setDateRange] = useState([null,null]);
+  const preProcess=async ()=>{
+    // company 선택 리스트 가져오기
+      const response = await api.post(API_ENDPOINTS.SELECTION_VALUES,{});
+      setSelectCenterOptions([{value:null, label:'전체'},...response.data.companies.map((e)=>{
+        return {
+          value:e, label:e,
+        }
+      })]);
+      // 초기 데이터 용 company 구하기기
+      const { company, id } = await fetchCommonData();
+      let initCompany=company;
+      let cookieCompany=Cookies.get("admincompany")
+      if(cookieCompany!==undefined)initCompany=cookieCompany;
+      if(cookieCompany==='null')initCompany=null;
+      onSearch(initCompany);
+     
+   
+
+  }
+  useEffect(()=>{
+    preProcess()
+  },[])
 
   // 초기화
   const resetSearch=()=>{
@@ -26,6 +49,10 @@ const SearchWrap = () => {
     setSelectedCenter(selectCenterOptions[0]);
     //날짜
     setDateRange([null,null]);
+  }
+  const onSearchClick=(event)=>{
+
+    onSearch(selectedCenter.value,dateRange[0],dateRange[1])
   }
 
   return (
@@ -100,6 +127,7 @@ const SearchWrap = () => {
             minWidth="80px"
             iconMode="search"
             colorMode={true}
+            onClick={onSearchClick}
           >
             검색
           </Btn>

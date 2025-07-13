@@ -128,7 +128,6 @@ const AgGrid = (props) => {
 
       return newRow;
     });
-    console.log(headers);
 
     // 3. 워크시트 생성
     const worksheet = XLSX.utils.json_to_sheet(exportData, { header: headers });

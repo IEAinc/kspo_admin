@@ -161,7 +161,6 @@ const MainScenarioManagement = () => {
   const handleDataUpdate = (updatedData,gridApi) => {
     const selectedRows = gridApi.getSelectedRows();
     let stop=false;
-    console.log(allowIdList.indexOf(userId))
     // 회사명 검색후 금지지
      if(allowIdList.indexOf(userId)===-1){
       selectedRows.map((e)=>{
@@ -169,7 +168,6 @@ const MainScenarioManagement = () => {
           
       })
      }
-     console.log("stop",stop)
      if(stop){
       setAlertState({
         isOpen: true,
@@ -272,7 +270,6 @@ const MainScenarioManagement = () => {
         
         return data
     });
-    console.log(grid_data)
       /* 그리드 헤더 설정 */
       const grid_columns = [
         { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
