@@ -11,13 +11,13 @@ const Breadcrumb = () => {
     mainScenarioManagement: "메인 시나리오 관리",
     faqManagement: "FAQ 관리",
     satisfactionManagement: "만족도 관리",
+    consultationConnectionCount: "상담 연결 횟수 조회",
     adminManagement: "관리자 관리",
     historyManagement: "이력 관리",
     mainScenarioHistory: "메인시나리오 수정이력 조회",
     faqModificationHistory: "FAQ 수정이력 조회",
     loginHistory: "로그인 이력 조회",
   };
-
 
   // 마지막 경로 가져오기
   let lastPathname = ''
