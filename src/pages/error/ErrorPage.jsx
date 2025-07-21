@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 const ErrorPage = () => {
     const navigate=useNavigate();
     useEffect(()=>{
-        navigate("/sports/olparksports?company=올림픽스포츠센터")
+        navigate("/sports/olparksports?company=올림픽공원스포츠센터")
     },[])
     return (<></>)
 }

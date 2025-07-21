@@ -16,7 +16,7 @@ const logoBox = document.querySelector(".logo-box");
 const title = document.querySelector("title");
 const ChatBotHeaderChar = document.querySelector(".chat-bot > header a .char")
 const favicon = document.querySelector("link[rel='icon']");
-let companyText = "올림픽스포츠센터";
+let companyText = "올림픽공원스포츠센터";
 let companyImgNames = "";
 let chatCon=`https://o8z36.channel.io/home`;
 let evalList=[];
@@ -37,10 +37,10 @@ function companyChanger(companyText){
   if(companyText === "올림픽수영장"){
     name = "_swim";
     chatCon='https://olympicswimmimngpool.channel.io/home'
-  }else if(companyText === "테니스장"){
+  }else if(companyText === "올림픽테니스장"){
     name = "_tennis";
     chatCon='https://9v3q1.channel.io/home'
-  }else if(companyText === "축구장"){
+  }else if(companyText === "올림픽축구장"){
     name = "_soccer";
     chatCon='https://vdo3q.channel.io/home'
   }else if(companyText === "일산스포츠센터"){
@@ -668,10 +668,10 @@ $(function(){
     if(companyText === "올림픽수영장"){
       name = "_swim";
       chatCon='https://olympicswimmimngpool.channel.io/home'
-    }else if(companyText === "테니스장"){
+    }else if(companyText === "올림픽테니스장"){
       name = "_tennis";
       chatCon='https://9v3q1.channel.io/home'
-    }else if(companyText === "축구장"){
+    }else if(companyText === "올림픽축구장"){
       name = "_soccer";
       chatCon='https://vdo3q.channel.io/home'
     }else if(companyText === "일산스포츠센터"){
@@ -857,7 +857,7 @@ function generateUUID() {
 let chatRoom=null;
 //완전 처음 들어왔을때
 //회사이름 초기 설정
-let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽스포츠센터';
+let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽공원스포츠센터';
 
 
 //쿠키에 세션값 있는지 확인

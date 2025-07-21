@@ -5,16 +5,16 @@ function btnPoint(value){
 
 
 $(function(){
-  companyText=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽스포츠센터';
+  companyText=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽공원스포츠센터';
   function companyChanger(companyText){
     let name = "";
     if(companyText === "올림픽수영장"){
       name = "_swim";
       chatCon='https://olympicswimmimngpool.channel.io/home'
-    }else if(companyText === "테니스장"){
+    }else if(companyText === "올림픽테니스장"){
       name = "_tennis";
       chatCon='https://9v3q1.channel.io/home'
-    }else if(companyText === "축구장"){
+    }else if(companyText === "올림픽축구장"){
       name = "_soccer";
       chatCon='https://vdo3q.channel.io/home'
     }else if(companyText === "일산스포츠센터"){
@@ -45,7 +45,7 @@ $(function(){
   function evalInsert(){
     let data=JSON.parse(decodeURIComponent(get_cookie('evalList')));
     //회사이름 가져오기
-    let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽스포츠센터';
+    let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽공원스포츠센터';
     let comment=document.querySelector(`#comment`).value;
     fetch(api_base.replace("/window","")+`/insertEval`, {
       method: "POST",
