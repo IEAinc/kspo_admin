@@ -95,6 +95,10 @@ const SearchWrap = ({onSearch}) => {
         }))
       ];
       setSelectDialogOptions(options);
+      let now= new Date();
+        let before_month=new Date();
+        before_month.setMonth(before_month.getMonth()-1)
+        setDateRange([before_month,now])
       //초기값 구분 시나리오 같은경우  해당 회사가 없을경우가 존재하지 않으나 여기는 없을 수 있음
       if(isFirst){
       // 회사 초기값 세팅
@@ -122,7 +126,7 @@ const SearchWrap = ({onSearch}) => {
           cookieName=null;
         }
         //대화명 세팅       
-        onSearch(initCompany,cookieName)
+        onSearch(initCompany,cookieName,null,null,before_month,now)
       }else{
         if(names.indexOf(selectDialog)===-1){
           setSelectDialog({ value: null, label: "전체" })
@@ -140,6 +144,9 @@ const SearchWrap = ({onSearch}) => {
         let cookieCompany=Cookies.get("admincompany")
         if(cookieCompany!==undefined)initCompany=cookieCompany;
         if(cookieCompany==='null')initCompany=null;
+
+        
+   
         fetchCenterOptions(initCompany,true);
       }
       preProcess();

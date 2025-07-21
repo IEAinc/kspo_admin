@@ -67,15 +67,19 @@ const SearchWrap = ({onSearch}) => {
         let cookieCompany=Cookies.get("admincompany")
         if(cookieCompany!==undefined)initCompany=cookieCompany;
         if(cookieCompany==='null')initCompany=null;
+        let now= new Date();
+        let before_month=new Date();
+        before_month.setMonth(before_month.getMonth()-1)
+        setDateRange([before_month,now])
         if(companies.indexOf(initCompany)>-1){
           setSelectedCenter( { value: initCompany, label: initCompany })
           Cookies.set('admincompany', initCompany, { 
             path: '/', 
             sameSite: 'Strict' 
           });
-          onSearchClick(initCompany)
+          onSearch(initCompany,null,before_month,now)
         }else{
-          onSearchClick()
+          onSearch(null,null,before_month,now)
         }
         setSelectCenterOptions(options);
       } catch (error) {

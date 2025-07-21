@@ -78,6 +78,11 @@ const SearchWrap = ({onSearch}) => {
       }
     };
     const preprocess= async ()=>{
+      // 날자 세팅
+      let now= new Date();
+      let before_month=new Date();
+      before_month.setMonth(before_month.getMonth()-1)
+      setDateRange([before_month,now])
           //대화명 세팅
         await  fetchCenterOptions();
  

@@ -132,7 +132,10 @@ const SatisfactionManagement = () => {
   
     const preProcess=async ()=>{
      
-      fetchListData()
+      let now= new Date();
+      let before_month=new Date();
+      before_month.setMonth(before_month.getMonth()-1)
+      fetchListData(null,null,null,before_month,now)
     }
     preProcess();
   },[])

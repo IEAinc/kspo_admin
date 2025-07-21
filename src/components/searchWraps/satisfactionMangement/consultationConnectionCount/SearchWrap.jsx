@@ -34,7 +34,12 @@ const SearchWrap = ({onSearch}) => {
       let cookieCompany=Cookies.get("admincompany")
       if(cookieCompany!==undefined)initCompany=cookieCompany;
       if(cookieCompany==='null')initCompany=null;
-      onSearch(initCompany);
+      // 날자 세팅
+      let now= new Date();
+      let before_month=new Date();
+      before_month.setMonth(before_month.getMonth()-1)
+      setDateRange([before_month,now])
+      onSearch(initCompany,before_month,now); 
      
    
 
