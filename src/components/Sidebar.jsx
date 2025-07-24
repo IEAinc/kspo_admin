@@ -43,7 +43,7 @@ const Sidebar = () => {
       },
       subMenu: [
         {title:'챗봇 이용자 만족도 조회', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
-        {title:'상담 연결 횟수 조회', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
+        {title:'챗봇 이용 현황', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
       ]
     },
     // {
@@ -130,8 +130,8 @@ const Sidebar = () => {
               active: Icon2Active,
             },
             subMenu: [
-              {title:'만족도 관리', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
-              {title:'사용자 통계', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
+              {title:'챗봇 이용자 만족도 조회', path:'/ksponcoadministrator/satisfactionManagement/satisfactionManagement'},
+              {title:'챗봇 이용 현황', path:'/ksponcoadministrator/satisfactionManagement/consultationConnectionCount'}
             ]
           },
 
