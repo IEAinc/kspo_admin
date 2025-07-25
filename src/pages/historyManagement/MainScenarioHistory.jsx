@@ -72,7 +72,13 @@ const MainScenarioHistory = () => {
 
       /* 그리드 헤더 설정 */
       let grid_columns = [
-        { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => params.node.rowIndex + 1,},
+        { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => {
+            // 현재 페이지와 페이지 크기를 이용해 전체 목록에서의 번호 계산
+            const pageSize = params.context.pageSize;
+            const currentPage = params.context.currentPage;
+            return (currentPage - 1) * pageSize + params.node.rowIndex + 1;
+          }
+        },
         { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
         { headerName: "대화명",flex:1, field: "name", cellClass: 'text-left'},
         { headerName: "답변 내용",flex:1, field: "answer", cellClass: 'text-left' },

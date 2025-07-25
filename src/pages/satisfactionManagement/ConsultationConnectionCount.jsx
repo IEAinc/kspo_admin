@@ -133,10 +133,16 @@ const ConsultationConnectionCount = () => {
     
     /* 그리드 헤더 설정 */
     let grid_columns = [
-      { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => params.node.rowIndex + 1,},
+      { headerName: "NO", field: "number",cellClass: 'text-center',width: 80 ,suppressSizeToFit: true, valueGetter: (params) => {
+          // 현재 페이지와 페이지 크기를 이용해 전체 목록에서의 번호 계산
+          const pageSize = params.context.pageSize;
+          const currentPage = params.context.currentPage;
+          return (currentPage - 1) * pageSize + params.node.rowIndex + 1;
+        }
+      },
       { headerName: "날짜", flex:1,field: "created", cellClass: 'text-center'},
       { headerName: "센터명", flex:1,field: "company", cellClass: 'text-center'},
-      { headerName: "사용자수",flex:1, field: "user_count", cellClass: 'text-center'},
+      { headerName: "이용자 수",flex:1, field: "user_count", cellClass: 'text-center'},
       { headerName: "질문 횟수",flex:1, field: "usage_count", cellClass: 'text-center'},
     ];
     setGridColumns(grid_columns);
@@ -151,20 +157,20 @@ const ConsultationConnectionCount = () => {
       </div>
       {/* 검색 필터링 */}
       <div className="flex items-stretch gap-[18px] w-full mb-[16px]">
-        {/* 일별 방문자 */}
+        {/* 총 이용자 수 */}
         <div className="flex justify-between flex-col w-[25%] py-[20px] px-[20px] rounded-[20px] bg-white br-[#EEF4FF] border-2 relative overflow-hidden">
           <div className="flex justify-between items-start gap-2 mb-[8px] ">
-            <p className="text-[24px] font-bold text-black ]">일별 방문자 </p>
+            <p className="text-[24px] font-bold text-black ]">총 이용자 수 </p>
           </div>
           <div className="flex justify-between items-end gap-2">
             <p className="text-[50px] font-medium text-black leading-none">{countAll[0]}</p>
             <UserCount style={{ width: '80px',position:'relative',bottom:'-20px' }} />
           </div>
         </div>
-        {/* 질문 개수 */}
+        {/* 총 질문 횟수 */}
         <div className="flex justify-between flex-col w-[25%] py-[20px] px-[20px] rounded-[20px] bg-white br-[#EEF4FF] border-2 relative overflow-hidden">
           <div className="flex justify-between items-start gap-2 mb-[8px] ">
-            <p className="text-[24px] font-bold text-black ]">질문 개수</p>
+            <p className="text-[24px] font-bold text-black ]">총 질문 횟수</p>
           </div>
           <div className="flex justify-between items-end gap-2">
             <p className="text-[50px] font-medium text-black leading-none">{countAll[1]}</p>

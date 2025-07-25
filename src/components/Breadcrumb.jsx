@@ -10,7 +10,7 @@ const Breadcrumb = () => {
     scenarioManagement: "시나리오 관리",
     mainScenarioManagement: "메인 시나리오 관리",
     faqManagement: "FAQ 관리",
-    satisfactionManagement: "만족도 관리",
+    satisfactionManagement: "챗봇 이용자 만족도 조회",
     consultationConnectionCount: "챗봇 이용 현황",
     adminManagement: "관리자 관리",
     historyManagement: "이력 관리",
