@@ -40,7 +40,13 @@ const SearchWrap = ({onSearch}) => {
       }else{
         setSelectedCenter({value:initCompany, label:initCompany})
       }
-    
+      setSelectedCenter( { value: initCompany, label: initCompany===null?"전체":initCompany })
+              Cookies.set('admincompany', initCompany, { 
+                path: '/', 
+                sameSite: 'Strict' 
+              }); 
+            
+      
       // 날자 세팅
       let now= new Date();
       let before_month=new Date();
