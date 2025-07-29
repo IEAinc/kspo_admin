@@ -234,16 +234,16 @@ const DetailMainScenarioHistory = () => {
 
                         return (
                           <React.Fragment key={index}>
-                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.name}
                             </div>
-                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.btnType}
                             </div>
-                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.btnName}
                             </div>
-                            <div className={`col-span-4 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-4 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color break-all`}>
                               {item.btnDetail}
                             </div>
                           </React.Fragment>
@@ -332,16 +332,16 @@ const DetailMainScenarioHistory = () => {
 
                         return (
                           <React.Fragment key={index}>
-                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-2 py-[15px] px-[8px] flex items-center justify-center text-[14px] font-bold text-gray1 bg-tb-bg-color border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.name}
                             </div>
-                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.btnType}
                             </div>
-                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-3 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white border-r ${borderClass} border-tb-br-color break-all`}>
                               {item.btnName}
                             </div>
-                            <div className={`col-span-4 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color`}>
+                            <div className={`col-span-4 p-[15px] flex items-center justify-start text-[14px] font-medium text-black bg-white ${borderClass} border-tb-br-color break-all`}>
                               {item.btnDetail}
                             </div>
                           </React.Fragment>
