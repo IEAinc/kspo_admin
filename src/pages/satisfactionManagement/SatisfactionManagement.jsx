@@ -135,7 +135,12 @@ const SatisfactionManagement = () => {
       let now= new Date();
       let before_month=new Date();
       before_month.setMonth(before_month.getMonth()-1)
-      fetchListData(null,null,null,before_month,now)
+      const { company, id } = await fetchCommonData();
+      let initCompany=company;
+      let cookieCompany=Cookies.get("admincompany")
+      if(cookieCompany!==undefined)initCompany=cookieCompany;
+      if(cookieCompany==='null')initCompany=null;
+      fetchListData(initCompany,null,null,before_month,now)
     }
     preProcess();
   },[])

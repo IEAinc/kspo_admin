@@ -32,8 +32,21 @@ const SearchWrap = ({onSearch}) => {
       const { company, id } = await fetchCommonData();
       let initCompany=company;
       let cookieCompany=Cookies.get("admincompany")
+      console.log(cookieCompany)
       if(cookieCompany!==undefined)initCompany=cookieCompany;
       if(cookieCompany==='null')initCompany=null;
+      if(initCompany===null){
+        setSelectedCenter({value:initCompany, label:"전체"})
+      }else{
+        setSelectedCenter({value:initCompany, label:initCompany})
+      }
+      setSelectedCenter( { value: initCompany, label: initCompany===null?"전체":initCompany })
+              Cookies.set('admincompany', initCompany, { 
+                path: '/', 
+                sameSite: 'Strict' 
+              }); 
+            
+      
       // 날자 세팅
       let now= new Date();
       let before_month=new Date();

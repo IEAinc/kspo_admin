@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import Cookies from 'js-cookie';
 // API Base URL
 export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":8080";
 
@@ -22,23 +22,22 @@ export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
-    'Accept': 'application/json',
-    'X-XSRF-TOKEN': getCsrfTokenFromCookie()
+    'Accept': 'application/json'
   },
   withCredentials: true,
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN'
+
 });
 
 api.interceptors.request.use((config) => {
-  const csrfToken = getCsrfTokenFromCookie();
-
-  if (csrfToken) {
-    config.headers['X-XSRF-TOKEN'] = csrfToken;
-    //config.headers['X-CSRF-TOKEN'] = csrfToken; // 스프링이 두 헤더를 모두 체크하도록
-  }
+  
   return config;
-}, (error) => Promise.reject(error));
+},  (error) => {
+  if (error.response?.status === 403 || error.response?.status === 401 || error.response?.status === 400) {
+      Cookies.remove('XSRF-TOKEN')
+  }
+  return Promise.reject(error);
+}
+);
 
 // API Endpoints
 // API Endpoints

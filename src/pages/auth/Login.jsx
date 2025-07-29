@@ -42,6 +42,7 @@ const Login = () => {
         });
       };
       const getToken= async ()=>{
+        Cookies.remove('XSRF-TOKEN')
         const response = await api.get(API_ENDPOINTS.TEST)
  
          
@@ -50,6 +51,7 @@ const Login = () => {
     useEffect(()=>{
       Cookies.remove('admincompany');
       Cookies.remove('adminName');
+      Cookies.remove('XSRF-TOKEN');
       getToken();
       let localChk=localStorage.getItem('rememberMe')
       if(localChk){

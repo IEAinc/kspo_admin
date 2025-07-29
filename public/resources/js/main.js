@@ -40,7 +40,7 @@ function companyChanger(companyText){
   }else if(companyText === "올림픽테니스장"){
     name = "_tennis";
     chatCon='https://9v3q1.channel.io/home'
-  }else if(companyText === "올림픽축구장"){
+  }else if(companyText === "올팍축구장"){
     name = "_soccer";
     chatCon='https://vdo3q.channel.io/home'
   }else if(companyText === "일산스포츠센터"){
@@ -671,7 +671,7 @@ $(function(){
     }else if(companyText === "올림픽테니스장"){
       name = "_tennis";
       chatCon='https://9v3q1.channel.io/home'
-    }else if(companyText === "올림픽축구장"){
+    }else if(companyText === "올팍축구장"){
       name = "_soccer";
       chatCon='https://vdo3q.channel.io/home'
     }else if(companyText === "일산스포츠센터"){
