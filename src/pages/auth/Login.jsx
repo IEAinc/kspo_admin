@@ -42,6 +42,7 @@ const Login = () => {
         });
       };
       const getToken= async ()=>{
+        Cookies.remove('XSRF-TOKEN')
         const response = await api.get(API_ENDPOINTS.TEST)
  
          
