@@ -37,7 +37,12 @@ const MainScenarioManagement = () => {
     onCancel: () => {}
   });
   useEffect(()=>{
-
+    const preProcess=async ()=>{
+      const { company, id } = await fetchCommonData();
+      setUserId(id);
+      setUserCompany(company)
+    }
+    preProcess()
 
   },[location.pathname])
   // Alert 닫기 함수
