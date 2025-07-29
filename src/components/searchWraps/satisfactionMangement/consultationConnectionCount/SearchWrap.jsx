@@ -32,7 +32,6 @@ const SearchWrap = ({onSearch}) => {
       const { company, id } = await fetchCommonData();
       let initCompany=company;
       let cookieCompany=Cookies.get("admincompany")
-      console.log(cookieCompany)
       if(cookieCompany!==undefined)initCompany=cookieCompany;
       if(cookieCompany==='null')initCompany=null;
       if(initCompany===null){

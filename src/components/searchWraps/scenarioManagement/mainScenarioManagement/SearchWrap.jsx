@@ -125,7 +125,7 @@ const SearchWrap = ({ onSearch}) => {
       fetchSelectionValues(initCompany,true);
      
     }
-    
+    resetSearch()
     preprocess()
   }, [location.pathname]);
 

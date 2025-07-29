@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 // 한국어 로케일 import
@@ -9,7 +9,7 @@ import TabRadioWrap from '../forms/TabRadioWrap.jsx';
 // 사용한 이미지 모음
 import CalendarIcon from '../../../assets/images/icon/ico_calendar.svg?react';
 
-const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=[null,null]}) => {
+const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=[null,null],selectedRange, setSelectedRange}) => {
   const {
     widthSize = 'full', // widthSize 추가 (기본값은 full)
     labelSize = 'full'
@@ -22,6 +22,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
     sm: 'lg:w-[75px] w-full', // Small
     full: 'w-full' // Full Width
   };
+
   const widthClass = widthClassMap[widthSize] || 'w-full'; // 기본값은 full
 
   // [라벨 사이즈]
@@ -36,7 +37,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
   // 시작 날짜와 종료 날짜 상태
   
   const [startDate, endDate] = dateRange; // Default 종료 날짜
-  const [selectedRange, setSelectedRange] = useState(""); // 라디오 버튼 선택 값
+
   // const [rangeOptions, setRangeOptions] = useState(["오늘", "1주", "15일", "1개월", "3개월", "6개월", "1년"]); // 기본 옵션
 
   // 라디오 버튼 날짜 값을 설정하는 함수
@@ -105,6 +106,7 @@ const CustomDatePicker = ({rangeOptions = [], options={},setDateRange,dateRange=
       setDateRange([startDate, date]);
     }
   };
+
 
   return (
     <div className={`

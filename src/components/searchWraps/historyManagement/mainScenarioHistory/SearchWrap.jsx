@@ -10,6 +10,7 @@ import { API_ENDPOINTS,api } from '../../../../constants/api.js';
 import { fetchCommonData } from '../../../../constants/common.js';
 import Cookies from "js-cookie";
 const SearchWrap = ({onSearch}) => {
+  const [selectedRange, setSelectedRange] = useState(""); // 라디오 버튼 선택 값
   const location= useLocation()
   // 검색조건
   // (select) > 센터명
@@ -61,6 +62,7 @@ const SearchWrap = ({onSearch}) => {
     setSearchContent('');
     //날짜
     setDateRange([null,null])
+    setSelectedRange('')
 
   }
   const onSearchClick=()=>{
@@ -136,6 +138,7 @@ const SearchWrap = ({onSearch}) => {
       console.error('센터명 옵션을 불러오는데 실패했습니다:', error);
     }
   };
+
   useEffect(() => {
      
       const preProcess= async ()=>{
@@ -146,9 +149,10 @@ const SearchWrap = ({onSearch}) => {
         if(cookieCompany==='null')initCompany=null;
 
         
-   
+        resetSearch()
         fetchCenterOptions(initCompany,true);
       }
+      
       preProcess();
       
     }, [location.pathname]); 
@@ -239,6 +243,7 @@ const [dateRange, setDateRange] = useState([null,null]);
             />
           </div>
           <CustomDatePicker
+          
           rangeOptions={customOptions}
           dateRange={dateRange}
             setDateRange={setDateRange}
@@ -246,6 +251,8 @@ const [dateRange, setDateRange] = useState([null,null]);
               widthSize:'md',
               labelSize: 'sm',
             }}
+            selectedRange={selectedRange}
+          setSelectedRange={setSelectedRange}
           />
         </div>
 

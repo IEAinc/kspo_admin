@@ -9,6 +9,7 @@ import { api,API_ENDPOINTS } from "../../../../constants/api.js";
 import { fetchCommonData } from "../../../../constants/common.js";
 import Cookies from "js-cookie";
 const SearchWrap = ({onSearch}) => {
+  const [selectedRange, setSelectedRange] = useState(""); // 라디오 버튼 선택 값
   // 검색조건
   // (select) > 센터명
   const [selectCenterOptions, setSelectCenterOptions] = useState([
@@ -42,12 +43,14 @@ const SearchWrap = ({onSearch}) => {
     setSearchContent('');
     //날짜
     setDateRange([null,null])
+    setSelectedRange('')
 
   }
   const onSearchClick=()=>{
     onSearch(selectedCenter.value,searchContent,dateRange[0],dateRange[1]);
   }
   useEffect(() => {
+
     const fetchCenterOptions = async () => {
       try {
         const response = await api.post(API_ENDPOINTS.LogCompany);
@@ -145,6 +148,8 @@ const SearchWrap = ({onSearch}) => {
             />
           </div>
           <CustomDatePicker
+          selectedRange={selectedRange}
+          setSelectedRange={setSelectedRange}
             rangeOptions={customOptions}
             dateRange={dateRange}
               setDateRange={setDateRange}
