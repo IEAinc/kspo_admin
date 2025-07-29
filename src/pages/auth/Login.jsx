@@ -50,6 +50,7 @@ const Login = () => {
     useEffect(()=>{
       Cookies.remove('admincompany');
       Cookies.remove('adminName');
+      Cookies.remove('XSRF-TOKEN');
       getToken();
       let localChk=localStorage.getItem('rememberMe')
       if(localChk){
