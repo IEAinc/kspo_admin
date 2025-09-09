@@ -402,7 +402,7 @@ const createChat = (companyText) => {
         chatBox.innerHTML +=
             `
           <div class="chats ${item.type}">
-            ${item.type === "left" ? `<div class="icon"><img src="/resources/img/char${companyImgNames}.png" alt=""></div>` : ``}
+            ${item.type === "left" ? `<div class="icon"><img src="/resources/img/char_logo${companyImgNames}.png" alt=""></div>` : ``}
             <div class="balloon" ${item.mapData ? `id="map${item.mapData.id}header"` : ``}>
               ${item.imgURL ? `<img src="/resources/img/${item.imgURL}.png" alt="">` : ""}
          
