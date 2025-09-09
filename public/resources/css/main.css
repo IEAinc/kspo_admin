@@ -207,6 +207,7 @@ h3{font-size:var(--fs18);font-weight:700;}
 .chat-bot .chat-box .chats + .chats.right{margin-top:20px;}
 .chat-bot .chat-box .chats + .chats.left{margin-top:12px;}
 .chat-bot .chat-box .chats .icon{width:auto;height:36px;margin-bottom:8px;}
+.chat-bot .chat-box .chats .icon > img {heihgt:100%;}
 .chat-bot .chat-box .chats .balloon{max-width:40%;padding:16px;}
 .chat-bot .chat-box .chats .balloon > p{word-break:break-all;white-space:pre-line;}
 .chat-bot .chat-box .chats .balloon > * + *{margin-top:20px;}
