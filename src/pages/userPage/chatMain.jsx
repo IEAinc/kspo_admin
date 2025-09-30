@@ -29,7 +29,7 @@ const ChatMain = () => {
         const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
         let mainScript=null;
         jqueryScript.onload=()=>{
-            const kakaoScript=makeScript('https://dapi.kakao.com/v2/maps/sdk.js?appkey=609927986cdcea5222434ab71d1271b0&autoload=false&libraries=services,clusterer')
+            const kakaoScript=makeScript('https://dapi.kakao.com/v2/maps/sdk.js?appkey=30d2c08f659481120615deb138fc40a2&autoload=false&libraries=services,clusterer')
             kakaoScript.onload = () => {
          
                 window.kakao.maps.load(() => {
