@@ -53,7 +53,7 @@ function App() {
   useEffect(() => {
     removeKoreanCookies();
   }, []);
-  let pagList=['olparksports','olparkswim','olparktennis','olparksoccer','ilsansports','bundangsports']
+  let pagList=['olparksports','olparkswim','olparktennis','olparksoccer','ilsansports','bundangsports',"olympicpark","boatracepark"]
   return (
     <Routes>
       {/* 사용자 페이지 */}
