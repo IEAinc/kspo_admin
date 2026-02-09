@@ -49,7 +49,14 @@ function companyChanger(companyText){
   }else if(companyText === "분당스포츠센터"){
     name = "_bundang";
     chatCon='https://n1p7v.channel.io/home'
+  }else if(companyText === "올림픽공원"){
+    name = "";
+    chatCon='https://olympicpark-info.channel.io/home'
+  }else if(companyText === "미사경정공원"){
+    name = "";
+    chatCon='https://misapark.channel.io/home'
   }
+
 
   chatBot.classList.add(name.split("_")[1]);
   companyImgNames = name;
@@ -369,7 +376,76 @@ const chatHead =
     </div>
   </div>
   `;
-
+const chatHeadPark =
+    `
+  <div class="chat-head">
+    <div class="char"><img src="/resources/img/char${companyImgNames}.png" alt=""></div>
+    <div class="quick-btn-box">
+      <h3 class="question">자주 묻는 질문</h3>
+      <div class="quick-btn-item">
+        <button onclick="chatSend('올림픽공원 이용 안내')">
+          <img src="/resources/img/icon/quick${companyImgNames}_01.svg" alt="">
+          올림픽공원 이용 안내
+        </button>
+        <button onclick="chatSend('올림픽공원 교통 안내')">
+          <img src="/resources/img/icon/quick${companyImgNames}_02.svg" alt="">
+          올림픽공원 교통 안내
+        </button>
+        <button onclick="chatSend('주차 사전무인정산기 안내')">
+          <img src="/resources/img/icon/quick${companyImgNames}_03.svg" alt="">
+          주차 사전무인정산기 안내
+        </button>
+        <button onclick="chatSend('올림픽공원 CCTV 열람')">
+          <img src="/resources/img/icon/quick${companyImgNames}_04.svg" alt="">
+          올림픽공원 CCTV 열람
+        </button>
+        <button onclick="chatSend('촬영·영상 제작 허가 안내')">
+          <img src="/resources/img/icon/quick${companyImgNames}_05.svg" alt="">
+          촬영·영상 제작 허가 안내
+        </button>
+        <button onclick="chatSend('공원 이용수칙·행위 제한 안내')">
+          <img src="/resources/img/icon/quick${companyImgNames}_06.svg" alt="">
+          공원 이용수칙·행위 제한 안내
+        </button>
+      </div>
+    </div>
+  </div>
+  `;
+const chatHeadMisa =
+  `
+<div class="chat-head">
+  <div class="char"><img src="/resources/img/char${companyImgNames}.png" alt=""></div>
+  <div class="quick-btn-box">
+    <h3 class="question">자주 묻는 질문</h3>
+    <div class="quick-btn-item">
+      <button onclick="chatSend('편의시설·매점·자동판매기 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_01.svg" alt="">
+        편의시설·매점·자동판매기 안내
+      </button>
+      <button onclick="chatSend('놀이시설·피크닉 공간 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_03.svg" alt="">
+         놀이시설·피크닉 공간 안내
+      </button>
+      <button onclick="chatSend('주차요금·이용 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_04.svg" alt="">
+        주차요금·이용 안내
+      </button>
+      <button onclick="chatSend('공원 이용시간·출입 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_05.svg" alt="">
+         공원 이용시간·출입 안내
+      </button>
+      <button onclick="chatSend('촬영·대관·이벤트 이용 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_06.svg" alt="">
+        촬영·대관·이벤트 이용 안내
+      </button>
+      <button onclick="chatSend('미사경정공원 대표 연락처 안내')">
+        <img src="/resources/img/icon/quick${companyImgNames}_02.svg" alt="">
+        미사경정공원 대표 연락처 안내
+      </button>
+    </div>
+  </div>
+</div>
+`;
 const historyBox = document.querySelector(".history-item > ul");
 let historyData =[];
 
@@ -396,7 +472,14 @@ const createChat = (companyText) => {
       `
 
     if(historyData[i-1].active){
-      chatBox.innerHTML = chatHead;
+      if(companyText==="올림픽공원"){
+        chatBox.innerHTML = chatHeadPark;
+      }else if(companyText==="미사경정공원"){
+        chatBox.innerHTML = chatHeadMisa;
+      }else{
+        chatBox.innerHTML = chatHead;
+      }
+      
       historyData[i-1].characterData.forEach((item) => {
 
         chatBox.innerHTML +=
