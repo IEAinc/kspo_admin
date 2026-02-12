@@ -1,8 +1,52 @@
 // api 호출 관련
-// api_base: API 호출의 기본 URL 설정
-//   - 루트 경로가 아닌 경우 현재 경로 사용
-//   - 루트 경로인 경우 location.origin 사용
-let api_base=location.pathname!=='/'?location.origin+":8080"+location.pathname:location.origin+":8080";
+// api_base: API 호출의 기본 URL 설정 (8080 우선, 실패 시 8000으로 폴백)
+let api_base = location.pathname !== '/' ? location.origin + ":8080" + location.pathname : location.origin + ":8080";
+let api_fallback = location.pathname !== '/' ? location.origin + ":8000" + location.pathname : location.origin + ":8000";
+
+// API 호출 헬퍼 함수 (8080 실패 시 8000으로 자동 폴백)
+async function apiCall(endpoint, options = {}) {
+  try {
+    // 먼저 8080 포트 시도 (Java Spring Boot)
+    console.log(`🔄 API 호출 시도: ${api_base}${endpoint}`);
+    const response = await fetch(`${api_base}${endpoint}`, options);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    console.log(`✅ Java Spring Boot 연결 성공 (8080)`);
+    return response;
+  } catch (error) {
+    console.log(`❌ Java Spring Boot 연결 실패 (8080): ${error.message}`);
+    console.log(`🔄 FastAPI로 폴백 시도 (8000)...`);
+    
+    try {
+      // FastAPI 엔드포인트 매핑
+      let fastApiEndpoint = endpoint;
+      if (endpoint === '/getChat') {
+        fastApiEndpoint = '/chat';
+      } else if (endpoint === '/insertHistory') {
+        fastApiEndpoint = '/chat/history';
+      } else if (endpoint === '/insertEval') {
+        fastApiEndpoint = '/chat/evaluate';
+      } else if (endpoint === '/selectChatSingle') {
+        fastApiEndpoint = '/chat/sessions';
+      }
+      
+      const fallbackResponse = await fetch(`${api_fallback}${fastApiEndpoint}`, options);
+      
+      if (!fallbackResponse.ok) {
+        throw new Error(`HTTP ${fallbackResponse.status}: ${fallbackResponse.statusText}`);
+      }
+      
+      console.log(`✅ FastAPI 연결 성공 (8000)`);
+      return fallbackResponse;
+    } catch (fallbackError) {
+      console.error(`❌ 모든 API 서버 연결 실패:`, fallbackError);
+      throw new Error(`API 서버에 연결할 수 없습니다. Java Spring Boot(8080)와 FastAPI(8000) 모두 응답하지 않습니다.`);
+    }
+  }
+}
 
 /*
  * 업체별 스타일 설정
@@ -151,7 +195,7 @@ async function chatSend(value) {
   const time = new Date().toLocaleTimeString();
   const timeSet = time.substring(0, time.length - 3);
 
-  const response = await fetch(`${api_base}/getChat`, {
+  const response = await apiCall('/getChat', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -278,7 +322,7 @@ async function chatSend(value) {
   sendMessage.value = "";
   evalList.push(JSON.parse(JSON.stringify(evalJson)));
   document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
-  fetch(`${api_base}/insertHistory`, {
+  apiCall('/insertHistory', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -288,7 +332,7 @@ async function chatSend(value) {
       chat_num: chatRoom
     }),
   }).then(res => {
-    fetch(`${api_base}/insertHistory`, {
+    apiCall('/insertHistory', {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -537,7 +581,7 @@ chatAddBtn.addEventListener("click", async () => {
   const inIttime = new Date().toLocaleTimeString();
   const intIttimeSet = inIttime.substring(0, inIttime.length - 3);
   const historyBox = document.querySelector(".history-item > ul");
-  let response = await fetch(`${api_base}/getChat`, {
+  let response = await apiCall('/getChat', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -594,7 +638,7 @@ chatAddBtn.addEventListener("click", async () => {
           },
         ]
       }
-  fetch(`${api_base}/insertHistory`, {
+  apiCall('/insertHistory', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
@@ -693,7 +737,7 @@ $(function(){
 
 
 
-      await fetch(`${api_base}/deleteChatRooom`, {
+      await apiCall('/deleteChatRooom', {
         method: "POST",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
@@ -905,7 +949,7 @@ function evalInsert(closePoint){
   let data=JSON.parse(decodeURIComponent(get_cookie('evalList')));
   let comment=document.querySelector(`#comment`).value;
 
-  fetch(`${api_base}/insertEval`, {
+  apiCall('/insertEval', {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({
