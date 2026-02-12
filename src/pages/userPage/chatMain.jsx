@@ -53,48 +53,48 @@ const ChatMain = () => {
 
      return(
    
-    <div class="chat-bot normal">
+    <div className="chat-bot normal">
     <header>
-      <a href="#" class="logo-box">
-        <img src="/resources/img/char.png" class="char" alt=""/>
-        <img src="/resources/img/logo.svg" class="logo" alt=""/>
+      <a href="#" className="logo-box">
+        <img src="/resources/img/char.png" className="char" alt=""/>
+        <img src="/resources/img/logo.svg" className="logo" alt=""/>
         <span>올림픽공원스포츠센터챗봇</span>
       </a>
       
-      <div class="btn-wrap">
-        <div class="word-changer">
-          <button class="word-change-btn">더 크게</button>
+      <div className="btn-wrap">
+        <div className="word-changer">
+          <button className="word-change-btn">더 크게</button>
         </div>
-        <button class="menu-btn"></button>
+        <button className="menu-btn"></button>
       </div>
     </header>
-    <div class="content-box">
-      <div class="left-menu">
-        <div class="in-box">
-          <div class="btn-wrap end">
-            <div class="menu-close-btn"></div>
+    <div className="content-box">
+      <div className="left-menu">
+        <div className="in-box">
+          <div className="btn-wrap end">
+            <div className="menu-close-btn"></div>
           </div>
-          <button class="add-btn">채팅</button>
-          <div class="chat-history">
+          <button className="add-btn">채팅</button>
+          <div className="chat-history">
             <h3>대화 기록</h3>
             
-            <div class="history-item">
+            <div className="history-item">
               <ul></ul>
             </div>
           </div>
         </div>
       </div>
-      <div class="wrap">
-        <div class="chat-box"></div>
-        <div class="chat-input">
-          <div class="related-word">
+      <div className="wrap">
+        <div className="chat-box"></div>
+        <div className="chat-input">
+          <div className="related-word">
             <ul id="related-question">
             </ul>
           </div>
           <label>
             <input type="text" id="sendMessage" placeholder="질문을 입력해 주세요."/>
           </label>
-          <button class="send-btn"></button>
+          <button className="send-btn"></button>
         </div>
       </div>
     </div>
@@ -104,52 +104,52 @@ const ChatMain = () => {
     </footer>
 
     {/* <!-- 만족도 조사 --> */}
-    <div class="popup satisfaction">
-      <div class="popup-box">
-        <div class="pop-head">
+    <div className="popup satisfaction">
+      <div className="popup-box">
+        <div className="pop-head">
           <h3>만족도 조사</h3>
-          <button class="close-btn" onClick={()=>window.evalInsert(5)}></button>
+          <button className="close-btn" onClick={()=>window.evalInsert(5)}></button>
         </div>
-        <div class="pop-body">
+        <div className="pop-body">
           <h4>스포츠센터 챗봇의 만족도를 선택해주세요.</h4>
-          <div class="rating-wrap">
-            <div class="rating-box">
-              <button onClick={()=>window.btnPoint(1)} class="rate-btn"></button>
-              <button onClick={()=>window.btnPoint(2)} class="rate-btn"></button>
-              <button onClick={()=>window.btnPoint(3)} class="rate-btn"></button>
-              <button onClick={()=>window.btnPoint(4)} class="rate-btn"></button>
-              <button onClick={()=>window.btnPoint(5)} class="rate-btn"></button>
+          <div className="rating-wrap">
+            <div className="rating-box">
+              <button onClick={()=>window.btnPoint(1)} className="rate-btn"></button>
+              <button onClick={()=>window.btnPoint(2)} className="rate-btn"></button>
+              <button onClick={()=>window.btnPoint(3)} className="rate-btn"></button>
+              <button onClick={()=>window.btnPoint(4)} className="rate-btn"></button>
+              <button onClick={()=>window.btnPoint(5)} className="rate-btn"></button>
             </div>
-            <div class="rating-info"></div>
+            <div className="rating-info"></div>
           </div>
 
-          <div class="survey-box">
-            <div class="top">
-              <h5>불편을 느끼신 항목을 알려주시면 <br class="mob" /> 다음 서비스엔 꼭 좋아요를 받아 볼게요.</h5>
+          <div className="survey-box">
+            <div className="top">
+              <h5>불편을 느끼신 항목을 알려주시면 <br className="mob" /> 다음 서비스엔 꼭 좋아요를 받아 볼게요.</h5>
               <p>폭언, 욕설, 성희롱 등 아픈 말은 참아주세요.</p>
             </div>
-            <div class="textarea">
+            <div className="textarea">
               <label>
-                <textarea id="comment" placeholder="의견을 입력해주세요. (최대 500자)" maxlength="500"></textarea>
+                <textarea id="comment" placeholder="의견을 입력해주세요. (최대 500자)" maxLength={500}></textarea>
               </label>
             </div>
           </div>
         </div>
-        <div class="pop-foot">
-          <button id='evalEnd' disabled  class="confirm-btn">설문완료</button>
+        <div className="pop-foot">
+          <button id='evalEnd' disabled  className="confirm-btn">설문완료</button>
         </div>
       </div>
     </div>
 
     {/* <!-- 만족도 조사 응답 --> */}
-    <div class="popup satisfaction-confirmed">
-      <div class="popup-box">
-        <div class="pop-body">
-          <div class="char"><img src="/resources/img/char.png" alt=""/></div>
+    <div className="popup satisfaction-confirmed">
+      <div className="popup-box">
+        <div className="pop-body">
+          <div className="char"><img src="/resources/img/char.png" alt=""/></div>
           <h4>만족도 설문조사에 응해주셔서 감사합니다.</h4>
         </div>
-        <div class="pop-foot">
-          <button class="confirm-btn">확인</button>
+        <div className="pop-foot">
+          <button className="confirm-btn">확인</button>
         </div>
       </div>
     </div>
