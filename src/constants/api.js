@@ -1,7 +1,9 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-// API Base URL
-export const API_BASE_URL = window.location.origin.split(":")[0]+":"+window.location.origin.split(":")[1]+":8080";
+
+// 프론트는 3000에서만 구동. API는 같은 origin(3000)으로 보내고 Vite proxy가 8080으로 전달.
+// 3000 -> proxy -> 8080 이므로 baseURL은 빈 문자열(상대 경로).
+export const API_BASE_URL = '';
 
 
 // 서버에서 쿠키로 전달된 CSRF 토큰 읽기

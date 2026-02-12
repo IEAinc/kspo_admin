@@ -5,7 +5,8 @@ import svgr from "vite-plugin-svgr";
 import svgLoader from 'vite-svg-loader';
 
 const env = loadEnv(process.env.NODE_ENV || 'development', process.cwd());
-const API_BASE_URL = env.VITE_API_BASE_URL +":8080"
+// 백엔드 주소 (이미 포트 포함. 예: http://localhost:8080)
+const API_BASE_URL = env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 
 

@@ -1,14 +1,17 @@
-// api 호출 관련
-// api_base: API 호출의 기본 URL 설정 (8080 우선, 실패 시 8000으로 폴백)
-let api_base = location.pathname !== '/' ? location.origin + ":8080" + location.pathname : location.origin + ":8080";
-let api_fallback = location.pathname !== '/' ? location.origin + ":8000" + location.pathname : location.origin + ":8000";
+// api 호출 관련 (kspo_admin 전용, 프론트 3000 / 백엔드 8080 proxy)
+// /sports/olparksports 형태여야 proxy가 8080으로 전달함. 아니면 기본값 사용.
+var api_base = (location.pathname && location.pathname.startsWith('/sports/'))
+  ? location.origin + location.pathname
+  : location.origin + '/sports/olparksports';
+var fallbackOrigin = location.protocol + '//' + location.hostname + ':8000';
+var api_fallback = api_base.replace(location.origin, fallbackOrigin);
 
 // API 호출 헬퍼 함수 (8080 실패 시 8000으로 자동 폴백)
 async function apiCall(endpoint, options = {}) {
   try {
-    // 먼저 8080 포트 시도 (Java Spring Boot)
+    var opts = Object.assign({ credentials: 'include' }, options);
     console.log(`🔄 API 호출 시도: ${api_base}${endpoint}`);
-    const response = await fetch(`${api_base}${endpoint}`, options);
+    const response = await fetch(`${api_base}${endpoint}`, opts);
     
     if (!response.ok) {
       throw new Error(`HTTP ${response.status}: ${response.statusText}`);
@@ -33,7 +36,7 @@ async function apiCall(endpoint, options = {}) {
         fastApiEndpoint = '/chat/sessions';
       }
       
-      const fallbackResponse = await fetch(`${api_fallback}${fastApiEndpoint}`, options);
+      const fallbackResponse = await fetch(`${api_fallback}${fastApiEndpoint}`, Object.assign({ credentials: 'include' }, options));
       
       if (!fallbackResponse.ok) {
         throw new Error(`HTTP ${fallbackResponse.status}: ${fallbackResponse.statusText}`);
@@ -48,6 +51,10 @@ async function apiCall(endpoint, options = {}) {
   }
 }
 
+function init() {
+  const chatBot = document.querySelector(".chat-bot");
+  if (!chatBot) return;
+
 /*
  * 업체별 스타일 설정
  * - 각 업체별로 다른 스타일과 이미지를 적용하기 위한 설정
@@ -55,7 +62,6 @@ async function apiCall(endpoint, options = {}) {
  * - companyImgNames: 업체별 이미지 이름을 저장하는 변수
  * - chatCon: 채팅 연결 URL
  */
-const chatBot = document.querySelector(".chat-bot");
 const logoBox = document.querySelector(".logo-box");
 const title = document.querySelector("title");
 const ChatBotHeaderChar = document.querySelector(".chat-bot > header a .char")
@@ -65,6 +71,22 @@ let companyImgNames = "";
 let chatCon=`https://o8z36.channel.io/home`;
 let evalList=[];
 document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
+
+var pathMatch = location.pathname.match(/^\/sports\/([^/]+)(?:\/|$)/);
+var pathSegment = pathMatch ? pathMatch[1] : null;
+var pathToKorean = {
+  olparksports: "올림픽공원스포츠센터",
+  olparkswim: "올림픽수영장",
+  olparktennis: "올림픽테니스장",
+  olparksoccer: "올팍축구장",
+  ilsansports: "일산스포츠센터",
+  bundangsports: "분당스포츠센터",
+  olympicpark: "올림픽공원",
+  boatracepark: "미사경정공원"
+};
+if (pathSegment && pathToKorean[pathSegment]) {
+  companyText = pathToKorean[pathSegment];
+}
 if(location.href.split("?")[1] && location.href.split("?")[1].split("=")[1]){
   companyText = decodeURI(location.href.split("?")[1].split("=")[1]);
 }
@@ -346,6 +368,9 @@ async function chatSend(value) {
 
   sendBtn.classList.remove("active");
 }
+
+window.chatSend = chatSend;
+window.wordSend = wordSend;
 
 sendMessage.addEventListener("input", async (e) => {
 
@@ -963,6 +988,8 @@ function evalInsert(closePoint){
   evalList=[];
   document.cookie = `evalList=${encodeURIComponent(JSON.stringify(evalList))}; path=/; `;
 }
+window.btnPoint = btnPoint;
+window.evalInsert = evalInsert;
 /* 채팅 초기 데이터 작업 */
 // 쿠키값 가져오기
 function get_cookie(name) {
@@ -983,8 +1010,8 @@ function generateUUID() {
 //세션 아이디 생성
 let chatRoom=null;
 //완전 처음 들어왔을때
-//회사이름 초기 설정
-let company=new URL(window.location.href).searchParams.get("company")?new URL(window.location.href).searchParams.get("company"):'올림픽공원스포츠센터';
+//회사이름 초기 설정: URL 경로(/sports/olparkswim 등) 우선, 없으면 쿼리, 없으면 기본값
+let company = (pathSegment && pathToKorean[pathSegment]) ? pathSegment : (new URL(window.location.href).searchParams.get("company") || "올림픽공원스포츠센터");
 
 
 //쿠키에 세션값 있는지 확인
@@ -1017,7 +1044,10 @@ if(jsession===null){
       let buttons=[];
       let button={};
       let mapjson={};
-      JSON.parse(e).forEach((be)=>{
+      if (!e || !e.trim()) return;
+      let parsed;
+      try { parsed = JSON.parse(e); } catch (err) { console.error('getChat 응답 파싱 실패:', err); return; }
+      (parsed || []).forEach((be)=>{
         if(be.btn_type){
           //type link = 웹링크 전화걸기 text=대화연결
           if(be.btn_type==='대화연결'){
@@ -1046,11 +1076,12 @@ if(jsession===null){
 
 
       })
-      //초기에 데이터 뿌리기
+      //초기에 데이터 뿌리기 (빈 배열이면 기본 문구 사용)
+      var firstAnswer = (parsed && parsed[0] && parsed[0].answer) ? parsed[0].answer : "";
       historyData = [
         { name: "새로운 대화", active: true,chatRoom:chatRoom,
           characterData: [
-            { type: "left", content: JSON.parse(e)[0].answer, time: intIttimeSet,mapData:  mapjson.check?mapjson:null,buttons:buttons },
+            { type: "left", content: firstAnswer, time: intIttimeSet,mapData:  mapjson.check?mapjson:null,buttons:buttons },
           ]
         },]
       createChat(companyText);
@@ -1258,7 +1289,7 @@ async function fetchSuggestions(query) {
   if(query.trim()===''||query.trim()===null){document.querySelector('#related-question').innerHTML='';return;}
   isMake=true;
   try {
-    let word = JSON.parse(await (await fetch(`${api_base}/getSelect`, {
+    const res = await fetch(`${api_base}/getSelect`, {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
@@ -1266,7 +1297,13 @@ async function fetchSuggestions(query) {
         company: company,
         session_id: jsession
       }),
-    })).text()).slice(0,5);
+    });
+    const text = await res.text();
+    let word = [];
+    if (text && text.trim()) {
+      try { word = JSON.parse(text); } catch (_) { word = []; }
+    }
+    word = (Array.isArray(word) ? word : []).slice(0, 5);
 
     let wordLi=` `;
     //html로 가공
@@ -1279,4 +1316,11 @@ async function fetchSuggestions(query) {
     console.error("Error fetching suggestions:", error);
   }
   isMake=false;
+}
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  setTimeout(init, 0);
 }

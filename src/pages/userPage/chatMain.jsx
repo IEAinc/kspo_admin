@@ -4,56 +4,58 @@ import React, { useEffect } from 'react'
 
 
 const ChatMain = () => {
-    const makeScript=(page,integrity,crossorigin)=>{
+    const makeScript = (page, integrity, crossorigin) => {
         const script = document.createElement('script');
-        script.src = page; 
+        script.src = page;
         script.async = true;
-        script.autoload=false;
+        script.autoload = false;
         document.body.appendChild(script);
-        return script
-    }
-    const makeCSS = (href, integrity, crossorigin) => {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      if (integrity) link.integrity = integrity;
-      if (crossorigin) link.crossOrigin = crossorigin;
-      link.type = 'text/css';
-      link.referrerPolicy = 'no-referrer'; // optional
-      document.head.appendChild(link);
-      return link;
+        return script;
     };
-    let maincss=makeCSS('/resources/css/main.css')
+    const makeCSS = (href, integrity, crossorigin) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        if (integrity) link.integrity = integrity;
+        if (crossorigin) link.crossOrigin = crossorigin;
+        link.type = 'text/css';
+        link.referrerPolicy = 'no-referrer';
+        document.head.appendChild(link);
+        return link;
+    };
+
     useEffect(() => {
-     
-        const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
-        let mainScript=null;
-        jqueryScript.onload=()=>{
-            const kakaoScript=makeScript('https://dapi.kakao.com/v2/maps/sdk.js?appkey=30d2c08f659481120615deb138fc40a2&autoload=false&libraries=services,clusterer')
+        const maincss = makeCSS('/resources/css/main.css');
+        let kakaoScript = null;
+        let mainScript = null;
+
+        const jqueryScript = makeScript(
+            'https://code.jquery.com/jquery-3.7.1.js',
+            'sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=',
+            'anonymous'
+        );
+        jqueryScript.onload = () => {
+            mainScript = makeScript('/resources/js/main.js');
+            kakaoScript = makeScript(
+                'https://dapi.kakao.com/v2/maps/sdk.js?appkey=30d2c08f659481120615deb138fc40a2&autoload=false&libraries=services,clusterer'
+            );
             kakaoScript.onload = () => {
-         
-                window.kakao.maps.load(() => {
-                    mainScript=makeScript('/resources/js/main.js')
-                });
-             
+                if (window.kakao?.maps) window.kakao.maps.load(() => {});
             };
-
-        }
-       
-        return () => {
-          // 페이지에서 벗어날 때 스크립트 제거
-          document.body.removeChild(mainScript);
-          document.body.removeChild(jqueryScript);
-          document.body.removeChild(kakaoScript);
-          document.body.removeChild(maincss);
         };
-      }, []);
+
+        return () => {
+            if (mainScript?.parentNode) document.body.removeChild(mainScript);
+            if (kakaoScript?.parentNode) document.body.removeChild(kakaoScript);
+            if (jqueryScript?.parentNode) document.body.removeChild(jqueryScript);
+            if (maincss?.parentNode) document.head.removeChild(maincss);
+        };
+    }, []);
 
 
 
-     return(
-   
-    <div className="chat-bot normal">
+    return (
+    <div className="chat-bot normal" style={{ minHeight: '100vh', height: '100%' }}>
     <header>
       <a href="#" className="logo-box">
         <img src="/resources/img/char.png" className="char" alt=""/>

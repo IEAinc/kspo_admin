@@ -6,6 +6,7 @@ import Box from '../../components/common/boxs/Box'
 import AgGrid from '../../components/common/grids/AgGrid'
 import CustomAlert from "../../components/common/modals/CustomAlert";
 import { api,API_ENDPOINTS } from '../../constants/api';
+import { allowIdList } from '../../constants/common';
 import { id } from 'date-fns/locale';
 const AdminManagement = () => {
   const navigate = useNavigate();
@@ -171,10 +172,8 @@ const AdminManagement = () => {
   // 권한있는 id확인
   const chkId=async ()=>{
     const response = await api.post(API_ENDPOINTS.GETID);
-
-    let allowIdList=['Admin','IEA_Admin']
-    let myId=response.data
-    if(allowIdList.indexOf(myId)==-1){
+    const myId = response.data;
+    if(allowIdList.indexOf(myId) === -1){
       setAlertState({
         isOpen: true,
         title: '접근 제한',

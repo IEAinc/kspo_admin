@@ -2,7 +2,8 @@ import React, {useState,useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import CustomAlert from "../../components/common/modals/CustomAlert";
 import { api,API_ENDPOINTS } from '../../constants/api';
-// 사용한 컴포넌트 모음
+import { allowIdList } from '../../constants/common';
+import { isValidIPv4, isValidEmail, isValidPassword } from '../../utils/validation';
 import Box from '../../components/common/boxs/Box'
 import Btn from '../../components/common/forms/Btn'
 import Select from '../../components/common/forms/Select'
@@ -39,9 +40,8 @@ const DetailCardAdminManagement = () => {
   // 권한있는 id확인
     const chkAuth=async ()=>{
       const response = await api.post(API_ENDPOINTS.GETID);
-      let allowIdList=['Admin','IEA_Admin']
-      let myId=response.data
-      if(allowIdList.indexOf(myId)==-1){
+      const myId = response.data;
+      if(allowIdList.indexOf(myId) === -1){
         setAlertState({
           isOpen: true,
           title: '접근 제한',
@@ -155,17 +155,6 @@ const DetailCardAdminManagement = () => {
   const handleEmailChange = (selectedOption) => {
     setSelectedEmail(selectedOption); // 선택된 옵션을 직접 값으로 받음
   };
-  // 아이피체크
-  function isValidIPv4(ip) {
-    const ipv4Regex = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
-    return ipv4Regex.test(ip);
-  }
-  
-  // 이메일 체크
-  function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  }
   //수정 및 생성
   const handleEdit=async ()=>{
 
@@ -315,23 +304,8 @@ const DetailCardAdminManagement = () => {
     }
   }
   const sanitizeAndLimit=(input, maxLength)=> {
-    // 숫자 아닌 것 제거
     const onlyNumbers = input.replace(/\D/g, '');
-    // 글자 수 제한
     return onlyNumbers.slice(0, maxLength);
-  }
-  function isValidPassword(password) {
-    if (password.length < 8) return false;
-  
-    const hasUpper = /[A-Z]/.test(password);
-    const hasLower = /[a-z]/.test(password);
-    const hasDigit = /[0-9]/.test(password);
-    const hasSpecial = /[^A-Za-z0-9]/.test(password);
-  
-    // 조건 몇 개를 만족하는지 계산
-    const count = [hasUpper, hasLower, hasDigit, hasSpecial].filter(Boolean).length;
-  
-    return count >= 2;
   }
 
   return (
