@@ -95,6 +95,7 @@
 
 *{color:inherit;font-family:inherit;padding:0;margin:0;box-sizing:border-box;}
 html, body{height:100%;}
+.chat-bot{display:none;}
 a{text-decoration:none;}
 ul{list-style:none;}
 img{max-width:100%;}

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
+import "../../../public/resources/css/main.css"
 
 
 
@@ -12,18 +13,6 @@ const ChatMain = () => {
         document.body.appendChild(script);
         return script
     }
-    const makeCSS = (href, integrity, crossorigin) => {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      if (integrity) link.integrity = integrity;
-      if (crossorigin) link.crossOrigin = crossorigin;
-      link.type = 'text/css';
-      link.referrerPolicy = 'no-referrer'; // optional
-      document.head.appendChild(link);
-      return link;
-    };
-    let maincss=makeCSS('/resources/css/main.css')
     useEffect(() => {
      
         const jqueryScript=makeScript('https://code.jquery.com/jquery-3.7.1.js',"sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=",'anonymous')
@@ -45,7 +34,6 @@ const ChatMain = () => {
           document.body.removeChild(mainScript);
           document.body.removeChild(jqueryScript);
           document.body.removeChild(kakaoScript);
-          document.body.removeChild(maincss);
         };
       }, []);
 

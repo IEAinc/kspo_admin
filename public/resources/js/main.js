@@ -1236,3 +1236,4 @@ async function fetchSuggestions(query) {
   }
   isMake=false;
 }
+setTimeout(()=>{document.querySelector(".chat-bot").style.display = "block";},300)
